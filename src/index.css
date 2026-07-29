@@ -11,6 +11,27 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
+  /* Mission Room 配色 */
+  --ink: #0f172a;
+  --muted: #64748b;
+  --app-bg: #f1f5f9;
+  --surface: #ffffff;
+  --panel: #f8fafc;
+  --line: #e2e8f0;
+  --accent-strong: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: #eff6ff;
+  --accent-shadow: rgba(37, 99, 235, 0.12) 0 4px 16px -2px;
+  --card-shadow: rgba(15, 23, 42, 0.06) 0 1px 3px, rgba(15, 23, 42, 0.04) 0 4px 12px -4px;
+  --ok-fg: #047857;
+  --ok-bg: #ecfdf5;
+  --ok-border: #a7f3d0;
+  --warn-fg: #b45309;
+  --warn-bg: #fffbeb;
+  --warn-border: #fde68a;
+  --neutral-bg: #f1f5f9;
+  --neutral-border: #cbd5e1;
+
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -43,6 +64,26 @@
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+
+    --ink: #e5e7eb;
+    --muted: #94a3b8;
+    --app-bg: #0f1116;
+    --surface: #191b22;
+    --panel: #1f222b;
+    --line: #2e303a;
+    --accent-strong: #60a5fa;
+    --accent-hover: #3b82f6;
+    --accent-soft: rgba(96, 165, 250, 0.1);
+    --accent-shadow: rgba(96, 165, 250, 0.18) 0 4px 16px -2px;
+    --card-shadow: rgba(0, 0, 0, 0.35) 0 1px 3px, rgba(0, 0, 0, 0.3) 0 4px 12px -4px;
+    --ok-fg: #34d399;
+    --ok-bg: rgba(52, 211, 153, 0.1);
+    --ok-border: rgba(52, 211, 153, 0.35);
+    --warn-fg: #fbbf24;
+    --warn-bg: rgba(251, 191, 36, 0.1);
+    --warn-border: rgba(251, 191, 36, 0.35);
+    --neutral-bg: rgba(148, 163, 184, 0.12);
+    --neutral-border: rgba(148, 163, 184, 0.35);
   }
 
   #social .button-icon {
@@ -55,11 +96,10 @@ body {
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1560px;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  text-align: left;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
