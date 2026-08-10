@@ -1,5 +1,26 @@
 # AI 场景战略解码与访谈 Copilot（fde-copilot）
 
+## 项目现状
+
+**当前阶段：产品设计基础设施 + Mission Room 交互原型验证**
+
+这套对象链（IndustryTemplate → Enterprise → StrategicContext → Interview →
+Evidence → AIOpportunityCard → ProcessTwin → Deliverable）是完整的产品设计，
+但当前实现是**前端原型，静态数据，无后端**——请勿理解为"已建成的 AI 咨询系统"。
+
+**已完成：**
+- 产品工作流设计（对象定义、归属规则、关键用户流程）
+- 核心域模型（8 个对象、5 种来源类型、4 种确认状态）
+- 画板设计标准与产品框架（`skill/fde-copilot/`）
+- Mission Room 交互原型（三栏布局、Next Best Move、真实案例数据验证一条完整推导链）
+
+**未实现：**
+- 后端架构与数据持久化
+- 真实 AI 推理管线（当前 Next Best Move 为静态展示，非模型实时生成）
+- 多轮画板实现（当前仅 Mission Room 一屏落地，其余 9 屏为设计文档）
+- 企业级数据集成
+
+## 定义
 面向企业 AI 咨询项目的 AI-native Mission System：帮助顾问从行业模板和企业战略假设出发，开展多场业务访谈，从访谈证据中提炼 AI 机会卡，并进一步生成 ProcessTwin 流程图和 One Page Card 交付物。
 
 它不是会议纪要工具，也不是普通流程图工具。核心区别在于：AI 主动维护任务状态、判断偏差、推荐 Next Best Move，并保证每个结论都能追溯到来源和确认状态。
