@@ -11,26 +11,42 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  /* Mission Room 配色 */
+  /* ---------------------------------------------- Mission Room 配色 token */
   --ink: #0f172a;
   --muted: #64748b;
-  --app-bg: #f1f5f9;
+  --app-bg: #eef1f6;
   --surface: #ffffff;
   --panel: #f8fafc;
-  --line: #e2e8f0;
-  --accent-strong: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-soft: #eff6ff;
-  --accent-shadow: rgba(37, 99, 235, 0.12) 0 4px 16px -2px;
-  --card-shadow: rgba(15, 23, 42, 0.06) 0 1px 3px, rgba(15, 23, 42, 0.04) 0 4px 12px -4px;
-  --ok-fg: #047857;
+  --line: #e6e9ef;
+
+  /* 三栏纵深：左浅灰 / 中白 / 右浅蓝 */
+  --col-qa-bg: #f8fafc;
+  --col-input-bg: #ffffff;
+  --col-action-bg: #f4f6ff;
+
+  --accent-strong: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-soft: #eef2ff;
+
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 6px 16px rgba(15, 23, 42, 0.1),
+    0 2px 6px rgba(15, 23, 42, 0.05);
+  --accent-shadow: 0 4px 16px rgba(37, 99, 235, 0.12);
+  --accent-shadow-hover: 0 10px 28px rgba(37, 99, 235, 0.2);
+
+  --ok-fg: #059669;
   --ok-bg: #ecfdf5;
   --ok-border: #a7f3d0;
-  --warn-fg: #b45309;
+  --warn-fg: #d97706;
   --warn-bg: #fffbeb;
   --warn-border: #fde68a;
   --neutral-bg: #f1f5f9;
-  --neutral-border: #cbd5e1;
+  --neutral-border: #dde3ec;
+
+  /* 圆角层级：外层卡片 / 内层卡片 / 小标签 */
+  --radius-card: 16px;
+  --radius-inner: 12px;
+  --radius-chip: 6px;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -65,25 +81,35 @@
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
 
-    --ink: #e5e7eb;
-    --muted: #94a3b8;
-    --app-bg: #0f1116;
-    --surface: #191b22;
-    --panel: #1f222b;
-    --line: #2e303a;
-    --accent-strong: #60a5fa;
-    --accent-hover: #3b82f6;
-    --accent-soft: rgba(96, 165, 250, 0.1);
-    --accent-shadow: rgba(96, 165, 250, 0.18) 0 4px 16px -2px;
-    --card-shadow: rgba(0, 0, 0, 0.35) 0 1px 3px, rgba(0, 0, 0, 0.3) 0 4px 12px -4px;
+    --ink: #e8eaf0;
+    --muted: #949cad;
+    --app-bg: #0e1015;
+    --surface: #191c24;
+    --panel: #1e212a;
+    --line: #2b2f3a;
+
+    --col-qa-bg: #15181f;
+    --col-input-bg: #191c24;
+    --col-action-bg: #171a2a;
+
+    --accent-strong: #818cf8;
+    --accent-hover: #a5b4fc;
+    --accent-soft: rgba(129, 140, 248, 0.12);
+
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --card-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.45),
+      0 2px 6px rgba(0, 0, 0, 0.35);
+    --accent-shadow: 0 4px 16px rgba(129, 140, 248, 0.18);
+    --accent-shadow-hover: 0 10px 28px rgba(129, 140, 248, 0.28);
+
     --ok-fg: #34d399;
-    --ok-bg: rgba(52, 211, 153, 0.1);
-    --ok-border: rgba(52, 211, 153, 0.35);
+    --ok-bg: rgba(5, 150, 105, 0.16);
+    --ok-border: rgba(52, 211, 153, 0.38);
     --warn-fg: #fbbf24;
-    --warn-bg: rgba(251, 191, 36, 0.1);
-    --warn-border: rgba(251, 191, 36, 0.35);
+    --warn-bg: rgba(217, 119, 6, 0.16);
+    --warn-border: rgba(251, 191, 36, 0.38);
     --neutral-bg: rgba(148, 163, 184, 0.12);
-    --neutral-border: rgba(148, 163, 184, 0.35);
+    --neutral-border: rgba(148, 163, 184, 0.3);
   }
 
   #social .button-icon {
