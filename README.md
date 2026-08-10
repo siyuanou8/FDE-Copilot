@@ -60,16 +60,47 @@ npm run lint     # oxlint 检查
 
 新成员建议阅读顺序：`HANDOFF.md` → `PRD.md` → `DATA_MODEL.md` → `ADR.md` → `SKILL.md`。
 
+目录本身的只读约定见 [docs/README.md](docs/README.md)。
+
+## skill/fde-copilot/ 目录说明
+
+`docs/` 是 Maggie 提供的原始文档，只读；`skill/fde-copilot/` 是**我们自己整理的项目工作手册**，可持续迭代。
+
+它把散落在 9 份原始文档和后续讨论中的共识，收敛成一份可直接执行的手册：项目是什么、方法论依据、画板设计标准、各屏蓝图、反向沉淀机制、约束边界、当前状态。接手这个项目、或要推进其中任何一环（画板设计、页面开发、视觉迭代、对外汇报）时，从这里进入。
+
+| 文件 | 作用 |
+| --- | --- |
+| `skill/fde-copilot/SKILL.md` | **手册入口**：6 条铁律、核心对象链、画板设计标准、画一屏的五步流程、蓝图速览、协作方式，以及何时该去读下面哪一份 reference |
+| `references/01-product-foundation.md` | 产品根基：产品是什么、给谁用、解决什么，对象定义与归属规则、来源类型、确认状态 |
+| `references/02-methodology-arguments.md` | 方法论与论证素材：汇报 / 答辩时要用的论证，并区分哪些是 Whisper 自己的判断 |
+| `references/03-canvas-standard.md` | 画板设计标准：画任何一屏之前必读的规格（每屏固定 9 样、三个密度来源） |
+| `references/04-canvas-blueprint.md` | 画板蓝图：要画哪些屏、每屏定位与依据出处、各屏的边界追问方向 |
+| `references/05-reverse-sedimentation.md` | 反向沉淀机制（**本项目原创设计**）：让行业模板从每次真实访谈中自己长出来 |
+| `references/06-constraints.md` | 约束体系：已拍板的 ADR 与 QA Gate，不得推翻 |
+| `references/07-project-status.md` | 项目现状与协作方式：进度、已知问题、协作须遵守的方式 |
+| `references/08-canvas-template.md` | 画板输出模板：每屏统一使用的骨架，结构不自由发挥 |
+
+> `SKILL.md` 带 `name: fde-copilot` frontmatter，可直接作为 Claude skill 使用；`references/` 按需加载，不必一次读完。
+
+> ⚠️ `docs/SKILL.md`（Maggie 的 product-design-harness 规范）与 `skill/fde-copilot/SKILL.md`（我们的项目工作手册）是**两份不同的文件**，引用时请写全路径。
+
 ## 当前进度
 
-**文档层：已固化。** 9 份 harness 文档全部落盘到 `docs/`，对应 PRD 第 7 节「当前开发重点」的第 1 项。
+**文档层：已固化。** 9 份 harness 原始文档全部落盘到 `docs/`，对应 PRD 第 7 节「当前开发重点」的第 1 项；我们自己的工作手册落在 `skill/fde-copilot/`。
 
-**代码层：尚未开始。** `src/` 目前仍是 Vite + React 脚手架（`main.jsx` / `App.jsx` / 样式 / assets），没有业务代码，没有数据模型实现。
+**代码层：Interview Mission Room v1 已实现。** `src/App.jsx` 是一个纯前端静态演示页（无后端、无持久化），以万华化学研发部门访谈为样例数据，已落地：
+
+- **三栏布局**：左栏访谈 Q&A 流（含进度条与 8 问分组）、中栏受访者回答输入、右栏 Next Best Move + AI 机会卡
+- **Next Best Move**：给出追问问题，并同时说明「为什么问 / 服务哪个北极星 / 补哪个槽位缺口」
+- **来源与确认状态标注**：每条内容都带 source 与 status（`confirmed` / `to_be_confirmed`），区分客户原话、客户材料、顾问推断、AI 生成、示例占位数据，对应 [docs/DATA_MODEL.md](docs/DATA_MODEL.md) 的枚举
+- **采纳交互**：点击「采纳并加入 Q&A 流」，把 AI 追问写入左栏作为「待回答」条目
+
+尚未实现：Interview Setup Wizard、多张机会卡生成、ProcessTwin、One Page Card，以及回答提交后的 AI 判断逻辑（当前提交仅记录到本地演示状态）。
 
 下一步按 [docs/HANDOFF.md](docs/HANDOFF.md) 第 9 节的顺序推进：
 
 1. 企业层信息架构 + Interview Setup Wizard（行业模板预填、默认 8 问）
-2. Interview Mission Room（Next Best Move、槽位复述确认、Q&A 待回答流）
+2. Interview Mission Room 深化（槽位复述确认、Q&A 待回答流的完整闭环）
 3. AIOpportunityCard（从访谈证据生成多张机会卡）
 4. ProcessTwin（机会卡下的 As-is / To-be 结构化流程）
 5. Living One Page Card（随访谈证据持续生长的卡片校准页）
