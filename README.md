@@ -17,7 +17,7 @@ Evidence → AIOpportunityCard → ProcessTwin → Deliverable）是完整的产
 **未实现：**
 - 后端架构与数据持久化
 - 真实 AI 推理管线（当前 Next Best Move 为静态展示，非模型实时生成）
-- 多轮画板实现（当前仅 Mission Room 一屏落地，其余 9 屏为设计文档）
+- 未实现:多轮画板实现(当前仅 Mission Room 一屏落地为页面;其余 9 屏仅完成蓝图定位与依据梳理〔见 04-canvas-blueprint.md〕,尚未按输出模板展开为完整设计文档)
 - 企业级数据集成
 
 ## 定义
@@ -66,6 +66,7 @@ npm run lint     # oxlint 检查
 ```
 
 ## 仓库导图
+```
 fde-copilot/
 │
 ├── AGENTS.md                          给 AI 协作者的项目说明书
@@ -103,6 +104,7 @@ fde-copilot/
 ├── public/                             静态资源（favicon等）
 │
 └── 配置文件                             package.json / vite.config.js / .oxlintrc.json / .gitignore
+```
 
 
 ## docs/ 目录说明
