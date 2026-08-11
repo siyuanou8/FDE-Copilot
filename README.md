@@ -12,13 +12,24 @@ Evidence → AIOpportunityCard → ProcessTwin → Deliverable）是完整的产
 - 产品工作流设计（对象定义、归属规则、关键用户流程）
 - 核心域模型（8 个对象、5 种来源类型、4 种确认状态）
 - 画板设计标准与产品框架（`skill/fde-copilot/`）
-- Mission Room 交互原型（三栏布局、Next Best Move、真实案例数据验证一条完整推导链）
+- Mission Room 交互原型（`src/App.jsx`，纯前端静态演示页，无后端、无持久化，以万华化学研发部门访谈为样例数据）：
+  - **三栏布局**：左栏访谈 Q&A 流（含进度条与 8 问分组）、中栏受访者回答输入、右栏 Next Best Move + AI 机会卡
+  - **Next Best Move**：给出追问问题，并同时说明「为什么问 / 服务哪个北极星 / 补哪个槽位缺口」
+  - **来源与确认状态标注**：每条内容都带 source 与 status（`confirmed` / `to_be_confirmed`），区分客户原话、客户材料、顾问推断、AI 生成、示例占位数据，对应 [docs/DATA_MODEL.md](docs/DATA_MODEL.md) 的枚举
+  - **采纳交互**：点击「采纳并加入 Q&A 流」，把 AI 追问写入左栏作为「待回答」条目
 
 **未实现：**
 - 后端架构与数据持久化
 - 真实 AI 推理管线（当前 Next Best Move 为静态展示，非模型实时生成）
-- 未实现:多轮画板实现(当前仅 Mission Room 一屏落地为页面;其余 9 屏仅完成蓝图定位与依据梳理〔见 04-canvas-blueprint.md〕,尚未按输出模板展开为完整设计文档)
+- 多轮画板实现：当前仅 Mission Room 一屏落地为页面；其余 9 屏仅完成蓝图定位与依据梳理（见 skill/fde-copilot/references/04-canvas-blueprint.md），尚未按输出模板（08-canvas-template.md）展开为完整设计文档
 - 企业级数据集成
+
+**下一步**（按 [docs/HANDOFF.md](docs/HANDOFF.md) 第 9 节的顺序推进）：
+1. 企业层信息架构 + Interview Setup Wizard（行业模板预填、默认 8 问）
+2. Interview Mission Room 深化（槽位复述确认、Q&A 待回答流的完整闭环）
+3. AIOpportunityCard（从访谈证据生成多张机会卡）
+4. ProcessTwin（机会卡下的 As-is / To-be 结构化流程）
+5. Living One Page Card（随访谈证据持续生长的卡片校准页）
 
 ## 定义
 面向企业 AI 咨询项目的 AI-native Mission System：帮助顾问从行业模板和企业战略假设出发，开展多场业务访谈，从访谈证据中提炼 AI 机会卡，并进一步生成 ProcessTwin 流程图和 One Page Card 交付物。
@@ -146,27 +157,6 @@ fde-copilot/
 > `SKILL.md` 带 `name: fde-copilot` frontmatter，可直接作为 Claude skill 使用；`references/` 按需加载，不必一次读完。
 
 > ⚠️ `docs/SKILL.md`（Maggie 的 product-design-harness 规范）与 `skill/fde-copilot/SKILL.md`（我们的项目工作手册）是**两份不同的文件**，引用时请写全路径。
-
-## 当前进度
-
-**文档层：已固化。** 9 份 harness 原始文档全部落盘到 `docs/`，对应 PRD 第 7 节「当前开发重点」的第 1 项；我们自己的工作手册落在 `skill/fde-copilot/`。
-
-**代码层：Interview Mission Room v1 已实现。** `src/App.jsx` 是一个纯前端静态演示页（无后端、无持久化），以万华化学研发部门访谈为样例数据，已落地：
-
-- **三栏布局**：左栏访谈 Q&A 流（含进度条与 8 问分组）、中栏受访者回答输入、右栏 Next Best Move + AI 机会卡
-- **Next Best Move**：给出追问问题，并同时说明「为什么问 / 服务哪个北极星 / 补哪个槽位缺口」
-- **来源与确认状态标注**：每条内容都带 source 与 status（`confirmed` / `to_be_confirmed`），区分客户原话、客户材料、顾问推断、AI 生成、示例占位数据，对应 [docs/DATA_MODEL.md](docs/DATA_MODEL.md) 的枚举
-- **采纳交互**：点击「采纳并加入 Q&A 流」，把 AI 追问写入左栏作为「待回答」条目
-
-尚未实现：Interview Setup Wizard、多张机会卡生成、ProcessTwin、One Page Card，以及回答提交后的 AI 判断逻辑（当前提交仅记录到本地演示状态）。
-
-下一步按 [docs/HANDOFF.md](docs/HANDOFF.md) 第 9 节的顺序推进：
-
-1. 企业层信息架构 + Interview Setup Wizard（行业模板预填、默认 8 问）
-2. Interview Mission Room 深化（槽位复述确认、Q&A 待回答流的完整闭环）
-3. AIOpportunityCard（从访谈证据生成多张机会卡）
-4. ProcessTwin（机会卡下的 As-is / To-be 结构化流程）
-5. Living One Page Card（随访谈证据持续生长的卡片校准页）
 
 ## 给 AI 协作者
 
