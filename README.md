@@ -65,6 +65,46 @@ npm run preview  # 本地预览生产构建产物
 npm run lint     # oxlint 检查
 ```
 
+## 仓库导图
+fde-copilot/
+│
+├── AGENTS.md                          给 AI 协作者的项目说明书
+├── README.md                          项目总览入口
+│
+├── docs/                              【Maggie 原始文档 · 只读】
+│   ├── README.md                        说明本目录性质
+│   ├── PRD.md                            产品需求文档
+│   ├── HANDOFF.md                        新成员交接说明
+│   ├── SKILL.md                          product-design-harness 规范（⚠️ 非我们的skill）
+│   ├── PRODUCT_PRINCIPLES.md             11条产品原则
+│   ├── HARNESS.md                        迭代总控流程
+│   ├── ADR.md                            13条架构决策
+│   ├── QA_GATES.md                       5组质量闸门
+│   └── DATA_MODEL.md                     对象归属规则
+│
+├── skill/fde-copilot/                 【我们整理的工作手册 · 持续迭代】
+│   ├── SKILL.md                          手册入口（铁律/对象链/画板标准/流程）
+│   └── references/
+│       ├── 01-product-foundation.md      产品根基
+│       ├── 02-methodology-arguments.md   方法论论证素材
+│       ├── 03-canvas-standard.md         画板设计标准
+│       ├── 04-canvas-blueprint.md        画板蓝图（十屏清单+依据）
+│       ├── 05-reverse-sedimentation.md   反向沉淀机制（原创设计）
+│       ├── 06-constraints.md             约束体系（ADR+QA Gate）
+│       ├── 07-project-status.md          项目现状与协作方式
+│       └── 08-canvas-template.md         画板输出模板
+│
+├── src/                                【代码 · Mission Room v1 已实现】
+│   ├── App.jsx                           访谈进行页（三栏布局）
+│   ├── App.css / index.css               样式
+│   ├── main.jsx                          启动入口
+│   └── assets/                           图片素材（3个文件，当前均无引用）
+│
+├── public/                             静态资源（favicon等）
+│
+└── 配置文件                             package.json / vite.config.js / .oxlintrc.json / .gitignore
+
+
 ## docs/ 目录说明
 
 | 文件 | 作用 |
