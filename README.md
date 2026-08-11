@@ -95,7 +95,7 @@ fde-copilot/
 │       ├── 07-project-status.md          项目现状与协作方式
 │       └── 08-canvas-template.md         画板输出模板
 │
-├── src/                                【代码 · Mission Room v1 已实现】
+├── src/                                【代码 · Mission Room v1 已实现·仍需优化】
 │   ├── App.jsx                           访谈进行页（三栏布局）
 │   ├── App.css / index.css               样式
 │   ├── main.jsx                          启动入口
