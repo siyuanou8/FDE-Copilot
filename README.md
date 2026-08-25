@@ -11,7 +11,7 @@ Evidence → AIOpportunityCard → ProcessTwin → Deliverable）是完整的产
 **已完成：**
 - 产品工作流设计（对象定义、归属规则、关键用户流程）
 - 核心域模型（8 个对象、5 种来源类型、4 种确认状态）
-- 画板设计标准与产品框架（`skill/fde-copilot/`）
+- 画板设计标准与产品框架（`skill🤠/fde-copilot/`）
 - Mission Room 交互原型（`src/App.jsx`，纯前端静态演示页，无后端、无持久化，以万华化学研发部门访谈为样例数据）：
   - **三栏布局**：左栏访谈 Q&A 流（含进度条与 8 问分组）、中栏受访者回答输入、右栏 Next Best Move + AI 机会卡
   - **Next Best Move**：给出追问问题，并同时说明「为什么问 / 服务哪个北极星 / 补哪个槽位缺口」
@@ -21,7 +21,7 @@ Evidence → AIOpportunityCard → ProcessTwin → Deliverable）是完整的产
 **未实现：**
 - 后端架构与数据持久化
 - 真实 AI 推理管线（当前 Next Best Move 为静态展示，非模型实时生成）
-- 多轮画板实现：当前仅 Mission Room 一屏落地为页面；其余 9 屏仅完成蓝图定位与依据梳理（见 skill/fde-copilot/references/04-canvas-blueprint.md），尚未按输出模板（08-canvas-template.md）展开为完整设计文档
+- 多轮画板实现：当前仅 Mission Room 一屏落地为页面；其余 9 屏仅完成蓝图定位与依据梳理（见 skill🤠/fde-copilot/references/04-canvas-blueprint.md），尚未按输出模板（08-canvas-template.md）展开为完整设计文档
 - 企业级数据集成
 
 **下一步**（按 [docs/HANDOFF.md](docs/HANDOFF.md) 第 9 节的顺序推进）：
@@ -94,7 +94,7 @@ fde-copilot/
 │   ├── QA_GATES.md                       5组质量闸门
 │   └── DATA_MODEL.md                     对象归属规则
 │
-├── skill/fde-copilot/                 【我们整理的工作手册 · 持续迭代】
+├── skill🤠/fde-copilot/                【我们整理的工作手册 · 持续迭代】
 │   ├── SKILL.md                          手册入口（铁律/对象链/画板标准/流程）
 │   └── references/
 │       ├── 01-product-foundation.md      产品根基
@@ -136,15 +136,15 @@ fde-copilot/
 
 目录本身的只读约定见 [docs/README.md](docs/README.md)。
 
-## skill/fde-copilot/ 目录说明
+## skill🤠/fde-copilot/ 目录说明
 
-`docs/` 是 Maggie 提供的原始文档，只读；`skill/fde-copilot/` 是**我们自己整理的项目工作手册**，可持续迭代。
+`docs/` 是 Maggie 提供的原始文档，只读；`skill🤠/fde-copilot/` 是**我们自己整理的项目工作手册**，可持续迭代。
 
 它把散落在 9 份原始文档和后续讨论中的共识，收敛成一份可直接执行的手册：项目是什么、方法论依据、画板设计标准、各屏蓝图、反向沉淀机制、约束边界、当前状态。接手这个项目、或要推进其中任何一环（画板设计、页面开发、视觉迭代、对外汇报）时，从这里进入。
 
 | 文件 | 作用 |
 | --- | --- |
-| `skill/fde-copilot/SKILL.md` | **手册入口**：6 条铁律、核心对象链、画板设计标准、画一屏的五步流程、蓝图速览、协作方式，以及何时该去读下面哪一份 reference |
+| `skill🤠/fde-copilot/SKILL.md` | **手册入口**：6 条铁律、核心对象链、画板设计标准、画一屏的五步流程、蓝图速览、协作方式，以及何时该去读下面哪一份 reference |
 | `references/01-product-foundation.md` | 产品根基：产品是什么、给谁用、解决什么，对象定义与归属规则、来源类型、确认状态 |
 | `references/02-methodology-arguments.md` | 方法论与论证素材：汇报 / 答辩时要用的论证，并区分哪些是 Whisper 自己的判断 |
 | `references/03-canvas-standard.md` | 画板设计标准：画任何一屏之前必读的规格（每屏固定 9 样、三个密度来源） |
@@ -156,7 +156,7 @@ fde-copilot/
 
 > `SKILL.md` 带 `name: fde-copilot` frontmatter，可直接作为 Claude skill 使用；`references/` 按需加载，不必一次读完。
 
-> ⚠️ `docs/SKILL.md`（Maggie 的 product-design-harness 规范）与 `skill/fde-copilot/SKILL.md`（我们的项目工作手册）是**两份不同的文件**，引用时请写全路径。
+> ⚠️ `docs/SKILL.md`（Maggie 的 product-design-harness 规范）与 `skill🤠/fde-copilot/SKILL.md`（我们的项目工作手册）是**两份不同的文件**，引用时请写全路径。
 
 ## 给 AI 协作者
 
