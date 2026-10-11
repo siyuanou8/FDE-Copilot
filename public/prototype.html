@@ -132,6 +132,7 @@ svg{display:block}
 .src .st{display:inline-flex;align-items:center;gap:4px;padding-left:6px;border-left:1px solid var(--line);font-weight:600}
 .src .st::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
 .st-ok{color:var(--ok)} .st-warn{color:var(--warn)} .st-no{color:var(--faint);text-decoration:line-through}
+.src-mat .ico{color:#8A6A3C}
 .src-tpl .ico{color:var(--brand-2)} .src-ai .ico{color:var(--ai)} .src-quote .ico{color:var(--ok)}
 .cnt{font-size:11.5px;color:var(--muted);white-space:nowrap;cursor:help;border-bottom:1px dotted #C9CCC8}
 /* AI 提议态 */
@@ -1388,9 +1389,11 @@ function judgeCell(x){
 }
 function srcTag(j){
   if (!j.ref) return '<span class="muted" style="font-size:12px">—</span>';
-  var lab = j.src === 'up' ? '客户提供' : j.src === 'off' ? '官方披露' : j.src === 'web' ? '联网检索' : 'AI 推断';
-  return '<span class="src">' + ico(j.src === 'up' ? 'i-file' : j.src === 'off' ? 'i-building' : 'i-search') + lab + ' · ' + j.ref + '<span class="st st-warn">待确认</span></span>';
+  var lab = j.src === 'up' ? '客户提供' : j.src === 'off' ? '官方披露' : '公开检索';
+  return '<span class="src src-mat">' + ico('i-file') + '客户材料 · ' + lab + ' · ' + j.ref + '<span class="st st-warn">待确认</span></span>';
 }
+/* 来源类型「客户材料」：有原文出处的企业材料（客户提供 / 官方披露 / 公开检索），与「AI 推断」区分 */
+function stMat(ref){ return srcTag({src:/客户提供/.test(ref) ? 'up' : /年报|公告|半年报/.test(ref) ? 'off' : 'web', ref:ref}); }
 function stInfer(ref){ return '<span class="src src-ai">' + ico('i-ai') + 'AI 推断 · 仅作提问方向 · 依据 ' + ref + '</span>'; }
 var STL = {orig:['原文','tg-ok'], infer:['推测','tg-ai'], miss:['缺失 · 访谈确认','tg-risk']};
 
@@ -1447,7 +1450,7 @@ function viewPreread(){
   var rowOf = function(x){
     var j = judgeOf(x), k = x.src === 'clue' ? 'clue|' + x.id : keyOf(x), pk = prio(x);
     var from = x.src === 'clue' ? '<span class="lab">' + ico('i-sprout') + '预读新增</span><span class="cnt">本企业材料</span>' : srcLab(x) + countText(x);
-    var src = x.src === 'clue' ? stInfer(x.ref) : j.j === 'infer' ? stInfer(j.ref) : srcTag(j);
+    var src = x.src === 'clue' ? stMat(x.ref) : j.j === 'infer' ? stInfer(j.ref) : srcTag(j);
     var rk = j.j === 'sup' ? 'sup_' + (j.src === 'up' ? 'up' : 'off') : j.j;
     return '<tr data-k="' + k + '" class="' + (P.flash[k] ? 'flash' : '') + '" style="--d:' + (ri++ * 90) + 'ms">' +
       '<td><span class="hf">' + fLab(x.f) + '</span><span class="it">' + x.t + '</span><div class="from">' + from + '</div></td>' +
@@ -1472,7 +1475,7 @@ function viewPreread(){
   var cl = clueList();
   var clues = cl.length ? cl.map(function(c, i){
     var added = P.added[c.id];
-    return '<div class="clue" style="--d:' + i * 140 + 'ms"><span class="n">' + (i + 1) + '</span><div class="body"><b>' + c.t + '</b><span>' + c.d + '</span><div>' + stInfer(c.ref) + '</div></div><div class="ac">' +
+    return '<div class="clue" style="--d:' + i * 140 + 'ms"><span class="n">' + (i + 1) + '</span><div class="body"><b>' + c.t + '</b><span>' + c.d + '</span><div>' + stMat(c.ref) + '</div></div><div class="ac">' +
       (added ? '<span class="ok-l">' + ico('i-check') + '已加入清单</span>' : '<button class="btn btn-g btn-sm" data-act="add-clue" data-id="' + c.id + '">' + ico('i-plus') + '加入清单</button>') + '</div></div>';
   }).join('') : '<div class="cl-empty" style="padding:28px">' + ico('i-sprout') + '<b>没有找到清单之外的线索</b>公开信息太少。线索会在第一场访谈里出现。</div>';
   var G = GAPS[K];

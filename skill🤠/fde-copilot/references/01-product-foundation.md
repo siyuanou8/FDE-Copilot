@@ -197,7 +197,7 @@ IndustryTemplate → Enterprise → StrategicContext → Interview
 
 ## 7. 来源类型与确认状态
 
-**来源类型（Source types）——共 5 种：**
+**来源类型（Source types）——共 6 种（DATA_MODEL 原定 5 种，本项目新增 `client_material`）：**
 
 | 值 | 中文 |
 |---|---|
@@ -205,7 +205,8 @@ IndustryTemplate → Enterprise → StrategicContext → Interview
 | `consultant_refinement` | 顾问提炼 |
 | `case_inspiration` | 案例启发 |
 | `industry_template` | 行业模板 |
-| `ai_inference` | AI 推断 |
+| `client_material` | 客户材料：有原文出处的企业材料（客户提供、官方披露、公开检索），须注明文件、页码或网址与日期。**本项目新增（2026-10-11）**，待写回 DATA_MODEL |
+| `ai_inference` | AI 推断：AI 基于材料推算或推测、原文未直接写明的内容，标「仅作提问方向」并注明依据 |
 
 **确认状态（Confirmation status）——共 4 种：**
 
@@ -306,7 +307,7 @@ IndustryTemplate → Enterprise → StrategicContext → Interview
 | 段 | 发生什么 | 对应对象 | 依据 |
 |---|---|---|---|
 | 模板 → 待验证清单 | 新建企业时，合并「行业」「业务模式」两组标签的条目，全部标 `to_be_confirmed` | IndustryTemplate → StrategicContext | PRD §3.1、ADR-004 |
-| 预读材料 → 印证 / 否定 | 访谈前读年报、财报、公告等，AI 对清单逐条标「材料支持 / 反驳 / 未提及」 | StrategicContext（证据来源暂标 `ai_inference` + 注明材料出处） | 本项目判断 |
+| 预读材料 → 印证 / 否定 | 访谈前读年报、财报、公告等，AI 对清单逐条标「材料支持 / 反驳 / 未提及」 | StrategicContext（原文写明的标 `client_material` + 出处；AI 推算或推测的标 `ai_inference` + 依据） | 本项目判断 |
 | 访谈原话 → 印证 / 否定 | 访谈现场，客户原话对应到清单条目，顾问确认后更新企业层假设 | Interview → Evidence → StrategicContext | ADR-001、ADR-002 |
 | 访谈证据 → 机会卡 | 访谈结束，AI 从证据起草机会卡，一张卡可引用多场访谈 | Evidence → AIOpportunityCard | ADR-011、012、013 |
 | 机会卡 → ProcessTwin / One Page Card → 交付物 | 机会卡配流程对比图和一页纸，打包成交付物 | AIOpportunityCard → ProcessTwin → Deliverable | ADR-005、006 |
