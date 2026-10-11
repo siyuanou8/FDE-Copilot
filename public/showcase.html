@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FDE Copilot · 产品展示</title>
+<meta name="description" content="FDE Copilot 产品展示页 · 第二批：准备、访谈设置、访谈现场、收尾">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   设计变量 —— 全站颜色只在这里定义。换配色只改这一段。
+   ===================================================================== */
+:root{
+  /* 底色与文字 */
+  --bg:#F7F6F1;          /* 页面底：暖米白 */
+  --surface:#FFFFFF;     /* 卡片 */
+  --surface-2:#FBFAF6;   /* 次级面 */
+  --ink:#1C1F1D;         /* 主文字 */
+  --ink-2:#4A504C;       /* 次文字 */
+  --muted:#7A807C;       /* 弱文字 */
+  --line:#E4E2DA;        /* 边框 */
+  --line-2:#EEECE5;      /* 分割线 */
+  --grid:rgba(28,31,29,.045); /* 背景网格线 */
+
+  /* 品牌绿（深、沉，只用于品牌与主操作） */
+  --brand:#1F4D3A;
+  --brand-2:#2E6B50;
+  --brand-soft:#E3ECE5;
+  --brand-tint:#F0F5F1;
+
+  /* 状态色（与品牌绿区分：亮绿 + 勾号） */
+  --ok:#1E8E4E;   --ok-soft:#E5F4EA;
+  --warn:#A86A12; --warn-soft:#FBF1DF;
+  --ai:#2F6FB0;   --ai-soft:#EDF3FA;   /* AI 推断 / AI 提议 */
+  --risk:#C2412D; --risk-soft:#FBEAE6;
+  --draft:#66707A;--draft-soft:#EEF0F2;
+
+  --r-sm:6px; --r:10px; --r-lg:16px;
+  --sh-1:0 1px 2px rgba(28,31,29,.05);
+  --sh-2:0 10px 28px -12px rgba(28,31,29,.16);
+  --sh-float:0 22px 48px -18px rgba(28,31,29,.24);
+  --font:"Inter","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"SF Mono",ui-monospace,Menlo,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:15px/1.65 var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+svg{display:block}
+.ico{width:16px;height:16px;flex:none}
+
+/* 背景细网格（参照 giga，改为浅色） */
+.gridlines{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(to right,var(--grid) 1px,transparent 1px);
+  background-size:calc(100% / 12) 100%;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent);
+          mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent)}
+.wrap{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:0 40px}
+
+/* ---------------------------------------------------------------- 顶栏 */
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,246,241,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:28px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;font-size:16px;white-space:nowrap}
+.brand-mark{width:26px;height:26px;border-radius:7px;background:var(--brand);display:grid;place-items:center;color:#fff;flex:none}
+.chapters{display:flex;gap:4px;flex:1;justify-content:center}
+.chapters a{font-size:13px;color:var(--ink-2);text-decoration:none;padding:6px 12px;border-radius:999px;white-space:nowrap;transition:background .2s,color .2s}
+.chapters a:hover{background:var(--line-2)}
+.chapters a.active{background:var(--brand);color:#fff}
+.chapters a.later{color:#B3B6B1}
+.chapters a.later:hover{background:none;cursor:default}
+.nav-meta{display:flex;gap:8px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);white-space:nowrap}
+.pill-demo{border-color:#E8D8B6;background:var(--warn-soft);color:var(--warn)}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;background:var(--brand);width:0;transition:width .1s linear}
+
+/* ---------------------------------------------------------------- 通用 */
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:var(--r);font-weight:600;font-size:15px;text-decoration:none;transition:transform .15s,background .2s,box-shadow .2s}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 6px 18px -8px rgba(31,77,58,.6)}
+.btn-primary:hover{background:var(--brand-2)}
+.btn-ghost{border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn-ghost:hover{border-color:#CFCCC2}
+.btn:active{transform:translateY(1px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--brand);text-transform:uppercase}
+.eyebrow::before{content:"";width:8px;height:8px;background:var(--brand);border-radius:2px}
+
+/* 出处标记 —— 本产品的标志性组件 */
+.src{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;line-height:1;padding:4px 8px 4px 6px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);white-space:nowrap;vertical-align:middle}
+.src .ico{width:12px;height:12px}
+.src .ico,.ref .ico,.try .ico,.tg .ico{position:relative;top:.5px}
+.btn .ico{position:relative;top:-.5px}
+.src .st{display:inline-flex;align-items:center;gap:4px;padding-left:6px;border-left:1px solid var(--line);font-weight:600}
+.src .st::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st-ok{color:var(--ok)} .st-warn{color:var(--warn)} .st-draft{color:var(--draft)} .st-no{color:#9AA09C;text-decoration:line-through}
+.src-quote .ico{color:var(--ok)}
+.src-tpl .ico{color:var(--brand-2)}
+.src-ai .ico{color:var(--ai)}
+.src-pen .ico{color:var(--ink-2)}
+.src-case .ico{color:var(--warn)}
+.count{font-size:11px;color:var(--muted);padding-left:6px;border-left:1px solid var(--line)}
+
+/* AI 提议态 vs 已采纳态 */
+.proposal{border:1.5px dashed #9DBBDB;background:var(--ai-soft);border-radius:var(--r);transition:border-color .35s,background .35s,box-shadow .35s}
+.proposal.is-adopted{border-style:solid;border-color:var(--line);background:var(--surface);box-shadow:var(--sh-1)}
+.prop-label{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--ai);letter-spacing:.02em}
+.prop-label .ico{width:13px;height:13px}
+.adopted-label{display:none;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--ok)}
+.adopted-label .ico{width:13px;height:13px}
+.proposal.is-adopted .prop-label{display:none}
+.proposal.is-adopted .adopted-label{display:inline-flex}
+
+/* ---------------------------------------------------------------- 首屏 */
+.hero{min-height:calc(100vh - 60px);display:grid;grid-template-columns:1.02fr 1fr;align-items:center;gap:40px;padding:56px 0 72px}
+.hero h1{font-size:clamp(44px,5.3vw,78px);line-height:1.06;letter-spacing:-.025em;font-weight:800;margin:22px 0 26px}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.lede{font-size:18px;color:var(--ink-2);max-width:520px;line-height:1.7}
+.hero-cta{display:flex;gap:12px;margin:34px 0 44px}
+.principles{display:flex;gap:28px;border-top:1px solid var(--line);padding-top:22px;max-width:540px}
+.principles div{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.principles b{display:block;color:var(--ink);font-size:14px}
+.principles .ico{width:18px;height:18px;color:var(--brand);margin-top:2px}
+
+.stage-hero{position:relative;height:610px}
+.stage-hero .panel{position:absolute;left:70px;top:24px;right:0;bottom:24px;border-radius:24px;background:var(--brand-soft);overflow:hidden}
+.stage-hero .panel::after{content:"";position:absolute;inset:0;background-image:linear-gradient(to right,rgba(31,77,58,.07) 1px,transparent 1px),linear-gradient(to bottom,rgba(31,77,58,.07) 1px,transparent 1px);background-size:36px 36px}
+.demo{position:absolute;left:0;top:150px;width:420px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh-float);padding:18px 18px 16px;z-index:3}
+.demo-head{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);padding-bottom:12px;border-bottom:1px solid var(--line-2)}
+.demo-head .q{margin-left:auto;font-family:var(--mono);font-size:11px}
+.live{width:7px;height:7px;border-radius:50%;background:var(--risk);box-shadow:0 0 0 0 rgba(194,65,45,.5);animation:pulse 1.8s infinite;flex:none}
+@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(194,65,45,0)}100%{box-shadow:0 0 0 0 rgba(194,65,45,0)}}
+.demo-question{font-weight:600;font-size:14.5px;margin:12px 0 10px}
+.demo-answer{min-height:46px;font-size:13.5px;color:var(--ink-2);border-left:3px solid var(--ok);padding:2px 0 2px 10px;background:linear-gradient(90deg,var(--ok-soft),transparent 70%)}
+.caret{display:inline-block;width:1.5px;height:14px;background:var(--ink);vertical-align:-2px;margin-left:1px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.demo-tag{margin:8px 0 12px;opacity:0;transition:opacity .4s}
+.demo.t-tag .demo-tag{opacity:1}
+.demo-prop{padding:12px 14px;opacity:0;transform:translateY(10px);transition:opacity .45s,transform .45s,border-color .35s,background .35s}
+.demo.t-prop .demo-prop{opacity:1;transform:none}
+.demo-prop p{font-weight:600;font-size:14px;margin:6px 0 4px}
+.demo-prop .why{font-size:12px;color:var(--muted)}
+.demo-prop .acts{display:flex;gap:8px;margin-top:10px}
+.demo-prop.is-adopted .acts{display:none}
+.demo-prop .done{display:none;margin-top:8px;font-size:12px;color:var(--ok);align-items:center;gap:6px}
+.demo-prop.is-adopted .done{display:flex}
+.bs{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px;border-radius:7px;font-size:12.5px;font-weight:600;white-space:nowrap;transition:transform .12s,background .2s}
+.bs .ico{width:13px;height:13px}
+.bs-primary{background:var(--brand);color:#fff}
+.bs-primary.pressed{transform:scale(.95);background:var(--brand-2)}
+.bs-ghost{border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+.bs-sm{height:24px;padding:0 8px;font-size:11.5px;border-radius:6px}
+.cursor{position:absolute;left:0;top:0;width:22px;height:22px;opacity:0;pointer-events:none;z-index:9;transition:transform .8s cubic-bezier(.45,.05,.25,1),opacity .25s;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+.fc{position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh-2);padding:14px 16px;animation:float 6s ease-in-out infinite alternate;z-index:2}
+.fc h6{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.06em;margin-bottom:10px}
+.fc-1{right:-6px;top:0;width:250px}
+.fc-1 .row{display:flex;margin:7px 0}
+.fc-2{right:-6px;bottom:0;width:270px;animation-delay:-3s}
+.fc-2 .t{font-weight:700;font-size:15px;margin:2px 0 6px}
+.fc-2 .m{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag-draft{font-size:11px;font-weight:600;color:var(--draft);background:var(--draft-soft);padding:2px 8px;border-radius:999px;white-space:nowrap}
+@keyframes float{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+
+/* ---------------------------------------------------------------- 旅程总览 */
+.section{padding:110px 0}
+.sec-head{max-width:760px;margin-bottom:44px}
+.sec-head h2{font-size:clamp(30px,3.3vw,44px);line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:14px 0 14px}
+.sec-head p{font-size:16.5px;color:var(--ink-2)}
+.journey{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
+.jc{padding:20px 16px 18px;border-right:1px solid var(--line-2);display:flex;flex-direction:column;gap:8px;position:relative;text-decoration:none;color:inherit;transition:background .2s}
+.jc:last-child{border-right:0}
+a.jc:hover{background:var(--surface-2)}
+.jc .no{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.jc .nm{font-weight:700;font-size:16px}
+.jc ul{list-style:none;font-size:12.5px;color:var(--ink-2);display:flex;flex-direction:column;gap:3px;flex:1}
+.jc .bt{align-self:flex-start;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px}
+.bt-now{background:var(--brand);color:#fff}
+.bt-done{background:var(--brand-soft);color:var(--brand)}
+.bt-next{background:var(--line-2);color:var(--muted)}
+.jc.now::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--brand)}
+.jc.done::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--brand-soft)}
+
+/* ---------------------------------------------------------------- 章节 */
+.ch-head{display:grid;grid-template-columns:1fr;gap:28px;justify-items:center;text-align:center;margin-bottom:32px}
+.ch-head .sec-head,#journey .sec-head{margin-left:auto;margin-right:auto;text-align:center}
+.ch-head .legend{text-align:left}
+.ch-head.solo{grid-template-columns:1fr;justify-items:center;text-align:center}
+.ch-head.solo .sec-head{margin-left:auto;margin-right:auto}
+.legend{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px}
+.legend h6{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:12px}
+.legend .lg-grid{display:flex;flex-wrap:wrap;gap:8px 8px;margin-bottom:12px}
+.legend .lg-row{display:flex;gap:10px;align-items:center;font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid var(--line-2)}
+.legend .mini{font-size:11px;padding:4px 8px;border-radius:6px}
+
+.story{display:grid;grid-template-columns:360px 1fr;gap:56px}
+.step{min-height:92vh;display:flex;align-items:center}
+.step-in{max-width:360px;opacity:.28;transform:translateY(12px);transition:opacity .5s,transform .5s}
+.step.active .step-in{opacity:1;transform:none}
+.step .k{font-family:var(--mono);font-size:12px;color:var(--brand);margin-bottom:12px;display:flex;gap:8px;align-items:center}
+.step .k span{color:var(--muted)}
+.step h3{font-size:28px;line-height:1.25;letter-spacing:-.015em;font-weight:800;margin-bottom:14px}
+.step p{color:var(--ink-2);font-size:15.5px;margin-bottom:14px}
+.step .refs{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.ref{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:2px 7px;background:var(--surface)}
+.try{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:13px;font-weight:600;color:var(--brand);background:var(--brand-tint);border:1px solid var(--brand-soft);padding:7px 12px;border-radius:8px}
+.try .ico{width:14px;height:14px}
+.points{list-style:none;display:flex;flex-direction:column;gap:10px;margin:4px 0 14px}
+.points li{display:flex;gap:10px;font-size:14.5px;color:var(--ink-2)}
+.points b{color:var(--ink)}
+.points .n{flex:none;width:20px;height:20px;border-radius:6px;background:var(--brand-soft);color:var(--brand);font-size:11px;font-weight:700;display:grid;place-items:center;margin-top:2px}
+.seg{display:inline-flex;margin-top:16px;padding:3px;border-radius:9px;background:var(--line-2);gap:2px}
+.seg button{font-size:13px;font-weight:600;padding:6px 14px;border-radius:7px;color:var(--ink-2)}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--sh-1)}
+
+.stage{position:sticky;top:84px;height:calc(100vh - 108px);display:flex;align-items:center;justify-content:flex-end}
+.frame{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh-float);overflow:hidden}
+.frame-bar{height:38px;display:flex;align-items:center;gap:14px;padding:0 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;background:#DDDAD1}
+.url{flex:1;max-width:520px;height:24px;border-radius:6px;background:var(--surface);border:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;align-items:center;padding:0 10px;overflow:hidden;white-space:nowrap}
+.size{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.frame-body{position:relative;overflow:hidden}
+.proto{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform-origin:0 0;background:var(--bg)}
+.bt-old{background:var(--warn-soft);color:var(--warn)}
+.journey{grid-template-columns:repeat(8,1fr)}
+
+/* ---------------------------------------------------------------- 首屏小样里的提议卡 */
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.act{display:flex;flex-direction:column;gap:10px;background:var(--surface-2)}
+.proposal.is-adopted dl{border-top-color:var(--line-2)}
+.proposal.is-adopted .acts{display:none}
+
+/* ---------------------------------------------------------------- 尾 */
+.endcard{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;background:var(--brand);color:#fff;border-radius:22px;padding:48px 52px;position:relative;overflow:hidden}
+.endcard::after{content:"";position:absolute;inset:0;background-image:linear-gradient(to right,rgba(255,255,255,.06) 1px,transparent 1px);background-size:calc(100%/12) 100%;pointer-events:none}
+.endcard h2{font-size:34px;line-height:1.2;letter-spacing:-.02em;font-weight:800;margin:12px 0 14px}
+.endcard p{color:rgba(255,255,255,.78)}
+.endcard .eyebrow{color:#BFD8C9}.endcard .eyebrow::before{background:#BFD8C9}
+.next{list-style:none;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+.next li{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 14px}
+.next b{display:block;font-size:14px}
+.next span{font-size:12.5px;color:rgba(255,255,255,.72)}
+.next .bn{flex:none;font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:5px;background:rgba(255,255,255,.14);margin-top:2px}
+footer{padding:40px 0 56px;font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* ---------------------------------------------------------------- 响应式 */
+@media (max-width:1100px){
+  .chapters{display:none}
+  .hero{grid-template-columns:1fr}
+  .stage-hero{height:560px;max-width:620px}
+  .journey{grid-template-columns:repeat(4,1fr)}
+  .jc{border-bottom:1px solid var(--line-2)}
+  .ch-head{grid-template-columns:1fr}
+  .story{grid-template-columns:1fr;gap:0}
+  .stage{position:sticky;top:64px;height:auto;z-index:5;padding:10px 0;background:var(--bg)}
+  .step{min-height:70vh}
+  .endcard{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .nav-meta .pill:not(.pill-demo){display:none}
+  .journey{grid-template-columns:repeat(2,1fr)}
+  .principles{flex-direction:column;gap:14px}
+  .stage-hero{transform:scale(.78);transform-origin:left top;height:470px}
+  .endcard{padding:32px 24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== SVG 图标（全部 inline，零 emoji） ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-quote" viewBox="0 0 24 24"><path fill="currentColor" d="M6.5 7H11v4.4c0 3.2-1.6 5.3-4.4 6.4l-.7-1.4c1.6-.8 2.4-2 2.5-3.9H6.5zm7 0H18v4.4c0 3.2-1.6 5.3-4.4 6.4l-.7-1.4c1.6-.8 2.4-2 2.5-3.9h-1.9z"/></symbol>
+    <symbol id="i-tpl" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M4 10h16M10 10v10"/></g></symbol>
+    <symbol id="i-ai" viewBox="0 0 24 24"><path fill="currentColor" d="M11 3l1.9 5.6L18.5 10.5l-5.6 1.9L11 18l-1.9-5.6L3.5 10.5l5.6-1.9zM18 14l.9 2.6 2.6.9-2.6.9L18 21l-.9-2.6-2.6-.9 2.6-.9z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 20l1-4L16 5l3 3L8 19zM14 7l3 3"/></symbol>
+    <symbol id="i-case" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M5 4.5h9a3 3 0 013 3V20H8a3 3 0 01-3-3zM5 17a3 3 0 013-3h9M9 8h4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></g></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 20V6l8-3v17M12 20V9l8 3v8M3 20h18M7.5 9v.01M7.5 13v.01M7.5 16v.01M16 14v.01M16 17v.01"/></g></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 13l2.5-8h11L20 13v6H4z"/><path d="M4 13h5l1 2h4l1-2h5"/></g></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 4l9 5-9 5-9-5z"/><path d="M3 14l9 5 9-5"/></g></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 5h16v11H9l-5 4z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></g></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 4L4 7l3 3M4 7h12M17 20l3-3-3-3M20 17H8"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3M18 3v4h-4M6 21v-4h4"/></symbol>
+    <symbol id="i-logo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18L12 5l6 13"/><path d="M8.6 13h6.8"/></g></symbol>
+    <symbol id="i-cursor" viewBox="0 0 24 24"><path fill="#1C1F1D" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" d="M5 3l14 8.2-6.2 1.4L10 19z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></g></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></g></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4.5l3 2"/></g></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.01"/></g></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.01"/></g></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></g></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-8"/><path d="M12 12c0-4 3-6 7-6 0 4-3 6-7 6zM12 14c0-3-2.5-5-6-5 0 3 2.5 5 6 5z"/></g></symbol>
+    <symbol id="i-merge" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 4v5a5 5 0 005 5h0a5 5 0 015 5v1M17 4v5a5 5 0 01-5 5"/></symbol>
+  </defs>
+</svg>
+
+<div class="gridlines" aria-hidden="true"></div>
+
+<!-- =============================== 顶栏 =============================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <div class="brand"><span class="brand-mark"><svg class="ico"><use href="#i-logo"/></svg></span>FDE Copilot</div>
+    <nav class="chapters" aria-label="章节">
+      <a href="#ch0" data-ch="ch0">序</a>
+      <a href="#ch1" data-ch="ch1">一 · 准备</a>
+      <a href="#ch2" data-ch="ch2">二 · 访谈设置</a>
+      <a href="#ch3" data-ch="ch3">三 · 访谈现场</a>
+      <a href="#ch4" data-ch="ch4">四 · 收尾</a>
+      <a href="#ch5" data-ch="ch5">五 · 企业全景</a>
+      <a class="later" title="第四轮制作">六 · 成果</a>
+      <a class="later" title="第四轮制作">七 · 贯穿能力</a>
+    </nav>
+    <div class="nav-meta">
+      <span class="pill pill-demo">示例数据 · 虚构企业</span>
+      <span class="pill">v0.5 · 第一至五章已接入原型</span>
+    </div>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+<!-- =============================== 序 · 首屏 =============================== -->
+<section id="ch0" data-chapter="ch0">
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow">AI 场景战略解码与访谈 Copilot</span>
+      <h1>让每一场访谈，<br>都长成可交付的<br><em>AI 机会。</em></h1>
+      <p class="lede">FDE Copilot 是企业 AI 咨询顾问的访谈副驾。AI 提出下一步，顾问做判断；从行业假设、访谈证据，到可交付的 AI 机会卡，每一条结论都带着出处。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#ch1">从头看一遍 <svg class="ico"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="prototype.html" target="_blank">打开可操作原型</a>
+      </div>
+      <div class="principles">
+        <div><svg class="ico"><use href="#i-ai"/></svg><span><b>AI 提出下一步</b>该问什么、缺什么，主动推到顾问面前</span></div>
+        <div><svg class="ico"><use href="#i-check"/></svg><span><b>顾问做出选择</b>采纳、修改或不适用，判断权在人</span></div>
+        <div><svg class="ico"><use href="#i-quote"/></svg><span><b>每条结论带出处</b>来源与确认状态，随时可追溯</span></div>
+      </div>
+    </div>
+
+    <div class="stage-hero" aria-label="产品小样：AI 提议，顾问采纳">
+      <div class="panel"></div>
+      <div class="fc fc-1">
+        <h6>出处标记</h6>
+        <div class="row"><span class="src src-quote"><svg class="ico"><use href="#i-quote"/></svg>客户原话<span class="st st-ok">已确认</span></span></div>
+        <div class="row"><span class="src src-ai"><svg class="ico"><use href="#i-ai"/></svg>AI 推断<span class="st st-warn">待确认</span></span></div>
+        <div class="row"><span class="src src-tpl"><svg class="ico"><use href="#i-tpl"/></svg>行业模板<span class="count">3 家提及</span><span class="st st-warn">待确认</span></span></div>
+      </div>
+      <div class="demo" id="demo">
+        <div class="demo-head"><span class="live"></span>访谈进行中 · 售后服务部<span class="q">Q4 / 8</span></div>
+        <p class="demo-question">流程中最依赖经验的环节是什么？</p>
+        <div class="demo-answer"><span id="demoType"></span><span class="caret"></span></div>
+        <div class="demo-tag"><span class="src src-quote"><svg class="ico"><use href="#i-quote"/></svg>客户原话<span class="st st-ok">已确认</span></span></div>
+        <div class="demo-prop proposal" id="demoProp">
+          <span class="prop-label"><svg class="ico"><use href="#i-ai"/></svg>AI 提议 · 下一步</span>
+          <span class="adopted-label"><svg class="ico"><use href="#i-check"/></svg>已采纳</span>
+          <p>一次故障平均要上门几次才能修好？</p>
+          <div class="why">补缺口：影响量化 · 服务北极星：首次修复率</div>
+          <div class="acts"><button class="bs bs-primary" id="demoBtn" tabindex="-1">采纳</button><button class="bs bs-ghost" tabindex="-1">换一个</button></div>
+          <div class="done"><svg class="ico"><use href="#i-check"/></svg>已加入问答流，等待受访者回答</div>
+        </div>
+        <svg class="cursor" id="demoCursor"><use href="#i-cursor"/></svg>
+      </div>
+      <div class="fc fc-2">
+        <h6>候选需求</h6>
+        <div class="t">AI 辅助故障诊断</div>
+        <div class="m"><span class="tag-draft">草稿</span>来源 Q3 · Q4 · 追问 4a</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== 旅程总览 =============================== -->
+<section class="section" id="journey" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">一次完整的旅程</span>
+      <h2>从一家新客户，到交给客户的成果<br>7 章 · 19 个画面</h2>
+      <p>跟着一位顾问服务一家企业的全过程：建档、准备访谈、访谈现场、收尾、打磨成果。第一至五章已接入可操作原型；其余章节随原型每一轮推进逐章替换。</p>
+    </div>
+    <div class="journey">
+      <a class="jc done" href="#ch0"><span class="no">序</span><span class="nm">首屏</span><ul><li>一句话 + 自动演示</li></ul><span class="bt bt-done">完成</span></a>
+      <a class="jc now" href="#ch1"><span class="no">01</span><span class="nm">建档与准备</span><ul><li>1 企业列表</li><li>2 新建企业</li><li>3 访谈前预读</li></ul><span class="bt bt-now">可操作原型</span></a>
+      <a class="jc now" href="#ch2"><span class="no">02</span><span class="nm">访谈设置</span><ul><li>4 设置一场访谈</li></ul><span class="bt bt-now">可操作原型</span></a>
+      <a class="jc now" href="#ch3"><span class="no">03</span><span class="nm">访谈现场</span><ul><li>5 实时转写</li><li>6 提纲外追问</li><li>7 顾问采纳</li><li>8 复述确认</li><li>9 现场校准</li></ul><span class="bt bt-now">可操作原型</span></a>
+      <a class="jc" href="#ch4"><span class="no">04</span><span class="nm">收尾</span><ul><li>10 机会卡草稿</li><li>11 反向沉淀</li></ul><span class="bt bt-old">旧版 · 第三轮</span></a>
+      <div class="jc"><span class="no">05</span><span class="nm">企业全景</span><ul><li>12 假设看板</li></ul><span class="bt bt-next">第三轮</span></div>
+      <div class="jc"><span class="no">06</span><span class="nm">成果</span><ul><li>13 机会卡校准</li><li>14 One Page Card</li><li>15 ProcessTwin</li><li>16 交付物</li></ul><span class="bt bt-next">第四轮</span></div>
+      <div class="jc"><span class="no">07</span><span class="nm">贯穿能力</span><ul><li>17 证据溯源</li><li>18 跨企业待办</li><li>19 行业模板</li></ul><span class="bt bt-next">第四轮</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== 第一章 · 准备 =============================== -->
+<section class="section" id="ch1" data-chapter="ch1" style="padding-bottom:40px">
+  <div class="wrap">
+    <div class="ch-head">
+      <div class="sec-head" style="margin-bottom:0">
+        <span class="eyebrow">第一章 · 建档与准备 · 画面 1–3 · 可操作原型</span>
+        <h2>不从空白开始：<br>进场前，先读懂这家企业</h2>
+        <p>每家企业独立建档。行业和业务模式两组标签先预填一份待验证清单，再读年报、公告做背景调查——带进访谈的是问题，不是答案。右侧窗口就是产品本身，可以直接点。</p>
+      </div>
+      <div class="legend">
+        <h6>读图说明 · 出处标记</h6>
+        <div class="lg-grid">
+          <span class="src src-quote"><svg class="ico"><use href="#i-quote"/></svg>客户原话</span>
+          <span class="src src-pen"><svg class="ico"><use href="#i-pen"/></svg>顾问提炼</span>
+          <span class="src src-tpl"><svg class="ico"><use href="#i-tpl"/></svg>行业模板</span>
+          <span class="src src-ai"><svg class="ico"><use href="#i-ai"/></svg>AI 推断</span>
+          <span class="src src-case"><svg class="ico"><use href="#i-case"/></svg>案例启发</span>
+        </div>
+        <div class="lg-grid">
+          <span class="src"><span class="st st-ok" style="border:0;padding:0">已确认</span></span>
+          <span class="src"><span class="st st-warn" style="border:0;padding:0">待确认</span></span>
+          <span class="src"><span class="st st-draft" style="border:0;padding:0">草稿</span></span>
+          <span class="src"><span class="st st-no" style="border:0;padding:0">已驳回</span></span>
+        </div>
+        <div class="lg-row"><span class="mini proposal" style="color:var(--ai);font-weight:700">AI 提议</span>虚线 = 等顾问决定<span class="mini proposal is-adopted" style="color:var(--ok);font-weight:700;margin-left:6px">已采纳</span>实线</div>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="steps">
+        <div class="step" id="f1" data-step="1" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 1 <span>· 企业列表</span></div>
+            <h3>多家客户，各自独立，一眼看清进度</h3>
+            <p>每张企业卡片只回答三件事：到了哪一步、卡在哪里、下一步做什么。下一步由系统给出，顾问不用自己找入口。</p>
+            <ul class="points">
+              <li><span class="n">1</span><span><b>两组标签</b>：行业和业务模式分开标，业务模式可以暂不选</span></li>
+              <li><span class="n">2</span><span><b>草稿企业</b>：填了名称和行业就自动保存</span></li>
+              <li><span class="n">3</span><span><b>停滞提醒</b>：几天没有进展的企业会被标出来</span></li>
+            </ul>
+            <div class="refs"><span class="ref">PRD §1</span><span class="ref">Principles 4</span></div>
+          </div>
+        </div>
+        <div class="step" id="f2" data-step="2" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 2 <span>· 新建企业</span></div>
+            <h3>只填两项，拿到一份待验证清单</h3>
+            <p>行业和业务模式是两组独立的标签。选完行业，AI 先匹配行业条目；再选业务模式，清单里会滑入几条「新增」——它们来自业务模式标签，比如招投标销售。</p>
+            <p>每条都标「待确认」，写明几家提及、几家不适用；只有初始设定的条目默认折叠。</p>
+            <div class="refs"><span class="ref">Interview Setup QA 1–2</span><span class="ref">ADR-004</span><span class="ref">PRD §4.1</span></div>
+            <span class="try"><svg class="ico"><use href="#i-chev"/></svg>窗口里可以直接操作：换一个业务模式试试</span>
+          </div>
+        </div>
+        <div class="step" id="f3" data-step="3" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 3 <span>· 访谈前预读</span></div>
+            <h3>进场之前，先读懂这家企业</h3>
+            <p>材料从三个入口来：顾问上传客户资料、自动获取官方披露（上市公司的年报、公告）、AI 联网检索官网、工商、中标和招聘信息。AI 逐份解析，整理出四块企业概况，每块标明是「原文」「推测」还是「缺失」，每条都能展开看原文。</p>
+            <p>这一步可以跳过，不挡访谈；但做了，顾问进场时心里就有底。</p>
+            <div class="refs"><span class="ref">本项目判断</span><span class="ref">访谈前背景调查</span></div>
+          </div>
+        </div>
+        <div class="step" id="f3b" data-step="3b" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 3 <span>· 业务模式建议</span></div>
+            <h3>业务模式怎么选，让材料说话</h3>
+            <p>新建时没选业务模式，AI 根据年报给出建议，并附三条原文：大客户占比、招标方式、单笔金额。顾问采纳后，业务模式标签的条目补进清单。</p>
+            <p>清单每一条，先看材料怎么说：支持、反驳，还是没提到。材料只代表过去，结论仍然「待确认」。</p>
+            <div class="refs"><span class="ref">01 · 业务模式标签</span><span class="ref">来源方案 B</span></div>
+          </div>
+        </div>
+        <div class="step" id="f3c" data-step="3c" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 3 <span>· 新线索</span></div>
+            <h3>清单里没有的，也要带去访谈</h3>
+            <p>年报战略章节说三年内要把服务收入占比提到 30%——这可能是比「首次修复率」更上层的北极星。顾问把它加入清单，带去第一场访谈当面确认。</p>
+            <div class="refs"><span class="ref">数据工作流 · 预读材料 → 印证 / 否定</span></div>
+          </div>
+        </div>
+        <div class="step" id="f3d" data-step="3d" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 3 <span>· 如果企业没上市</span></div>
+            <h3>没有年报，看板也要说真话</h3>
+            <p>非上市企业没有定期披露。AI 只能从官网、工商、中标公告、招聘信息里找线索：客户结构变成「推测」，收入结构「缺失」。业务模式建议标「证据有限」。</p>
+            <p>缺的部分不会编，而是变成两样东西：一份可以直接发给客户的「材料索取清单」，和一份 5 题的「访谈前小问卷」。</p>
+            <div class="refs"><span class="ref">覆盖状态</span><span class="ref">缺口与替代</span></div>
+          </div>
+        </div>
+        <div class="step" id="f3e" data-step="3e" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 3 <span>· 几乎没有公开信息</span></div>
+            <h3>材料不足时，AI 会说「无法判断」</h3>
+            <p>只查到工商登记时，四块概况三块缺失，AI 明确回答「材料不足，无法判断业务模式」，不硬给答案。清单每条都是「必问」，第一场访谈的前 10 分钟先了解背景。</p>
+            <p>预读的价值在这里也成立：它告诉顾问「哪些是一定要在访谈里问清楚的」。</p>
+            <div class="refs"><span class="ref">访谈优先级</span><span class="ref">首场背景了解</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="frame" data-w="1440" data-h="900">
+          <div class="frame-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">fde.local/enterprises</div><div class="size">1440 × 900 · 可操作原型</div></div>
+          <div class="frame-body"><iframe class="proto" id="proto1" src="prototype.html?embed=1#/enterprises" title="FDE Copilot 可操作原型"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== 第二章 · 访谈设置 =============================== -->
+<section class="section" id="ch2" data-chapter="ch2" style="padding-bottom:40px">
+  <div class="wrap">
+    <div class="ch-head solo">
+      <div class="sec-head" style="margin-bottom:0">
+        <span class="eyebrow">第二章 · 访谈设置 · 画面 4 · 可操作原型</span>
+        <h2>一分钟备好提纲：<br>按这家企业改写 8 个问题</h2>
+        <p>AI 建议第一场找谁、为什么；默认 8 问按部门、行业、业务模式改写，并写明每题要验证清单上的哪条假设。开始录音前，确认客户同意。</p>
+      </div>
+    </div>
+    <div class="story">
+      <div class="steps">
+        <div class="step" id="f4" data-step="4" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 4 <span>· 设置一场访谈</span></div>
+            <h3>第一场找谁，AI 先给建议</h3>
+            <p>预读发现年报战略章节提出「服务收入占比 30%」，需要当面确认它是不是北极星，AI 因此建议首场做高层访谈，找分管服务的副总裁，并附上原文理由。这是建议，顾问可以改选其他部门。</p>
+            <p>选定后，8 个问题按「部门 × 行业 × 业务模式」改写，每题标「AI 改写 · 待确认」，并标出它要验证清单上的哪条假设；随时可以看原文。</p>
+            <div class="refs"><span class="ref">PRD §4.2</span><span class="ref">PRD §5</span><span class="ref">Interview Setup QA 4–5</span></div>
+            <span class="try"><svg class="ico"><use href="#i-chev"/></svg>窗口里可以改选部门、看原文</span>
+          </div>
+        </div>
+        <div class="step" id="f4b" data-step="4b" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 4 <span>· 上传问题与录音同意</span></div>
+            <h3>自己的问题合并进来，重复的当场指出</h3>
+            <p>顾问上传事先准备的问题，自动插进对应分组；和默认问题意思重复的，AI 指出来，由顾问决定合并还是都保留。选「覆盖」会提示失去三组结构的风险。</p>
+            <p>开始访谈前，必须勾选「已获客户同意录音」，并能看到录音会经过哪些服务。</p>
+            <div class="refs"><span class="ref">Interview Setup QA 6</span><span class="ref">PRD §4.2</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="frame" data-w="1440" data-h="900">
+          <div class="frame-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">fde.local</div><div class="size">1440 × 900 · 可操作原型</div></div>
+          <div class="frame-body"><iframe class="proto" id="proto2" src="prototype.html?embed=1#/enterprises" title="FDE Copilot 可操作原型" loading="lazy"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== 第三章 · 访谈现场 =============================== -->
+<section class="section" id="ch3" data-chapter="ch3" style="padding-bottom:40px">
+  <div class="wrap">
+    <div class="ch-head solo">
+      <div class="sec-head" style="margin-bottom:0">
+        <span class="eyebrow">第三章 · 访谈现场 · 画面 5–9 · 可操作原型</span>
+        <h2>顾问专心听，<br>下一步由 AI 提出来</h2>
+        <p>访谈进行中，顾问最缺的不是记录，而是判断：这个回答够不够、有没有偏、下一句该问什么。右侧是同一场访谈，从第 5 屏连续演到第 9 屏。</p>
+      </div>
+    </div>
+    <div class="story">
+      <div class="steps">
+        <div class="step" id="f5" data-step="5" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 5 <span>· 实时转写与 AI 标注</span></div>
+            <h3>客户说的话，一句句变成证据</h3>
+            <p>访谈开始录音，转写逐句出现，并区分顾问和客户——顾问的提问不能当证据。AI 晚两三秒给出标注：这句话填了哪个槽位、印证了清单上哪条假设、哪里值得深挖。</p>
+            <p>「听」和「想」同时进行：转写约 1 秒上屏，AI 标注随后浮现，正在分析的句子显示「分析中」。说话人认错了，点一下就能纠正。</p>
+            <div class="refs"><span class="ref">PRD §4.3</span><span class="ref">实时工作流</span></div>
+            <span class="try"><svg class="ico"><use href="#i-chev"/></svg>窗口里点「客户 / 顾问」标签可纠正说话人</span>
+          </div>
+        </div>
+        <div class="step" id="f6" data-step="6" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 6 <span>· 提纲外的追问</span></div>
+            <h3>3 秒内，看到下一个最该问的问题</h3>
+            <p>客户说了「要跑两三趟」，但没有量化。右栏第一屏给出 Next Best Move，并一次说清三件事：</p>
+            <ul class="points">
+              <li><span class="n">1</span><span><b>为什么问</b>：有了「依赖经验」，却没有量化</span></li>
+              <li><span class="n">2</span><span><b>服务哪个北极星</b>：首次修复率（此时仍是模板假设）</span></li>
+              <li><span class="n">3</span><span><b>补哪个缺口</b>：本题的「影响量化」槽位</span></li>
+            </ul>
+            <div class="refs"><span class="ref">ADR-007</span><span class="ref">Mission Room QA 1–3</span></div>
+          </div>
+        </div>
+        <div class="step" id="f7" data-step="7" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 7 <span>· 顾问采纳</span></div>
+            <h3>AI 只提议，顾问来决定</h3>
+            <p>Next Best Move 是一条虚线的「提议」，不是指令。顾问点「采纳」，追问进入左侧问答流成为待回答问题，随后顾问把它问出口，转写里出现这句话。</p>
+            <p>采纳后卡片变成实线，一眼分清哪些是 AI 推过来的、哪些是顾问已经拍板的。</p>
+            <div class="refs"><span class="ref">ADR-009</span><span class="ref">ADR-007</span></div>
+          </div>
+        </div>
+        <div class="step" id="f8" data-step="8" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 8 <span>· 复述确认 + 案例</span></div>
+            <h3>回答落进槽位，当场复述确认</h3>
+            <p>客户答出「新人 2.6 次、老师傅 1.2 次」，「影响量化」补齐。系统把这道题的要点复述成一句话，顾问念给客户确认——确认摘要挂在这道题的槽位上，不放进全局侧栏。</p>
+            <p>同时右栏出现一条只服务当前问题的相似案例；候选需求「AI 辅助故障诊断」开始成形，带着来源。</p>
+            <div class="refs"><span class="ref">ADR-008</span><span class="ref">ADR-010</span><span class="ref">Mission Room QA 4–5</span></div>
+          </div>
+        </div>
+        <div class="step" id="f9" data-step="9" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 9 <span>· 现场校准假设</span></div>
+            <h3>客户一句话，北极星当场改写</h3>
+            <p>副总裁说：「首次修复率我们内部没正式考核，服务合同的续约率才是最关心的。」AI 把判断直接标在这句原话上：否定模板假设、印证预读线索、提出新北极星候选。</p>
+            <p>顾问确认后，企业层的战略假设当场更新，顶部北极星随之改变，后续每场访谈都继承它。预读时年报曾「反驳」续约率——材料反映过去，访谈反映现在。</p>
+            <div class="refs"><span class="ref">ADR-001</span><span class="ref">ADR-002</span><span class="ref">ADR-008</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="frame" data-w="1440" data-h="900">
+          <div class="frame-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">fde.local</div><div class="size">1440 × 900 · 可操作原型</div></div>
+          <div class="frame-body"><iframe class="proto" id="proto3" src="prototype.html?embed=1#/enterprises" title="FDE Copilot 可操作原型" loading="lazy"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== 第四章 · 收尾 =============================== -->
+<section class="section" id="ch4" data-chapter="ch4" style="padding-bottom:40px">
+  <div class="wrap">
+    <div class="ch-head solo">
+      <div class="sec-head" style="margin-bottom:0">
+        <span class="eyebrow">第四章 · 收尾 · 画面 10–11 · 可操作原型</span>
+        <h2>访谈结束，<br>证据变成机会卡草稿</h2>
+        <p>不用顾问自己整理笔记。AI 把一场访谈的证据汇总成机会卡草稿；模板里没有的新发现，由顾问决定沉淀到哪一组标签。</p>
+      </div>
+    </div>
+    <div class="story">
+      <div class="steps">
+        <div class="step" id="f10" data-step="10" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 10 <span>· 机会卡草稿</span></div>
+            <h3>一场访谈，两张机会卡</h3>
+            <p>每张卡都写明证据来自哪几问，引用的都是客户原话。证据偏少的卡直接标出来，并建议下一场补访谁。</p>
+            <p>右侧同时列出这场访谈改变了什么：新北极星、被推翻的假设、被印证的预读线索。</p>
+            <div class="refs"><span class="ref">PRD §4.4</span><span class="ref">ADR-012</span></div>
+          </div>
+        </div>
+        <div class="step" id="f10b" data-step="10b" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 10 <span>· 采纳或驳回</span></div>
+            <h3>草稿由顾问拍板</h3>
+            <p>采纳后进入机会卡校准；驳回的草稿归档，证据仍然保留。没补齐的槽位不会丢，自动转成下一场访谈的待办。</p>
+            <span class="try"><svg class="ico"><use href="#i-chev"/></svg>窗口里点「采纳」或「驳回」</span>
+          </div>
+        </div>
+        <div class="step" id="f11" data-step="11" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 11 <span>· 反向沉淀</span></div>
+            <h3>新发现归到哪一组标签，由顾问决定</h3>
+            <p>AI 给出建议和理由。「服务合同续约率」和卖法有关，建议归入业务模式标签，之后任何大客户招投标的企业都能用上；「新人上岗要 2 年」和设备复杂度有关，建议归入行业标签。</p>
+            <p>只属于这一家的发现，选「仅本企业保留」。被客户否定的模板条目只记录、不撤下。</p>
+            <div class="refs"><span class="ref">01 · 两组标签</span><span class="ref">05 · 反向沉淀</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="frame" data-w="1440" data-h="900">
+          <div class="frame-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">fde.local</div><div class="size">1440 × 900 · 可操作原型</div></div>
+          <div class="frame-body"><iframe class="proto" id="proto4" src="prototype.html?embed=1#/enterprises" title="FDE Copilot 可操作原型" loading="lazy"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== 第五章 · 企业全景 =============================== -->
+<section class="section" id="ch5" data-chapter="ch5" style="padding-bottom:40px">
+  <div class="wrap">
+    <div class="ch-head solo">
+      <div class="sec-head" style="margin-bottom:0">
+        <span class="eyebrow">第五章 · 企业全景 · 画面 12 · 可操作原型</span>
+        <h2>几场访谈下来，<br>这家客户实际是什么样</h2>
+        <p>企业工作台就是一张假设看板。每条假设挂着支持和反驳它的证据，下一场访谈找谁，由还没被印证的假设决定。</p>
+      </div>
+    </div>
+    <div class="story">
+      <div class="steps">
+        <div class="step" id="f12" data-step="12" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 12 <span>· 假设看板</span></div>
+            <h3>每条假设，都有证据撑着</h3>
+            <p>已印证、被推翻、只有材料支持、尚无人提及，一眼分清。点证据能展开原文；材料和访谈冲突时以访谈为准，但材料保留作参考。</p>
+            <div class="refs"><span class="ref">数据工作流</span><span class="ref">ADR-001</span></div>
+            <span class="try"><svg class="ico"><use href="#i-chev"/></svg>窗口里点任一条证据展开原文</span>
+          </div>
+        </div>
+        <div class="step" id="f12b" data-step="12b" data-proto="1">
+          <div class="step-in">
+            <div class="k">画面 12 <span>· 下一场找谁</span></div>
+            <h3>还没印证的假设，决定下一场访谈</h3>
+            <p>3 条假设还停留在「只有材料支持」或「尚无人提及」，其中 2 条和售后直接相关，所以 AI 建议下一场访谈售后服务部负责人。</p>
+            <p>顾问也可以凭自己的判断手动标为已印证，系统记录为「顾问判断」，与客户原话区分开。</p>
+          </div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="frame" data-w="1440" data-h="900">
+          <div class="frame-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">fde.local</div><div class="size">1440 × 900 · 可操作原型</div></div>
+          <div class="frame-body"><iframe class="proto" id="proto5" src="prototype.html?embed=1#/enterprises" title="FDE Copilot 可操作原型" loading="lazy"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== 尾 =============================== -->
+<section class="section" style="padding-top:60px">
+  <div class="wrap">
+    <div class="endcard">
+      <div style="position:relative;z-index:1">
+        <span class="eyebrow">当前进度 · v0.5</span>
+        <h2>从建档到企业全景，<br>已经是可操作的产品。</h2>
+        <p>展示页和原型共用同一套界面：每做完一轮原型，这里对应的章节就自动换成可操作的版本，两边不会再不同步。</p>
+        <div style="margin-top:22px"><a class="btn btn-primary" style="background:#fff;color:var(--brand)" href="prototype.html" target="_blank">打开完整原型<svg class="ico"><use href="#i-arrow"/></svg></a></div>
+      </div>
+      <ul class="next">
+        <li><span class="bn">第四轮</span><div><b>画面 13–19 · 成果与贯穿能力</b><span>机会卡校准、One Page Card、ProcessTwin、交付物、证据溯源、待办、模板管理</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="wrap">
+  <span>FDE Copilot · 产品展示页 · v0.5</span>
+  <span>「华衡精密制造」等企业均为虚构，界面数据仅用于演示结构 · 规格依据 PRD / ADR / QA Gates</span>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(s, r){ return (r || document).querySelector(s); }
+  function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+
+  /* ---------- 顶栏：阅读进度 + 当前章节 ---------- */
+  var progress = $('#progress'), links = $$('.chapters a[data-ch]');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - innerHeight;
+    progress.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+  }
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  var chObs = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.toggle('active', a.dataset.ch === e.target.id); });
+    });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  $$('[data-chapter]').forEach(function(s){ chObs.observe(s); });
+
+  /* ---------- 光标移动（坐标按画面缩放换算） ---------- */
+  function moveCursor(cur, host, target, scale){
+    var hr = host.getBoundingClientRect(), tr = target.getBoundingClientRect(), s = scale || 1;
+    var x = (tr.left - hr.left + tr.width * 0.55) / s, y = (tr.top - hr.top + tr.height * 0.6) / s;
+    cur.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  }
+
+  /* ---------- 首屏小样：自动循环演示 ---------- */
+  var demo = $('#demo'), typeEl = $('#demoType'), prop = $('#demoProp'), dBtn = $('#demoBtn'), dCur = $('#demoCursor');
+  var line = '同一个报警代码，新人得一项项排查，经常要跑两三趟。', timers = [];
+  function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+  function runDemo(){
+    timers.forEach(clearTimeout); timers = [];
+    demo.classList.remove('t-tag','t-prop'); prop.classList.remove('is-adopted');
+    dBtn.classList.remove('pressed'); typeEl.textContent = ''; dCur.style.opacity = 0;
+    dCur.style.transform = 'translate(380px,330px)';
+    var t = 400;
+    for (var i = 1; i <= line.length; i++){ (function(n){ later(function(){ typeEl.textContent = line.slice(0, n); }, t + n * 55); })(i); }
+    t += line.length * 55 + 450;
+    later(function(){ demo.classList.add('t-tag'); }, t);
+    later(function(){ demo.classList.add('t-prop'); }, t += 650);
+    later(function(){ dCur.style.opacity = 1; }, t += 900);
+    later(function(){ moveCursor(dCur, demo, dBtn); }, t += 80);
+    later(function(){ dBtn.classList.add('pressed'); }, t += 900);
+    later(function(){ prop.classList.add('is-adopted'); dCur.style.opacity = 0; }, t += 220);
+    later(runDemo, t + 3600);
+  }
+  if (reduce){ typeEl.textContent = line; demo.classList.add('t-tag','t-prop'); prop.classList.add('is-adopted'); }
+  else runDemo();
+
+  /* ---------- 产品窗口：按可用宽度等比缩放（旧画面 1120×700，原型 1440×900） ---------- */
+  var frames = $$('.frame');
+  function fit(){
+    frames.forEach(function(f){
+      var stage = f.parentElement, body = $('.frame-body', f);
+      var W = +(f.dataset.w || 1120), H = +(f.dataset.h || 700);
+      var w = stage.clientWidth - 2;
+      var maxH = innerWidth > 1100 ? innerHeight - 170 : innerHeight * 0.55;
+      var s = Math.min(w / W, maxH / H);
+      f._scale = s;
+      $$('.scr, .proto', body).forEach(function(sc){ sc.style.transform = 'scale(' + s + ')'; });
+      body.style.height = (H * s) + 'px';
+      f.style.width = (W * s + 2) + 'px';
+    });
+  }
+  addEventListener('resize', fit); fit();
+
+  /* ---------- 可操作原型：嵌入 + 控制（每章一个窗口，界面只有原型一份） ---------- */
+  var PROTOS = {}, pt = [];
+  $$('.proto').forEach(function(f){ PROTOS[f.id] = {el:f, ready:false, q:[]}; });
+  function P(id, msg){ var c = PROTOS[id]; if (!c) return; if (c.ready) c.el.contentWindow.postMessage(msg, '*'); else c.q.push(msg); }
+  function plater(fn, ms){ pt.push(setTimeout(fn, ms)); }
+  function clearP(){ pt.forEach(clearTimeout); pt = []; }
+  addEventListener('message', function(e){
+    var c = null; Object.keys(PROTOS).forEach(function(k){ if (PROTOS[k].el.contentWindow === e.source) c = PROTOS[k]; });
+    if (!c) return;
+    var m = e.data || {};
+    if (m.type === 'ready'){ c.ready = true; c.q.forEach(function(x){ c.el.contentWindow.postMessage(x, '*'); }); c.q = []; }
+    if (m.type === 'route'){
+      var path = (m.hash || '').replace('#', '').replace('/e/huaheng/', '/enterprises/huaheng/').replace('/s/', '/screen/').replace(/\?.*$/, '');
+      $('.url', c.el.closest('.frame')).textContent = 'fde.local' + (path || '/enterprises');
+    }
+  });
+
+  /* ---------- 通用：分段切换（有数据 / 首次使用 等） ---------- */
+  $$('.seg').forEach(function(seg){
+    $$('button', seg).forEach(function(b){
+      b.addEventListener('click', function(){
+        $$('button', seg).forEach(function(x){ x.classList.toggle('on', x === b); });
+        var scr = document.getElementById(seg.dataset.target);
+        scr.dataset.state = b.dataset.val;
+      });
+    });
+  });
+  function syncSeg(target, val){
+    var seg = $('.seg[data-target="' + target + '"]');
+    if (seg) $$('button', seg).forEach(function(x){ x.classList.toggle('on', x.dataset.val === val); });
+  }
+
+  /* ---------- 每一步进入时做什么 ---------- */
+  var enter = {
+    '1': function(){ P('proto1', {type:'act', name:'reset'}); P('proto1', {type:'go', hash:'#/enterprises'}); },
+    '2': function(){ P('proto1', {type:'go', hash:'#/enterprises/new'}); plater(function(){ P('proto1', {type:'act', name:'demo-new'}); }, 500); },
+    '3': function(){ P('proto1', {type:'act', name:'prep-pre', arg:'listed'}); P('proto1', {type:'go', hash:'#/e/huaheng/preread'}); },
+    '3b': function(){ P('proto1', {type:'act', name:'ensure-pre'}); P('proto1', {type:'act', name:'keep-listed'}); P('proto1', {type:'act', name:'finish-pre'}); plater(function(){ P('proto1', {type:'scroll', sel:'#bizCard'}); }, 300); plater(function(){ P('proto1', {type:'act', name:'adopt-biz'}); }, 2200); plater(function(){ P('proto1', {type:'scroll', sel:'#tblCard'}); }, 3600); },
+    '3c': function(){ P('proto1', {type:'act', name:'ensure-pre'}); P('proto1', {type:'act', name:'keep-listed'}); P('proto1', {type:'act', name:'finish-pre'}); plater(function(){ P('proto1', {type:'scroll', sel:'#cluesCard'}); }, 300); plater(function(){ P('proto1', {type:'act', name:'add-clue', arg:'c1'}); }, 1800); },
+    '3d': function(){ P('proto1', {type:'act', name:'pre-kind', arg:'private'}); plater(function(){ P('proto1', {type:'scroll', sel:'#gapsCard'}); }, 9000); },
+    '3e': function(){ P('proto1', {type:'act', name:'pre-kind', arg:'none'}); plater(function(){ P('proto1', {type:'scroll', sel:'#bizCard'}); }, 7000); },
+    '4': function(){ P('proto2', {type:'act', name:'prep-live'}); P('proto2', {type:'act', name:'demo-setup'}); },
+    '4b': function(){ P('proto2', {type:'act', name:'demo-upload'}); },
+    '5': function(){ P('proto3', {type:'act', name:'mr-to', arg:5}); },
+    '6': function(){ P('proto3', {type:'act', name:'mr-to', arg:6}); },
+    '7': function(){ P('proto3', {type:'act', name:'mr-to', arg:7}); },
+    '8': function(){ P('proto3', {type:'act', name:'mr-to', arg:8}); },
+    '9': function(){ P('proto3', {type:'act', name:'mr-to', arg:9}); },
+    '10': function(){ P('proto4', {type:'act', name:'wrap-go'}); },
+    '10b': function(){ P('proto4', {type:'act', name:'wrap-adopt'}); plater(function(){ P('proto4', {type:'scroll', sel:'.oc2:nth-of-type(2)'}); }, 2600); },
+    '11': function(){ P('proto4', {type:'act', name:'demo-sed'}); },
+    '12': function(){ P('proto5', {type:'act', name:'board-go'}); },
+    '12b': function(){ P('proto5', {type:'act', name:'board-go'}); plater(function(){ P('proto5', {type:'act', name:'hb-filter', arg:'wait'}); }, 900); }
+  };
+
+  /* ---------- 滚动叙事：左侧步骤驱动右侧画面 ---------- */
+  var steps = $$('.step'), current = null;
+  function activate(step){
+    var id = step.dataset.step;
+    if (id === current) return; current = id;
+    clearP();
+    var steps0 = $$('.step', step.parentElement);
+    steps0.forEach(function(s){ s.classList.toggle('active', s === step); });
+    if (step.dataset.proto){ if (enter[id]) enter[id](); return; }
+    var frame = $('.frame', step.closest('.story'));
+    var scr = document.getElementById(step.dataset.screen);
+    $$('.scr', frame).forEach(function(s){ s.classList.toggle('on', s === scr); });
+    $('.url', frame).textContent = scr.dataset.url;
+    if (enter[id]) enter[id]();
+  }
+  var stObs = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting) activate(e.target); });
+  }, {rootMargin:'-42% 0px -42% 0px'});
+  steps.forEach(function(s){ stObs.observe(s); });
+  $$('.steps').forEach(function(g){ var f = $('.step', g); if (f) f.classList.add('active'); });
+
+
+  /* ---------- 直达链接：#f3 等打开时直接跳到对应画面 ---------- */
+  function jump(){
+    var t = location.hash && document.getElementById(location.hash.slice(1));
+    if (!t || !t.classList.contains('step')) return;
+    var root = document.documentElement, prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, t.getBoundingClientRect().top + scrollY - (innerHeight - t.offsetHeight) / 2);
+    root.style.scrollBehavior = prev;
+    activate(t);
+  }
+  /* 字体和嵌入窗口加载完后页面会轻微位移，滚动观察可能把直达链接让给相邻步骤；稳定后再对准一次 */
+  function rejump(){
+    var t = location.hash && document.getElementById(location.hash.slice(1));
+    if (!t || !t.classList.contains('step') || current === t.dataset.step) return;
+    jump();
+  }
+  addEventListener('load', function(){ jump(); setTimeout(rejump, 900); setTimeout(rejump, 2200); });
+})();
+</script>
+</body>
+</html>
