@@ -197,7 +197,7 @@ IndustryTemplate → Enterprise → StrategicContext → Interview
 
 ## 7. 来源类型与确认状态
 
-**来源类型（Source types）——共 6 种（DATA_MODEL 原定 5 种，本项目新增 `client_material`）：**
+**来源类型（Source types）——共 6 种（2026-10-11 新增 `client_material`，已写入 DATA_MODEL）：**
 
 | 值 | 中文 |
 |---|---|
@@ -205,7 +205,7 @@ IndustryTemplate → Enterprise → StrategicContext → Interview
 | `consultant_refinement` | 顾问提炼 |
 | `case_inspiration` | 案例启发 |
 | `industry_template` | 行业模板 |
-| `client_material` | 客户材料：有原文出处的企业材料（客户提供、官方披露、公开检索），须注明文件、页码或网址与日期。**本项目新增（2026-10-11）**，待写回 DATA_MODEL |
+| `client_material` | 客户材料：有原文出处的企业材料（客户提供、官方披露、公开检索），须注明文件、页码或网址与日期。**本项目新增（2026-10-11）**，已写回 DATA_MODEL |
 | `ai_inference` | AI 推断：AI 基于材料推算或推测、原文未直接写明的内容，标「仅作提问方向」并注明依据 |
 
 **确认状态（Confirmation status）——共 4 种：**
