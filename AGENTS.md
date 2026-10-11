@@ -26,7 +26,7 @@ IndustryTemplate
 - **Vite 8** + **React 19**，`type: module`，JSX（暂未接入 TypeScript）
 - **oxlint** 做 lint，配置在 `.oxlintrc.json`
 - npm 管理依赖
-- 当前无后端；**不要接入真实 API 或付费服务**
+- 后端：**已获批准部署**（2026-10，Whisper 与 Maggie 一致），大模型为 Anthropic 或 Kimi，方案待定。**方案由 Whisper 确定之前，不要自行接入真实 API 或付费服务**；API 密钥只能放在后端，不得写进前端代码
 
 ## 目录结构
 
@@ -97,7 +97,7 @@ npm run lint    # oxlint
 - 不删关键文件
 - 不 reset Git
 - **不 commit，不 push**
-- 不接入真实 API 或付费服务
+- 后端方案确定前，不接入真实 API 或付费服务
 - 不改无关模块
 
 改动完成后返回：
