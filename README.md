@@ -2,34 +2,32 @@
 
 ## 项目现状
 
-**当前阶段：产品设计基础设施 + Mission Room 交互原型验证**
+**当前阶段：可操作产品原型（画面 1–12）+ 产品展示页 v0.5**
+
+👉 **在线查看**：https://fde-copilot-xi.vercel.app/showcase.html （建议用电脑打开）
 
 这套对象链（IndustryTemplate → Enterprise → StrategicContext → Interview →
 Evidence → AIOpportunityCard → ProcessTwin → Deliverable）是完整的产品设计，
-但当前实现是**前端原型，静态数据，无后端**——请勿理解为"已建成的 AI 咨询系统"。
+但当前实现是**前端原型，示例数据，无后端**——请勿理解为"已建成的 AI 咨询系统"。示例企业「华衡精密制造」为虚构。
 
 **已完成：**
-- 产品工作流设计（对象定义、归属规则、关键用户流程）
-- 核心域模型（8 个对象、5 种来源类型、4 种确认状态）
-- 画板设计标准与产品框架（`skill🤠/fde-copilot/`）
-- Mission Room 交互原型（`src/App.jsx`，纯前端静态演示页，无后端、无持久化，以万华化学研发部门访谈为样例数据）：
-  - **三栏布局**：左栏访谈 Q&A 流（含进度条与 8 问分组）、中栏受访者回答输入、右栏 Next Best Move + AI 机会卡
-  - **Next Best Move**：给出追问问题，并同时说明「为什么问 / 服务哪个北极星 / 补哪个槽位缺口」
-  - **来源与确认状态标注**：每条内容都带 source 与 status（`confirmed` / `to_be_confirmed`），区分客户原话、客户材料、顾问推断、AI 生成、示例占位数据，对应 [docs/DATA_MODEL.md](docs/DATA_MODEL.md) 的枚举
-  - **采纳交互**：点击「采纳并加入 Q&A 流」，把 AI 追问写入左栏作为「待回答」条目
+- 产品工作流设计（对象定义、归属规则、关键用户流程）与核心域模型
+- 画板蓝图 v2.1：入口 + 7 章 19 个画面（`skill🤠/fde-copilot/references/04-canvas-blueprint.md`）
+- 可操作原型（`public/prototype.html`）：画面 1–12，从企业列表一路点到假设看板
+  - 建档与准备：企业列表、新建企业（行业 + 业务模式两组标签生成待验证清单）、访谈前预读（材料三个入口、覆盖状态、按「假设 → 材料 → 访谈」排出访谈优先级）
+  - 访谈设置：AI 建议访谈对象、按部门 × 行业 × 业务模式改写提纲、录音同意与麦克风检测、模型选择示意
+  - 访谈现场：实时转写与 AI 标注、提纲外追问、顾问采纳、复述确认、现场校准北极星
+  - 收尾与企业全景：机会卡草稿、按标签反向沉淀、假设看板
+- 产品展示页（`public/showcase.html`）：七章讲解，第一至五章嵌入同一份原型逐步演示
 
 **未实现：**
-- 后端架构与数据持久化
-- 真实 AI 推理管线（当前 Next Best Move 为静态展示，非模型实时生成）
-- 多轮画板实现：当前仅 Mission Room 一屏落地为页面；其余 9 屏仅完成蓝图定位与依据梳理（见 skill🤠/fde-copilot/references/04-canvas-blueprint.md），尚未按输出模板（08-canvas-template.md）展开为完整设计文档
-- 企业级数据集成
+- 画面 13–19（机会卡校准、One Page Card、ProcessTwin、交付物、证据溯源、跨企业待办、模板管理）与入口页
+- 后端、数据持久化与真实 AI 推理（原型中的 AI 输出为预设演示，页面已标注）
+- 每屏的画板设计文档（边界问题、注解、QA 自查）
 
-**下一步**（按 [docs/HANDOFF.md](docs/HANDOFF.md) 第 9 节的顺序推进）：
-1. 企业层信息架构 + Interview Setup Wizard（行业模板预填、默认 8 问）
-2. Interview Mission Room 深化（槽位复述确认、Q&A 待回答流的完整闭环）
-3. AIOpportunityCard（从访谈证据生成多张机会卡）
-4. ProcessTwin（机会卡下的 As-is / To-be 结构化流程）
-5. Living One Page Card（随访谈证据持续生长的卡片校准页）
+**下一步**：画面 13–19；后端与实时录音工作流（服务选型与数据合规待定）；画板设计文档。
+
+> 早期的 Mission Room v1（`src/App.jsx`，Vite 应用）仍在仓库根路径部署，已被上述原型取代。
 
 ## 定义
 面向企业 AI 咨询项目的 AI-native Mission System：帮助顾问从行业模板和企业战略假设出发，开展多场业务访谈，从访谈证据中提炼 AI 机会卡，并进一步生成 ProcessTwin 流程图和 One Page Card 交付物。
