@@ -451,7 +451,7 @@ button.chip{cursor:pointer}
 .mrh{flex:none;display:flex;align-items:center;gap:14px;padding:10px var(--gutter);white-space:nowrap;background:var(--surface);border-bottom:1px solid var(--line)}
 .mrh .who b{display:block;font-size:15px}
 .mrh .who span{font-size:12.5px;color:var(--muted)}
-.mrh .ns{display:flex;align-items:center;gap:8px;padding:5px 10px;min-width:0;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-2);font-size:13px}
+.mrh .ns{flex:none;display:flex;align-items:center;gap:8px;padding:5px 10px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-2);font-size:13px}
 .mrh .ns .ico{width:15px;height:15px;color:var(--brand)}
 .mrh .ns .k{color:var(--muted);font-size:12px}
 .mrh .ns.changed{background:var(--ok-soft);border-color:#BFE3CB;animation:nsGlow 2s ease}
@@ -536,6 +536,25 @@ button.chip{cursor:pointer}
 .atg.a-dig,.atg.a-new{background:var(--ai-soft);color:var(--ai)}
 .atg.a-neg{background:var(--risk-soft);color:var(--risk)}
 .ana{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ai);font-weight:600}
+.mr2.focus .c-l,.mr2.focus .slots,.mr2.focus .card.mini,.mr2.focus .ln:not(:last-child){opacity:.42;transition:opacity .4s}
+.mr2.focus .c-l:hover,.mr2.focus .slots:hover,.mr2.focus .card.mini:hover,.mr2.focus .ln:hover{opacity:1}
+.swap{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:10px}
+.swap > div{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border-radius:10px;background:var(--surface)}
+.swap .k{font-size:11px;color:var(--muted);font-weight:600}
+.swap b{font-size:16px;letter-spacing:-.01em}
+.swap .was2 b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--risk)}
+.swap .now2{box-shadow:inset 0 0 0 1.5px var(--ok)}
+.swap .to2{display:grid;place-items:center;color:var(--muted)}
+.swap .to2 .ico{width:16px;height:16px}
+.swap .src{align-self:flex-start}
+.also{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.also .ico{width:12px;height:12px;color:var(--ok);vertical-align:-1px;margin-right:6px}
+.calib .acts .btn{flex:1;justify-content:center}
+.slots-min{display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:8px;row-gap:2px;width:100%;padding:10px 14px;text-align:left;border-color:#BFE3CB;background:var(--ok-soft)}
+.slots-min .ico{width:14px;height:14px;color:var(--ok);grid-row:span 2}
+.slots-min b{font-size:12.5px;color:var(--ok)}
+.slots-min span{grid-column:2;font-size:12px;color:var(--ink-2)}
+.slots-min em{grid-row:1 / span 2;grid-column:3;font-style:normal;font-size:12px;color:var(--brand);font-weight:600}
 .calib{margin-top:10px;padding:12px 14px;border-radius:10px;border:1.5px dashed var(--ai-line);background:var(--ai-soft);display:flex;flex-direction:column;gap:8px}
 .calib.in{animation:rise .5s ease both}
 .calib ul{list-style:none;display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--ink-2)}
@@ -723,7 +742,25 @@ button.chip{cursor:pointer}
 .tbl.hb td{vertical-align:top}
 .tbl.hb th:nth-child(2),.tbl.hb td:nth-child(2),.tbl.hb th:nth-child(3),.tbl.hb td:nth-child(3){text-align:center}
 .tbl.hb .evs{align-items:center}
-.tbl.need3 th:nth-child(2),.tbl.need3 td:nth-child(2),.tbl.need3 th:nth-child(3),.tbl.need3 td:nth-child(3),.tbl.need3 th:nth-child(4),.tbl.need3 td:nth-child(4),.tbl.need3 th:nth-child(6),.tbl.need3 td:nth-child(6){text-align:center}
+.pflow{display:grid;grid-template-columns:1fr auto 1.3fr auto 1.3fr;align-items:center;gap:14px;padding:16px 18px;border-bottom:1px solid var(--line-2)}
+.pflow > .ico{width:16px;height:16px;color:var(--muted)}
+.ps{display:flex;flex-direction:column;gap:3px}
+.ps .k{font-size:11.5px;font-weight:600;color:var(--muted)}
+.ps b{display:flex;gap:12px;font-size:17px;font-weight:700;letter-spacing:-.01em}
+.ps b em{font-style:normal}
+.ps .d{font-size:11.5px;color:var(--muted)}
+.c-ok{color:var(--ok)}.c-risk{color:var(--risk)}.c-warn{color:var(--warn)}
+.pre3 .arr{width:28px;padding-left:0;padding-right:0;text-align:center;color:#C9CEC9}
+.pre3 td.arr .ico{width:13px;height:13px;margin-top:4px}
+.pre3 .hf{display:block;font-size:11.5px;color:var(--muted);margin-bottom:2px}
+.pre3 .from{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+.pre3 .from .cnt{font-size:11.5px;color:var(--muted)}
+.pre3 .srcl{margin-top:6px}
+.pre3 .why{display:block;font-size:12px;color:var(--ink-2);margin-top:6px;line-height:1.5}
+.pre3 tr.grp td{background:var(--surface-2);padding:8px 18px;font-size:12px;color:var(--muted)}
+.pre3 tr.grp td > span:nth-child(2){margin-left:10px}
+.pre3 tr.grp .lnk2{float:right;font-size:12px;color:var(--brand);font-weight:600}
+.pre3 tr.grp{animation:none}
 .tbl.hb .it{font-weight:600;margin-top:2px}
 .evs{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
 .evs .snip{align-self:stretch}
@@ -747,6 +784,42 @@ button.chip{cursor:pointer}
 .il2 b{display:block;font-size:13px}
 .il2 > div span{font-size:12px;color:var(--muted)}
 .il2.hl{background:var(--ai-soft)}
+
+/* ================================================================
+   框架层 v2（参照 B 端工作台：大圆角、少分割线、细体大数字、胶囊控件、悬浮操作条）
+   只改框架与质感，不改配色和内容；整层删掉即可回到上一版
+   ================================================================ */
+:root{ --r:12px; --r-lg:18px; --sh-card:0 1px 2px rgba(28,31,29,.04),0 10px 28px -18px rgba(28,31,29,.16); }
+.side{background:var(--bg);border-right:0;padding-top:20px}
+.top{background:var(--bg);border-bottom:1px solid var(--line-2)}
+.card,.kpi{border:1px solid rgba(28,31,29,.06);box-shadow:var(--sh-card)}
+.card-h{border-bottom:0;padding:18px 20px 8px}
+.card-h h3{font-size:15px;font-weight:650}
+.card-b{padding:10px 20px 20px}
+.card-f{border-top:0;margin-top:auto;padding:12px 20px;background:var(--surface-2);border-radius:0 0 var(--r-lg) var(--r-lg)}
+.tbl th{background:transparent;border-bottom:1px solid var(--line-2);font-weight:500}
+.tbl td{border-bottom-color:#F2F0EA}
+/* 页面标题：更大，带返回 */
+.ph{align-items:center;margin-bottom:28px}
+.ph h1{font-size:28px;font-weight:650;letter-spacing:-.02em}
+.ph .back{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--surface);box-shadow:var(--sh-card);border:1px solid rgba(28,31,29,.06);color:var(--ink);margin-right:2px}
+.ph .back .ico{width:16px;height:16px;transform:rotate(180deg)}
+.ph .back:hover{background:var(--brand-tint)}
+/* 关键数字：大号细体 */
+.kpi{padding:16px 20px 18px}
+.kpi .l{font-size:12px;font-weight:500}
+.kpi .n{font-size:34px;font-weight:300;letter-spacing:-.035em;line-height:1.2;margin:4px 0 2px}
+.ps b{font-weight:400;font-size:20px;letter-spacing:-.02em}
+/* 胶囊控件 */
+.btn,.btn-sm,.btn-xs{border-radius:999px}
+.btn-sm{padding:0 14px}
+.seg2,.kindbar .seg{border-radius:999px}
+.seg2 button{border-radius:999px;padding:5px 14px}
+.guide-btn,.search{border-radius:999px}
+/* 悬浮操作条：居中胶囊 + 阴影，不模糊 */
+.actbar{padding:0 var(--gutter) 18px;pointer-events:none}
+.pblur{display:none}
+.actbar-in{pointer-events:auto;max-width:1176px;padding:10px 10px 10px 22px;background:var(--surface);border-radius:999px;box-shadow:0 0 0 1px rgba(28,31,29,.06),0 14px 36px -14px rgba(28,31,29,.28)}
 </style>
 </head>
 <body>
@@ -1014,9 +1087,9 @@ function ico(id, cls){ return '<svg class="ico' + (cls ? ' ' + cls : '') + '"><u
 function labInd(v){ return v ? '<span class="lab">' + ico('i-building') + '行业 · ' + v + '</span>' : ''; }
 function labBiz(v){ return v ? '<span class="lab">' + ico('i-brief') + '业务模式 · ' + v + '</span>' : '<span class="lab unset">' + ico('i-brief') + '业务模式未选</span>'; }
 function countText(it){
-  var n = it.men.length, s = n === 0 ? '初始设定，尚未被访谈印证' : n === 1 ? '首次记录' : n + ' 家提及';
+  var n = it.men.length, s = n === 0 ? '初始设定 · 尚无访谈印证' : n + ' 家企业访谈印证';
   if (it.na.length) s += ' · ' + it.na.length + ' 家不适用';
-  var tip = n ? '提及：' + it.men.join('、') : '建库时的初始设定，还没有任何访谈印证';
+  var tip = n ? '访谈中印证过的企业：' + it.men.join('、') : '建库时的初始设定，还没有任何访谈印证';
   if (it.na.length) tip += '；不适用：' + it.na.join('、');
   return '<span class="cnt" title="' + tip + '">' + s + '</span>';
 }
@@ -1100,7 +1173,9 @@ function renderSide(cur){
   h += '<div class="side-foot"><b>示例数据 · 虚构企业</b><br>界面数据与模板分类均为演示用，不代表真实客户。</div>';
   $('#side').innerHTML = h;
 }
+var BACK = '';
 function renderTop(cur, crumbs){
+  BACK = crumbs.length > 1 ? crumbs[crumbs.length - 2][1] : '';
   var c = crumbs.map(function(x, i){
     return i === crumbs.length - 1 ? '<b>' + x[0] + '</b>' : '<a href="' + x[1] + '">' + x[0] + '</a>' + ico('i-chev');
   }).join('');
@@ -1248,17 +1323,17 @@ function drawChecklist(fresh){
   var nInd = all.filter(function(x){ return x.src === 'ind'; }).length, nBiz = all.length - nInd, i = 0;
   function row(x, w){ var r = rowHy(x, w, fresh[keyOf(x)], i); if (fresh[keyOf(x)]) i++; return r; }
   var h = '<div class="card-h">' + ico('i-target') + '<h3>待验证清单</h3><div class="r"><span class="tg tg-warn">示例模板内容，待行业专家补充</span></div></div>' +
-    '<div class="cl-sum">共 ' + all.length + ' 条，全部待确认 ·' + labInd(f.ind) + nInd + ' 条' + (f.biz ? ' ·' + labBiz(f.biz) + nBiz + ' 条' : ' ·<span class="muted">选择业务模式可补充销售、客户结构相关条目</span>') + '</div>';
+    '<div class="cl-sum">共 ' + all.length + ' 条模板假设，都不是这家企业的结论，全部待访谈确认 ·' + labInd(f.ind) + nInd + ' 条' + (f.biz ? ' ·' + labBiz(f.biz) + nBiz + ' 条' : ' ·<span class="muted">选择业务模式可补充销售、客户结构相关条目</span>') + '</div>';
   FIELDS.forEach(function(fd){
     var rows = strong.filter(function(x){ return x.f === fd; });
     if (!rows.length) return;
-    h += '<div class="cl-g"><div class="sec-t">' + fd + '</div>' + rows.map(function(x){ return row(x, false); }).join('') + '</div>';
+    h += '<div class="cl-g"><div class="sec-t">' + fLab(fd) + '</div>' + rows.map(function(x){ return row(x, false); }).join('') + '</div>';
   });
   if (weak.length){
     h += '<button class="fold' + (S.foldOpen ? ' open' : '') + '" data-act="fold">' + ico('i-chev') + '另有 ' + weak.length + ' 条初始设定，尚未被任何访谈印证 · ' + (S.foldOpen ? '收起' : '展开') + '</button>';
     if (S.foldOpen) h += '<div class="cl-g">' + weak.map(function(x){ return row(x, true); }).join('') + '</div>';
   }
-  h += '<div class="card-f">' + ico('i-info') + '计数口径：顾问确认沉淀的次数，同一集团只算一次；计数只作提示，不会自动改变任何条目。悬停计数可查看是哪几家。</div>';
+  h += '<div class="card-f">' + ico('i-info') + '计数 = 此前有几家其他企业在访谈中印证过这条（顾问确认后沉淀，同一集团只算一次）。它说明这条假设值得问，不代表这家企业也成立。悬停可查看是哪几家。</div>';
   box.innerHTML = h;
   S.justNa = null;
 }
@@ -1300,6 +1375,7 @@ function checklist(){
   clueList().forEach(function(c){ if (S.pre.added[c.id]) list.push({src:'clue', id:c.id, f:c.f, t:c.t, ref:c.ref, men:[], na:[]}); });
   return list;
 }
+function fLab(f){ return f === '北极星指标' ? '北极星假设' : f; }
 function judgeOf(x){ return x.src === 'clue' ? {j:'clue', ref:x.ref} : ((JUDGE[kind()] || {})[x.t] || {j:'none'}); }
 function prio(x){ var j = judgeOf(x); if (j.j === 'sup' && j.src === 'up') return 'skip'; if (j.j === 'sup' && j.src === 'off') return 'quick'; return 'must'; }
 var PRIO = {must:['必问','tg-risk'], quick:['快速确认','tg-warn'], skip:['可跳过','tg-done']};
@@ -1307,7 +1383,7 @@ function prioCount(){ var c = {must:0, quick:0, skip:0}; checklist().forEach(fun
 function supCount(){ return checklist().filter(function(x){ return judgeOf(x).j === 'sup'; }).length; }
 function judgeCell(x){
   var j = judgeOf(x).j;
-  return {clue:'<span class="jd jd-sup">' + ico('i-sprout') + '材料线索</span>', sup:'<span class="jd jd-sup">' + ico('i-check') + '材料支持</span>', opp:'<span class="jd jd-opp">' + ico('i-x') + '材料反驳</span>', infer:'<span class="jd jd-inf">' + ico('i-ai') + '仅有推测</span>', none:'<span class="jd jd-none">材料未提及</span>'}[j];
+  return {clue:'<span class="jd jd-sup">' + ico('i-sprout') + '材料线索</span>', sup:'<span class="jd jd-sup">' + ico('i-check') + '材料有印证</span>', opp:'<span class="jd jd-opp">' + ico('i-alert') + '材料有出入</span>', infer:'<span class="jd jd-inf">' + ico('i-ai') + '只有间接线索</span>', none:'<span class="jd jd-none">材料未涉及</span>'}[j];
 }
 function srcTag(j){
   if (!j.ref) return '<span class="muted" style="font-size:12px">—</span>';
@@ -1365,12 +1441,31 @@ function viewPreread(){
   var people = PEOPLE[K].map(function(p, i){ return '<div class="person" style="--d:' + i * 100 + 'ms"><div class="pn"><b>' + p[0] + '</b>' + (p[3] ? '<span class="tg tg-ai">' + ico('i-ai') + p[3] + '</span>' : '') + '</div><div class="pr"><q>' + p[1] + '</q>' + (p[2] !== '—' ? ' · ' + p[2] : '') + '</div></div>'; }).join('');
   /* 清单预判 + 访谈优先级 */
   var list = checklist(), ri = 0, pc = prioCount();
-  var rows = list.map(function(x){
-    var j = judgeOf(x), k = x.src === 'clue' ? 'clue|' + x.id : keyOf(x), pr = PRIO[prio(x)];
-    var lab = x.src === 'clue' ? '<span class="lab">' + ico('i-sprout') + '预读新增</span>' : srcLab(x);
+  var REASON = {sup_off:'官方原文已写明，现场确认仍然成立即可', sup_up:'客户近期提供的材料已写明，不必再问', opp:'材料与假设不一致，当面问清现在的情况', none:'材料没有涉及，只能当面问', infer:'只有间接线索，需要当面确认', clue:'材料里的新线索，带去访谈确认'};
+  var GRP = {must:'材料无法判断，或与假设有出入', quick:'官方原文已写明，现场确认一句', skip:'客户近期材料已写明'};
+  var rowOf = function(x){
+    var j = judgeOf(x), k = x.src === 'clue' ? 'clue|' + x.id : keyOf(x), pk = prio(x);
+    var from = x.src === 'clue' ? '<span class="lab">' + ico('i-sprout') + '预读新增</span><span class="cnt">本企业材料</span>' : srcLab(x) + countText(x);
     var src = x.src === 'clue' ? stInfer(x.ref) : j.j === 'infer' ? stInfer(j.ref) : srcTag(j);
-    return '<tr data-k="' + k + '" class="' + (P.flash[k] ? 'flash' : '') + '" style="--d:' + (ri++ * 100) + 'ms"><td><span class="it">' + x.t + '</span>' + (j.q ? '<span class="q">「' + j.q + '」</span>' : '') + '</td><td class="muted" style="white-space:nowrap">' + x.f + '</td><td>' + lab + '</td><td>' + judgeCell(x) + '</td><td>' + src + '</td><td><span class="tg ' + pr[1] + '">' + pr[0] + '</span></td></tr>';
+    var rk = j.j === 'sup' ? 'sup_' + (j.src === 'up' ? 'up' : 'off') : j.j;
+    return '<tr data-k="' + k + '" class="' + (P.flash[k] ? 'flash' : '') + '" style="--d:' + (ri++ * 90) + 'ms">' +
+      '<td><span class="hf">' + fLab(x.f) + '</span><span class="it">' + x.t + '</span><div class="from">' + from + '</div></td>' +
+      '<td class="arr">' + ico('i-arrow') + '</td>' +
+      '<td>' + judgeCell(x) + (j.q ? '<span class="q">「' + j.q + '」</span>' : '') + (j.ref || x.src === 'clue' ? '<div class="srcl">' + src + '</div>' : '') + '</td>' +
+      '<td class="arr">' + ico('i-arrow') + '</td>' +
+      '<td><span class="tg ' + PRIO[pk][1] + '">' + PRIO[pk][0] + '</span><span class="why">' + REASON[rk] + '</span></td></tr>';
+  };
+  var rows = ['must','quick','skip'].map(function(pk){
+    var g = list.filter(function(x){ return prio(x) === pk; }); if (!g.length) return '';
+    var shut = pk === 'skip' && !P.skipOpen;
+    return '<tr class="grp grp-' + pk + '"><td colspan="5"><span class="tg ' + PRIO[pk][1] + '">' + PRIO[pk][0] + ' · ' + g.length + '</span><span>' + GRP[pk] + '</span>' +
+      (pk === 'skip' ? '<button class="lnk2" data-act="pre-skip">' + (shut ? '展开' : '收起') + '</button>' : '') + '</td></tr>' +
+      (shut ? '' : g.map(rowOf).join(''));
   }).join('');
+  var jc = {sup:0, opp:0, none:0}; list.forEach(function(x){ var j = judgeOf(x).j; jc[j === 'sup' ? 'sup' : j === 'opp' ? 'opp' : 'none']++; });
+  var flow = '<div class="pflow need3"><div class="ps"><span class="k">模板假设</span><b>' + list.length + ' 条</b><span class="d">来自行业与业务模式标签</span></div>' + ico('i-arrow') +
+    '<div class="ps"><span class="k">逐条核对材料</span><b><em class="c-ok">印证 ' + jc.sup + '</em><em class="c-risk">有出入 ' + jc.opp + '</em><em>未涉及 ' + jc.none + '</em></b><span class="d">材料只代表过去</span></div>' + ico('i-arrow') +
+    '<div class="ps"><span class="k">访谈怎么安排</span><b><em class="c-risk">必问 ' + pc.must + '</em><em class="c-warn">快速确认 ' + pc.quick + '</em><em>可跳过 ' + pc.skip + '</em></b><span class="d">优先级 = 访谈还需覆盖多少</span></div></div>';
   P.flash = {};
   /* 新线索、缺口与替代 */
   var cl = clueList();
@@ -1407,10 +1502,10 @@ function viewPreread(){
       '<div class="card c5"><div class="card-h">' + ico('i-users') + '<h3>建议访谈对象</h3><div class="r">附原文理由</div></div><div class="card-b">' +
         '<div class="sk-row wait2" style="padding:0"><span class="sk" style="height:40px"></span><span class="sk" style="height:40px"></span></div>' +
         '<div class="people need2">' + people + '</div><div class="hint need2" style="margin-top:10px">' + ico('i-info') + '首场建议为本项目判断，待 Maggie 确认；顾问可在设置访谈时改选。</div></div></div>' +
-      '<div class="card c12" id="tblCard"><div class="card-h">' + ico('i-target') + '<h3>待验证清单 · 材料预判与访谈优先级</h3><div class="r need3"><span class="tg tg-risk">必问 ' + pc.must + '</span><span class="tg tg-warn">快速确认 ' + pc.quick + '</span><span class="tg tg-done">可跳过 ' + pc.skip + '</span></div></div>' +
+      '<div class="card c12" id="tblCard"><div class="card-h">' + ico('i-target') + '<h3>待验证清单 · 带进访谈前先核对一遍</h3><div class="r">每条判断都待访谈确认</div></div>' +
         '<div class="sk-row wait3"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span>AI 正在逐条对照清单与材料…</div><span class="sk" style="height:34px"></span><span class="sk" style="height:34px"></span><span class="sk" style="height:34px"></span></div>' +
-        '<table class="tbl need3"><thead><tr><th style="width:32%">条目</th><th>类别</th><th>来自</th><th>材料判断</th><th>出处</th><th>访谈优先级</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-        '<div class="card-f">' + ico('i-info') + '规则：官方原文支持 → 快速确认；只有客户提供的近期材料写明 → 可跳过；材料反驳、未提及或只有推测 → 必问。所有判断仍是「待确认」，以访谈为准。</div></div>' +
+        '' + flow + '<table class="tbl need3 pre3"><thead><tr><th style="width:31%">假设 · 从哪来</th><th class="arr"></th><th>材料怎么说</th><th class="arr"></th><th style="width:24%">所以访谈怎么做</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        '<div class="card-f">' + ico('i-info') + '优先级只表示这一条访谈还需要覆盖多少，不代表重要程度。材料与访谈冲突时，以访谈为准。</div></div>' +
       (cl.length ? '<div class="card c7" id="cluesCard"><div class="card-h">' + ico('i-sprout') + '<h3>材料中的新线索</h3><div class="r">清单里没有、值得带去访谈</div></div>' +
         '<div class="sk-row wait4"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span>AI 正在寻找清单之外的线索…</div><span class="sk" style="height:46px"></span></div>' +
         '<div class="clues need4">' + clues + '</div></div>' : '<div id="cluesCard" style="display:none"></div>') +
@@ -1663,7 +1758,7 @@ function viewLive(){
   var head = '<div class="mrh">' +
     '<div class="who"><b>访谈 #1 · 高层访谈</b><span>分管服务的副总裁</span></div>' +
     '<div class="ns' + (nsOk ? ' changed' : '') + '">' + ico('i-target') + '<span class="k">北极星</span>' +
-      (nsOk ? '<b>服务合同续约率</b><span class="src src-quote">' + ico('i-quote') + '客户原话<span class="st st-ok">已确认</span></span><span class="was">首次修复率</span>'
+      (nsOk ? '<b>服务合同续约率</b><span class="src src-quote">' + ico('i-quote') + '客户原话<span class="st st-ok">已确认</span></span>'
             : '<b>首次修复率</b><span class="src src-tpl">' + ico('i-tpl') + '行业模板<span class="st st-warn">待确认</span></span>') + '</div>' +
     '<div class="prog">第 4 / 8 问<span class="segs"><i class="d"></i><i class="d gap"></i><i class="d"></i><i class="c"></i><i></i><i></i><i></i><i class="gap"></i></span></div>' +
     '<div class="rec"><span class="live"></span><span class="wave"><i></i><i></i><i></i><i></i><i></i></span><span id="mrClock">' + fmtClock(M.clock) + '</span></div>' +
@@ -1687,16 +1782,17 @@ function viewLive(){
   var lines = M.lines.map(function(id){
     var l = TX.filter(function(x){ return x.id === id; })[0], sp = speaker(l), tg = '';
     if (M.ana === id) tg = '<div class="atags"><span class="ana"><span class="dots"><i></i><i></i><i></i></span>AI 分析中</span></div>';
+    else if (M.tagged[id] && l.tags && id === 't6' && M.calib !== 'none') tg = '<div class="atags"><span class="atg a-new">' + ico('i-target') + 'AI 识别：这句话涉及 3 条企业假设，见下方</span></div>';
     else if (M.tagged[id] && l.tags) tg = '<div class="atags' + seenCls('tg-' + id) + '">' + l.tags.map(function(t){ return '<span class="atg ' + t[0] + '">' + ({'a-slot':ico('i-check'), 'a-hyp':ico('i-check'), 'a-dig':ico('i-ai'), 'a-neg':ico('i-x'), 'a-new':ico('i-target')})[t[0]] + t[1] + '</span>'; }).join('') + '</div>';
     var cal = '';
     if (id === 't6' && M.calib !== 'none'){
+      var swap = function(done){ return '<div class="swap"><div class="was2"><span class="k">原北极星假设</span><b>首次修复率</b><span class="src src-tpl">' + ico('i-tpl') + '行业模板 · 3 家印证</span></div>' +
+        '<span class="to2">' + ico('i-arrow') + '</span><div class="now2"><span class="k">' + (done ? '现在的北极星' : '改为') + '</span><b>服务合同续约率</b><span class="src src-quote">' + ico('i-quote') + '客户原话 · 34:05' + (done ? '<span class="st st-ok">已确认</span>' : '') + '</span></div></div>'; };
+      var also = '<div class="also">' + ico('i-check') + '同时印证预读线索「服务收入占比 30%」<span class="muted"> · 预读时年报与续约率有出入：材料是过去，访谈是现在</span></div>';
       cal = M.calib === 'ok' ?
-        '<div class="calib done' + seenCls('calok') + '"><span class="ok-l">' + ico('i-check') + '已更新企业层战略假设 · 后续访谈继承新北极星</span><span class="muted">「首次修复率」标为被客户否定；「服务合同续约率」成为北极星；预读线索「服务收入占比」由客户原话印证</span></div>' :
-        '<div class="calib' + seenCls('cal') + '"><span class="prop-l">' + ico('i-ai') + '这句话会更新企业的战略假设</span><ul>' +
-          '<li><span class="atg a-neg">' + ico('i-x') + '北极星「首次修复率」</span>标为被客户否定（预读：材料未提及）</li>' +
-          '<li><span class="atg a-new">' + ico('i-target') + '服务合同续约率</span>设为新北极星（预读：材料曾反驳——材料是过去，访谈是现在）</li>' +
-          '<li><span class="atg a-hyp">' + ico('i-check') + '服务收入占比</span>预读线索由客户原话印证</li></ul>' +
-          '<div class="acts"><button class="btn btn-p btn-sm" data-act="mr-calib">确认更新企业假设</button><button class="btn btn-g btn-sm" data-act="noop">只记为证据</button></div></div>';
+        '<div class="calib done' + seenCls('calok') + '"><span class="ok-l">' + ico('i-check') + '企业北极星已更新 · 后续访谈继承</span>' + swap(true) + '</div>' :
+        '<div class="calib' + seenCls('cal') + '"><span class="prop-l">' + ico('i-ai') + 'AI 提议 · 这句话改写了企业的北极星</span>' + swap(false) + also +
+          '<div class="acts"><button class="btn btn-p btn-sm" data-act="mr-calib">确认，更新企业北极星</button><button class="btn btn-g btn-sm" data-act="noop">只记为证据</button></div></div>';
     }
     return '<div class="ln ' + (sp === 'k' ? 'k' : 'g') + seenCls('ln-' + id) + '"><div class="lh"><button class="spk ' + (sp === 'k' ? 'k' : 'g') + '" data-act="mr-spk" data-id="' + id + '" title="点击纠正说话人">' + (sp === 'k' ? '客户' : '顾问') + '</button><span class="tm">' + l.tm + '</span>' + (l.note ? '<span class="note">' + l.note + '</span>' : '') + '</div>' +
       '<div class="lt">' + l.tx + '</div>' + (sp === 'k' ? tg : '<div class="atags"><span class="muted" style="font-size:11.5px">顾问发言不作为证据</span></div>') + cal + '</div>';
@@ -1705,7 +1801,7 @@ function viewLive(){
   var slot = function(k, label, filled, txt, srcHtml){ return '<div class="slot"><span class="k">' + label + '</span><span class="v">' + (filled ? '<span class="sv' + seenCls('sl-' + k) + '">' + txt + srcHtml + '</span>' : '<span class="slot-gap">缺口 · 还没有内容</span>') + '</span></div>'; };
   var nFill = M.slots.pain + M.slots.dep + M.slots.quant;
   var quote = '<span class="src src-quote">' + ico('i-quote') + '客户原话<span class="st st-ok">已确认</span></span>';
-  var slots = '<div class="slots"><div class="slots-h">本题槽位<span class="r' + (nFill === 3 ? ' full' : '') + '">' + nFill + ' / 3</span></div>' +
+  var slots = (nFill === 3 && M.recap === 'ok' && !M.slotOpen) ? '<button class="slots slots-min" data-act="mr-slots">' + ico('i-check') + '<b>本题槽位 3 / 3 · 客户已确认复述</b><span>现场故障判断 · 依赖资深工程师 · 新人 2.6 次 / 资深 1.2 次</span><em>展开</em></button>' : '<div class="slots"><div class="slots-h">本题槽位<span class="r' + (nFill === 3 ? ' full' : '') + '">' + nFill + ' / 3</span></div>' +
     slot('pain','痛点环节', M.slots.pain, '现场故障判断', quote) +
     slot('dep','依赖程度', M.slots.dep, '高度依赖资深工程师，新人常需多次上门', '<span class="src src-ai">' + ico('i-ai') + 'AI 提炼<span class="st st-warn">待确认</span></span>') +
     slot('quant','影响量化', M.slots.quant, '新人平均上门 2.6 次，资深约 1.2 次', quote) +
@@ -1720,6 +1816,7 @@ function viewLive(){
   var nbm;
   if (M.nbm === 'none') nbm = '<div class="nbm-empty">' + ico('i-ai') + '<span>客户回答后，AI 会在这里给出下一步</span></div>';
   else if (M.nbm === 'think') nbm = '<div class="nbm-empty">' + '<div class="thinking"><span class="dots"><i></i><i></i><i></i></span>AI 正在判断下一步…</div><span class="muted" style="font-size:12px">「两三趟」缺少量化，正在生成追问</span></div>';
+  else if (M.nbm === 'next' && M.calib === 'show') nbm = '<div class="prop nbm' + seenCls('nbm-cal') + '"><span class="prop-l">' + ico('i-ai') + 'AI 提议 · 先处理这一件</span><div class="q">客户否定了北极星「首次修复率」。先确认改为「服务合同续约率」，后面的追问会围绕新北极星展开。</div><div class="acts"><button class="btn btn-p btn-sm" data-act="mr-gocal">去确认</button></div></div>';
   else if (M.nbm === 'next') nbm = '<div class="prop nbm' + seenCls('nbm-next') + '"><span class="prop-l">' + ico('i-ai') + 'AI 提议 · 进入下一问</span><div class="q">本题槽位已补齐。建议进入 Q5：这些痛点背后，需要提升的核心能力是什么？</div><div class="acts"><button class="btn btn-p btn-sm" data-act="noop">进入 Q5</button><button class="btn btn-g btn-sm" data-act="noop">再追问一个</button></div></div>';
   else {
     var ad = M.nbm === 'adopted';
@@ -1737,7 +1834,7 @@ function viewLive(){
     '<div class="side-empty">候选需求会在这里出现<br><span>访谈中识别出的 AI 场景机会，带着来源自动汇总</span></div>';
   var right = '<div class="col-h">' + ico('i-ai') + '下一步 · Next Best Move<span class="r" style="color:var(--risk)">现场最高优先级</span></div>' + nbm + side;
 
-  return '<div class="live-wrap">' + head + '<div class="mr2"><div class="c-l">' + flow + '</div><div class="c-m">' + mid + '</div><div class="c-r">' + right + '</div></div></div>';
+  return '<div class="live-wrap">' + head + '<div class="mr2' + (M.calib === 'show' ? ' focus' : '') + '"><div class="c-l">' + flow + '</div><div class="c-m">' + mid + '</div><div class="c-r">' + right + '</div></div></div>';
 }
 function qi(no, h, a, src){
   return '<div class="qi past" title="' + a + '"><div class="h"><span class="no">' + no + '</span>' + h + '<span class="s s-done">已答</span></div><div class="a">' + a + '</div>' +
@@ -1892,7 +1989,7 @@ function viewSediment(){
     var r = R[x.id], lab = function(k){ return k === 'ind' ? '行业 · ' + S.hh.ind : '业务模式 · ' + biz; };
     var res = !r ? '' : r === 'ent' ? '<div class="sres">' + ico('i-building') + '<span>仅保留在「' + S.hh.name + '」，不进入行业模板</span></div>' :
       r === 'ign' ? '<div class="sres muted">' + ico('i-x') + '<span>已忽略。原话仍保留在访谈证据里</span></div>' :
-      '<div class="sres ok">' + ico('i-check') + '<span>已沉淀到「' + lab(r) + '」，记为<b class="pop">首次记录</b>' + (r === 'biz' ? '。业务模式标签跨行业共享：之后任何「' + biz + '」的企业，待验证清单里都会出现这一条' : '') + '</span></div>';
+      '<div class="sres ok">' + ico('i-check') + '<span>已沉淀到「' + lab(r) + '」，记为<b class="pop">1 家企业访谈印证</b>' + (r === 'biz' ? '。业务模式标签跨行业共享：之后任何「' + biz + '」的企业，待验证清单里都会出现这一条' : '') + '</span></div>';
     return '<div class="card sitem' + (r ? ' done' : '') + '" style="--d:' + i * 120 + 'ms"><div class="card-b">' +
       '<div class="si-h"><span class="muted">' + x.f + '</span><span class="src src-quote">' + ico('i-quote') + '客户原话 · ' + x.src + '<span class="st st-ok">已确认</span></span></div>' +
       '<div class="si-t">' + x.t + '</div><q class="si-q">' + x.q + '</q>' +
@@ -1908,25 +2005,25 @@ function viewSediment(){
       '<div class="c8" style="display:flex;flex-direction:column;gap:16px">' +
         '<div class="sec-row"><h3>' + ico('i-sprout') + '模板里没有的新发现 · 3 条</h3><span class="muted">已处理 ' + done + ' / 3</span></div>' + items +
         '<div class="card"><div class="card-h">' + ico('i-x') + '<h3>被否定的模板条目</h3><div class="r">自动记录 · 不撤下</div></div><div class="card-b">' +
-          '<div class="neg"><b>首次修复率</b><span class="lab">' + ico('i-building') + '行业 · 装备制造</span><span class="cnt">3 家提及</span>' + ico('i-arrow') + '<span class="cnt">3 家提及 · <b style="color:var(--risk)">1 家不适用</b></span></div>' +
+          '<div class="neg"><b>首次修复率</b><span class="lab">' + ico('i-building') + '行业 · 装备制造</span><span class="cnt">3 家印证</span>' + ico('i-arrow') + '<span class="cnt">3 家印证 · <b style="color:var(--risk)">1 家不适用</b></span></div>' +
           '<div class="hint" style="margin-top:8px">' + ico('i-info') + '这家企业说不适用，不代表整个行业不适用，所以只记录、不撤下。只有当「不适用」明显多于「提及」时，才会提示你考虑撤下。</div></div></div>' +
       '</div>' +
       '<div class="c4" style="display:flex;flex-direction:column;gap:16px">' +
         '<div class="card"><div class="card-h">' + ico('i-info') + '<h3>沉淀规则</h3></div><div class="card-b"><ul class="rules">' +
           '<li><b>必须由你确认</b>，不会自动沉淀</li>' +
           '<li><b>计数口径</b>：顾问确认沉淀的次数，不等于行业普遍程度</li>' +
-          '<li><b>门槛只提示</b>：「2 家提及」只提示值得关注，不触发任何自动动作</li>' +
+          '<li><b>门槛只提示</b>：「2 家印证」只提示值得关注，不触发任何自动动作</li>' +
           '<li><b>按集团去重</b>：同一集团的子公司只计一次</li>' +
           '<li><b>只属于这一家的发现</b>，选「仅本企业保留」，避免带偏整个行业</li></ul></div></div>' +
         '<div class="card"><div class="card-h">' + ico('i-layers') + '<h3>沉淀后模板的样子</h3></div><div class="card-b tplprev">' +
           '<div class="sec-t">' + labInd(S.hh.ind) + '</div><ul>' +
-            '<li><span>现场故障判断依赖资深工程师</span><span class="cnt">4 家提及</span></li>' +
-            '<li><span>首次修复率</span><span class="cnt">3 家提及 · 1 家不适用</span></li>' +
-            (R.s1 === 'ind' ? '<li class="newi"><span>新人独立上岗约需 2 年</span><span class="cnt">首次记录</span></li>' : '') +
-            (R.s3 === 'ind' ? '<li class="newi"><span>备件信息分散在多个系统</span><span class="cnt">首次记录</span></li>' : '') + '</ul>' +
+            '<li><span>现场故障判断依赖资深工程师</span><span class="cnt">4 家印证</span></li>' +
+            '<li><span>首次修复率</span><span class="cnt">3 家印证 · 1 家不适用</span></li>' +
+            (R.s1 === 'ind' ? '<li class="newi"><span>新人独立上岗约需 2 年</span><span class="cnt">1 家印证</span></li>' : '') +
+            (R.s3 === 'ind' ? '<li class="newi"><span>备件信息分散在多个系统</span><span class="cnt">1 家印证</span></li>' : '') + '</ul>' +
           '<div class="sec-t" style="margin-top:10px">' + labBiz(biz) + '</div><ul>' +
-            '<li><span>招投标周期长，一个销售盯三四个大客户</span><span class="cnt">3 家提及</span></li>' +
-            (R.s2 === 'biz' ? '<li class="newi"><span>服务合同续约率</span><span class="cnt">首次记录</span></li>' : '') + '</ul>' +
+            '<li><span>招投标周期长，一个销售盯三四个大客户</span><span class="cnt">3 家印证</span></li>' +
+            (R.s2 === 'biz' ? '<li class="newi"><span>服务合同续约率</span><span class="cnt">1 家印证</span></li>' : '') + '</ul>' +
         '</div></div>' +
       '</div>' +
     '</div></div>' +
@@ -1946,7 +2043,7 @@ function demoSed(){
    ===================================================================== */
 var HYP = [
   {f:'北极星指标', t:'服务合同续约率', st:'new', pro:[['访谈 #1 · 34:05','服务合同的续约率才是我们最关心的。']], con:[['年报 p.15 · 反映过去','长期服务合同收入占比不足 10%']]},
-  {f:'北极星指标', t:'首次修复率', st:'no', pro:[['行业模板','3 家提及']], con:[['访谈 #1 · 34:05','首次修复率我们内部没正式考核。']]},
+  {f:'北极星指标', t:'首次修复率', st:'no', pro:[['行业模板','3 家印证']], con:[['访谈 #1 · 34:05','首次修复率我们内部没正式考核。']]},
   {f:'预读线索', t:'服务收入占比提升至 30%', st:'ok', pro:[['年报 p.9','三年内服务收入占比提升至 30%'],['访谈 #1 · 34:05','集团今年更看重服务收入。']], con:[]},
   {f:'痛点', t:'现场故障判断依赖资深工程师', st:'ok', pro:[['年报 p.41','核心服务工程师平均从业 11 年'],['访谈 #1 · 31:18','老师傅一看就知道是液压还是电气的问题。']], con:[]},
   {f:'痛点', t:'备件需求预测不准，积压与缺件并存', st:'wait', pro:[['半年报 p.12','备品备件存货周转天数同比增加 23 天']], con:[], next:'供应链部'},
@@ -2023,6 +2120,7 @@ function route(soft){
   else if (hsh.indexOf('#/e/huaheng/board') === 0){ cur = 12; v.innerHTML = viewBoard(); }
   else if (/^#\/s\/\d+/.test(hsh)){ cur = +hsh.split('/')[2]; v.innerHTML = viewLater(cur); }
   else { v.innerHTML = viewList(hsh.indexOf('?empty') > 0); }
+  var ph0 = $('.ph', v); if (ph0 && BACK && cur > 2) ph0.insertAdjacentHTML('afterbegin', '<a class="back" href="' + BACK + '" title="返回">' + ico('i-chev') + '</a>');
   renderGuide(cur);
   if (!soft){
     $('#scroll').scrollTop = 0;
@@ -2104,6 +2202,7 @@ document.addEventListener('click', function(e){
   else if (a === 'adopt-biz'){ ACT['adopt-biz'](); }
   else if (a === 'pre-kind'){ ACT['pre-kind'](el.dataset.k); }
   else if (a === 'pre-open'){ S.pre.open[el.dataset.k] = !S.pre.open[el.dataset.k]; route(true); }
+  else if (a === 'pre-skip'){ S.pre.skipOpen = !S.pre.skipOpen; route(true); }
   else if (a === 'pre-q'){ S.pre.qOpen = !S.pre.qOpen; route(true); }
   else if (a === 'copy-req'){ var txt = GAPS[kind()].req.map(function(r, i){ return (i + 1) + '. ' + r; }).join('\n'); try { navigator.clipboard.writeText('访谈前请协助提供以下材料：\n' + txt).then(function(){ toast('已复制，可直接发给客户'); }, function(){ toast('浏览器不允许自动复制，请手动选择清单文字'); }); } catch (err){ toast('浏览器不允许自动复制，请手动选择清单文字'); } }
   else if (a === 'iv-model'){ S.iv.model = el.dataset.v; route(true); toast('访谈后汇总将使用：' + el.dataset.n); }
@@ -2122,10 +2221,12 @@ document.addEventListener('click', function(e){
   else if (a === 'mr-adopt'){ if (S.mr.nbm === 'show'){ S.mr.nbm = 'adopted'; S.mr.fu = true; drawLive(); toast('追问已加入问答流'); } }
   else if (a === 'mr-recap'){ S.mr.recap = 'ok'; drawLive(); toast('客户已确认复述'); }
   else if (a === 'wrap-card'){ S.wrap.card[el.dataset.id] = el.dataset.v; route(true); toast(el.dataset.v === 'ok' ? '已采纳，进入机会卡校准（第四轮）' : '已驳回，草稿归档，证据保留'); }
-  else if (a === 'sed'){ S.sed.res[el.dataset.id] = el.dataset.v; route(true); var v2 = el.dataset.v; toast(v2 === 'ign' ? '已忽略' : v2 === 'ent' ? '仅保留在本企业' : '已沉淀：记为首次记录'); }
+  else if (a === 'sed'){ S.sed.res[el.dataset.id] = el.dataset.v; route(true); var v2 = el.dataset.v; toast(v2 === 'ign' ? '已忽略' : v2 === 'ent' ? '仅保留在本企业' : '已沉淀：记为 1 家企业访谈印证'); }
   else if (a === 'hb-filter'){ ACT['hb-filter'](el.dataset.v); }
   else if (a === 'hb-open'){ var k = el.dataset.k; S.board.open[k] = !S.board.open[k]; route(true); }
   else if (a === 'hb-done'){ S.board.done[el.dataset.t] = 1; route(true); toast('已手动标为已印证，记录为「顾问判断」'); }
+  else if (a === 'mr-gocal'){ var cb = $('.calib'); if (cb) cb.scrollIntoView({behavior:'smooth', block:'center'}); }
+  else if (a === 'mr-slots'){ S.mr.slotOpen = !S.mr.slotOpen; drawLive(); }
   else if (a === 'mr-calib'){ S.mr.calib = 'ok'; drawLive(); toast('企业层战略假设已更新：北极星改为「服务合同续约率」'); }
   else if (a === 'mr-spk'){ var id = el.dataset.id, l = TX.filter(function(x){ return x.id === id; })[0]; S.mr.sp[id] = (S.mr.sp[id] || l.sp) === 'k' ? 'g' : 'k'; drawLive(); toast('已纠正说话人：' + (S.mr.sp[id] === 'k' ? '客户' : '顾问')); }
   else if (a === 'add-clue'){ ACT['add-clue'](el.dataset.id); }

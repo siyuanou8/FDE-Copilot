@@ -354,7 +354,7 @@ footer{padding:40px 0 56px;font-size:12.5px;color:var(--muted);display:flex;just
         <h6>出处标记</h6>
         <div class="row"><span class="src src-quote"><svg class="ico"><use href="#i-quote"/></svg>客户原话<span class="st st-ok">已确认</span></span></div>
         <div class="row"><span class="src src-ai"><svg class="ico"><use href="#i-ai"/></svg>AI 推断<span class="st st-warn">待确认</span></span></div>
-        <div class="row"><span class="src src-tpl"><svg class="ico"><use href="#i-tpl"/></svg>行业模板<span class="count">3 家提及</span><span class="st st-warn">待确认</span></span></div>
+        <div class="row"><span class="src src-tpl"><svg class="ico"><use href="#i-tpl"/></svg>行业模板<span class="count">3 家印证</span><span class="st st-warn">待确认</span></span></div>
       </div>
       <div class="demo" id="demo">
         <div class="demo-head"><span class="live"></span>访谈进行中 · 售后服务部<span class="q">Q4 / 8</span></div>
@@ -449,7 +449,7 @@ footer{padding:40px 0 56px;font-size:12.5px;color:var(--muted);display:flex;just
             <div class="k">画面 2 <span>· 新建企业</span></div>
             <h3>只填两项，拿到一份待验证清单</h3>
             <p>行业和业务模式是两组独立的标签。选完行业，AI 先匹配行业条目；再选业务模式，清单里会滑入几条「新增」——它们来自业务模式标签，比如招投标销售。</p>
-            <p>每条都标「待确认」，写明几家提及、几家不适用；只有初始设定的条目默认折叠。</p>
+            <p>这些是模板里的假设，不是这家企业的结论，每条都「待确认」。计数是此前有几家其他企业在访谈中印证过、几家不适用；还没有任何访谈印证的初始设定默认折叠。</p>
             <div class="refs"><span class="ref">Interview Setup QA 1–2</span><span class="ref">ADR-004</span><span class="ref">PRD §4.1</span></div>
             <span class="try"><svg class="ico"><use href="#i-chev"/></svg>窗口里可以直接操作：换一个业务模式试试</span>
           </div>
@@ -468,7 +468,7 @@ footer{padding:40px 0 56px;font-size:12.5px;color:var(--muted);display:flex;just
             <div class="k">画面 3 <span>· 业务模式建议</span></div>
             <h3>业务模式怎么选，让材料说话</h3>
             <p>新建时没选业务模式，AI 根据年报给出建议，并附三条原文：大客户占比、招标方式、单笔金额。顾问采纳后，业务模式标签的条目补进清单。</p>
-            <p>清单每一条，先看材料怎么说：支持、反驳，还是没提到。材料只代表过去，结论仍然「待确认」。</p>
+            <p>清单按「假设从哪来 → 材料怎么说 → 所以访谈怎么做」三段排开：材料有印证的现场确认一句，有出入或没涉及的列为必问。优先级只表示访谈还需覆盖多少，不代表重要程度。</p>
             <div class="refs"><span class="ref">01 · 业务模式标签</span><span class="ref">来源方案 B</span></div>
           </div>
         </div>
@@ -611,7 +611,7 @@ footer{padding:40px 0 56px;font-size:12.5px;color:var(--muted);display:flex;just
             <div class="k">画面 9 <span>· 现场校准假设</span></div>
             <h3>客户一句话，北极星当场改写</h3>
             <p>副总裁说：「首次修复率我们内部没正式考核，服务合同的续约率才是最关心的。」AI 把判断直接标在这句原话上：否定模板假设、印证预读线索、提出新北极星候选。</p>
-            <p>顾问确认后，企业层的战略假设当场更新，顶部北极星随之改变，后续每场访谈都继承它。预读时年报曾「反驳」续约率——材料反映过去，访谈反映现在。</p>
+            <p>顾问确认后，企业层的战略假设当场更新，顶部北极星随之改变，后续每场访谈都继承它。预读时年报与续约率有出入——材料反映过去，访谈反映现在。</p>
             <div class="refs"><span class="ref">ADR-001</span><span class="ref">ADR-002</span><span class="ref">ADR-008</span></div>
           </div>
         </div>
