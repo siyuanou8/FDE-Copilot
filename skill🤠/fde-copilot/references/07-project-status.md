@@ -26,7 +26,7 @@
 | Git 仓库 | ✅ `https://github.com/siyuanou8/FDE-Copilot` |
 | 部署 | ✅ Vercel 自动部署，`https://fde-copilot-xi.vercel.app` |
 | 部署链路 | ✅ 推代码到 GitHub → Vercel 自动构建 → 链接自动更新 |
-| 后端 | 🟡 **已获批准部署**（2026-10，Whisper 与 Maggie 达成一致）；方案待定，Whisper 会先提供参考网页，在那之前不动后端 |
+| 后端 | 🟢 **2026-10-13 开工**：Vercel Functions + DeepSeek；已上线 `/api/analyze`（访谈现场逐句分析，原型「真实 AI」输入条可用）；下一步数据保存 |
 | AI 引擎 | 🟡 待选：Anthropic 或 Kimi；另需流式语音转写服务。当前页面数据仍为静态 |
 
 **部署方案调研结论**：纯前端无后端 = 静态站，用 Vercel 静态托管最省事，免费额度够用，不需要买域名、不涉及备案。

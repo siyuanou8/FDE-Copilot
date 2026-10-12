@@ -8,7 +8,7 @@
 
 这套对象链（IndustryTemplate → Enterprise → StrategicContext → Interview →
 Evidence → AIOpportunityCard → ProcessTwin → Deliverable）是完整的产品设计，
-但当前实现是**前端原型，示例数据，无后端**——请勿理解为"已建成的 AI 咨询系统"。示例企业「华衡精密制造」为虚构。
+但当前实现以**前端原型 + 示例数据**为主，后端刚开始接入（目前只有逐句 AI 分析）——请勿理解为"已建成的 AI 咨询系统"。示例企业「华衡精密制造」为虚构。
 
 **已完成：**
 - 产品工作流设计（对象定义、归属规则、关键用户流程）与核心域模型
@@ -22,10 +22,12 @@ Evidence → AIOpportunityCard → ProcessTwin → Deliverable）是完整的产
 
 **未实现：**
 - 画面 13–19（机会卡校准、One Page Card、ProcessTwin、交付物、证据溯源、跨企业待办、模板管理）与入口页
-- 后端、数据持久化与真实 AI 推理（原型中的 AI 输出为预设演示，页面已标注）
+- 数据持久化；原型中除「真实 AI」输入条以外，AI 输出仍为预设演示（页面已标注）
 - 每屏的画板设计文档（边界问题、注解、QA 自查）
 
-**下一步**：画面 13–19；后端与实时录音工作流（服务选型与数据合规待定）；画板设计文档。
+**下一步**：数据保存（数据库）；画面 13–19；实时录音转写（服务选型与数据合规待定）；画板设计文档。
+
+**已接入的后端**：`api/analyze.js`——访谈现场逐句分析。顾问输入客户的一句话，后端调大模型（默认 DeepSeek `deepseek-flash`）返回槽位、假设印证 / 否定、深挖点与追问建议；顾问发言不调模型；只接受本站来源的请求。原型访谈现场的「真实 AI」输入条即调用此接口。
 
 > 早期的 Mission Room v1（`src/App.jsx`，Vite 应用）仍在仓库根路径部署，已被上述原型取代。
 
@@ -57,7 +59,7 @@ IndustryTemplate
 | 框架 | React 19（JSX，暂未接入 TypeScript） |
 | Lint | oxlint（配置见 `.oxlintrc.json`） |
 | 包管理 | npm |
-| 后端 / API | 暂无，当前不接入真实 API 或付费服务 |
+| 后端 / API | Vercel Functions（`api/`）；大模型 DeepSeek，密钥在 Vercel 环境变量 |
 
 ## 本地运行
 

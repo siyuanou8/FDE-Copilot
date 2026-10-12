@@ -26,7 +26,7 @@ IndustryTemplate
 - **Vite 8** + **React 19**，`type: module`，JSX（暂未接入 TypeScript）
 - **oxlint** 做 lint，配置在 `.oxlintrc.json`
 - npm 管理依赖
-- 后端：**已获批准部署**（2026-10，Whisper 与 Maggie 一致），大模型为 Anthropic 或 Kimi，方案待定。**方案由 Whisper 确定之前，不要自行接入真实 API 或付费服务**；API 密钥只能放在后端，不得写进前端代码
+- 后端：Vercel Functions（`api/` 目录），2026-10-13 开工。大模型默认 DeepSeek（`deepseek-flash` 逐句分析，需关闭 thinking），接口为通用格式，换 Kimi / 通义千问 / GPT 只改环境变量 `LLM_BASE_URL`、`LLM_MODEL`、`LLM_API_KEY`。**API 密钥只放在 Vercel 环境变量和本地 `.env.local`（已忽略），不得写进前端代码或提交**；新增付费服务前先问 Whisper
 
 ## 目录结构
 
@@ -97,7 +97,7 @@ npm run lint    # oxlint
 - 不删关键文件
 - 不 reset Git
 - **不 commit，不 push**
-- 后端方案确定前，不接入真实 API 或付费服务
+- 不新增付费服务或新的大模型供应商，除非 Whisper 同意
 - 不改无关模块
 
 改动完成后返回：
