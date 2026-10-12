@@ -675,6 +675,11 @@ button.chip{cursor:pointer}
 .mopt > span:nth-child(2) span:last-child{display:block;font-size:12px;color:var(--muted)}
 .mopt.on{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-tint)}
 .mopt.on .rd{border:5px solid var(--brand)}
+.mopt.off{opacity:.55;cursor:not-allowed;background:var(--surface-2)}
+.mopt .cost{margin-left:auto}
+.mmore{display:flex;align-items:center;gap:6px;width:100%;padding:8px 12px;border-radius:10px;font-size:12px;color:var(--muted);text-align:left;background:var(--surface-2)}
+.mmore .ico{width:12px;height:12px}
+.mmore:hover{color:var(--ink)}
 .cost{margin-left:auto;display:inline-flex;gap:3px;padding-top:4px}
 .cost i{width:7px;height:7px;border-radius:50%;background:var(--line)}
 .cost i.on{background:var(--warn)}
@@ -1582,26 +1587,59 @@ var UPQ = [
   {g:2, t:'哪个环节最依赖老师傅的经验？', dup:'Q4'},
   {g:2, t:'现场排查时，工程师最常翻的资料是什么？'}
 ];
-function freshIv(){ return {dept:'', role:'', played:false, consent:false, upload:false, mode:'merge', dup:'', open:{}, mic:'off', demo:false, model:'std'}; }
+function freshIv(){ return {dept:'', role:'', played:false, consent:false, upload:false, mode:'merge', dup:'', open:{}, mic:'off', demo:false, model:'ds-pro-think', liveModel:'ds-flash'}; }
 function prioForLabel(v){
   if (!S.pre.played) return '';
   var hit = checklist().filter(function(x){ return x.t.indexOf(v) >= 0 || v.indexOf(x.t) >= 0; })[0];
   if (hit) return PRIO[prio(hit)][0];
   return clueList().some(function(c){ return c.t.indexOf(v) >= 0 || v.indexOf(c.t.replace(/[「」]/g, '')) >= 0; }) ? '预读线索' : '';
 }
-var MODELS = [
-  {v:'std', n:'标准', ex:'例：Claude Sonnet 5.5', cost:1, d:'默认。大多数访谈够用'},
-  {v:'pro', n:'高性能', ex:'例：Claude Opus 5.5', cost:3, d:'大型企业、材料多、机会卡要求高时选'},
-  {v:'cn', n:'国内模型', ex:'例：Kimi（待评估）', cost:1, d:'数据需留在境内时选'}
+/* AI 模型：清单来自后端 /api/models（管理员维护，标明哪些已开通）；离线时用下面的默认清单 */
+var API_BASE = /vercel\.app$/.test(location.hostname) ? '' : 'https://fde-copilot-xi.vercel.app';
+var MODEL_FALLBACK = [
+  {id:'ds-flash', label:'DeepSeek Flash', provider:'DeepSeek', region:'国内', uses:['live','summary'], tier:1, note:'最快，现场标注默认', speed:'约 1.4 秒 / 句', available:null},
+  {id:'ds-pro', label:'DeepSeek V4 Pro', provider:'DeepSeek', region:'国内', uses:['live','summary'], tier:2, note:'判断更细，稍慢', speed:'约 2.4 秒 / 句', available:null},
+  {id:'ds-flash-think', label:'DeepSeek Flash · 深度思考', provider:'DeepSeek', region:'国内', uses:['summary'], tier:2, note:'先推理再回答，适合汇总', speed:'约 5 秒 / 段', available:null},
+  {id:'ds-pro-think', label:'DeepSeek V4 Pro · 深度思考', provider:'DeepSeek', region:'国内', uses:['summary'], tier:3, note:'最深入，适合大型企业的机会卡', speed:'约 17 秒 / 段', available:null},
+  {id:'claude-haiku', label:'Claude Haiku 5.5', provider:'Anthropic Claude', region:'海外', uses:['live','summary'], tier:1, note:'需海外账户与预付费', speed:'待开通后实测', available:false},
+  {id:'claude-sonnet', label:'Claude Sonnet 5.5', provider:'Anthropic Claude', region:'海外', uses:['summary'], tier:2, note:'需海外账户与预付费', speed:'待开通后实测', available:false},
+  {id:'claude-opus', label:'Claude Opus 5.5', provider:'Anthropic Claude', region:'海外', uses:['summary'], tier:3, note:'需海外账户与预付费', speed:'待开通后实测', available:false},
+  {id:'gpt', label:'OpenAI GPT', provider:'OpenAI GPT', region:'海外', uses:['live','summary'], tier:2, note:'需海外账户；开通后按官方列表选型', speed:'待开通后实测', available:false},
+  {id:'kimi', label:'Kimi', provider:'Kimi（月之暗面）', region:'国内', uses:['live','summary'], tier:1, note:'国内可用；开通后按官方列表选型', speed:'待开通后实测', available:false},
+  {id:'qwen', label:'通义千问', provider:'通义千问（阿里云百炼）', region:'国内', uses:['live','summary'], tier:1, note:'国内可用；开通后按官方列表选型', speed:'待开通后实测', available:false}
 ];
+var MODELS_STATE = {list:null, loading:false, failed:false};
+function modelList(){ return MODELS_STATE.list || MODEL_FALLBACK; }
+function modelLabel(id){ var m = modelList().filter(function(x){ return x.id === id; })[0]; return m ? m.label : id; }
+function loadModels(){
+  if (MODELS_STATE.list || MODELS_STATE.loading) return;
+  MODELS_STATE.loading = true;
+  fetch(API_BASE + '/api/models').then(function(r){ return r.json(); })
+    .then(function(j){ MODELS_STATE.list = j.models; })
+    .catch(function(){ MODELS_STATE.failed = true; })
+    .then(function(){ MODELS_STATE.loading = false; if (location.hash.indexOf('#/e/huaheng/interviews/new') === 0) route(true); });
+}
+function modelOpts(use){
+  var iv = S.iv, cur = use === 'live' ? iv.liveModel : iv.model, all = modelList().filter(function(m){ return m.uses.indexOf(use) >= 0; });
+  var on = all.filter(function(m){ return m.available !== false; }), off = all.filter(function(m){ return m.available === false; });
+  var btn = function(m){
+    var dis = m.available === false;
+    return '<button class="mopt' + (cur === m.id ? ' on' : '') + (dis ? ' off' : '') + '"' + (dis ? ' disabled' : ' data-act="iv-model" data-use="' + use + '" data-v="' + m.id + '"') + '><span class="rd"></span><span><b>' + m.label + '</b><span class="ex">' + m.provider + ' · ' + m.region + '</span>' +
+      (dis ? '<span class="tg tg-done" style="margin-left:6px">待开通</span>' : '') + '<span>' + m.note + ' · ' + m.speed + '</span></span>' +
+      '<span class="cost" title="相对费用">' + [1,2,3].map(function(k){ return '<i class="' + (k <= m.tier ? 'on' : '') + '"></i>'; }).join('') + '</span></button>';
+  };
+  var openKey = 'more-' + use;
+  return '<div class="mopts">' + on.map(btn).join('') +
+    (off.length ? '<button class="mmore" data-act="iv-mmore" data-k="' + openKey + '">' + ico('i-chev') + '另有 ' + off.length + ' 个待开通：' + off.map(function(m){ return m.label; }).join('、') + (iv.open[openKey] ? ' · 收起' : ' · 展开') + '</button>' + (iv.open[openKey] ? off.map(btn).join('') : '') : '') + '</div>';
+}
 function modelCard(){
-  var iv = S.iv;
-  return '<div class="card" id="modelCard"><div class="card-h">' + ico('i-ai') + '<h3>AI 模型</h3><div class="r">清单由管理员审批</div></div><div class="card-b" style="display:flex;flex-direction:column;gap:12px">' +
-    '<div class="mrow lock"><div><b>现场逐句标注（实时）</b><span>快速模型 · 管理员配置。实时转写需要秒级响应，不开放切换</span></div><span class="tg tg-done">' + ico('i-check') + '已锁定</span></div>' +
-    '<div><div class="sec-t">访谈后汇总与机会卡生成 · 顾问可选</div><div class="mopts">' + MODELS.map(function(m){
-      return '<button class="mopt' + (iv.model === m.v ? ' on' : '') + '" data-act="iv-model" data-v="' + m.v + '" data-n="' + m.n + '"><span class="rd"></span><span><b>' + m.n + '</b><span class="ex">' + m.ex + '</span><span>' + m.d + '</span></span><span class="cost" title="相对费用">' + [1,2,3].map(function(k){ return '<i class="' + (k <= m.cost ? 'on' : '') + '"></i>'; }).join('') + '</span></button>';
-    }).join('') + '</div></div>' +
-    '<div class="budget"><div class="bh"><span>项目预算（示例）</span><b>已用 24%</b></div><i><b style="width:24%"></b></i><span class="muted">用到 80% 提醒；用完需管理员批准。费用记入项目，按顾问、企业、访谈统计。</span></div>' +
+  loadModels();
+  var n = modelList().filter(function(m){ return m.available; }).length;
+  var st = MODELS_STATE.list ? '已开通 ' + n + ' 个 · 清单由管理员维护' : MODELS_STATE.failed ? '连不上后端，显示默认清单' : '正在读取可用模型…';
+  return '<div class="card" id="modelCard"><div class="card-h">' + ico('i-ai') + '<h3>AI 模型</h3><div class="r">' + st + '</div></div><div class="card-b" style="display:flex;flex-direction:column;gap:14px">' +
+    '<div><div class="sec-t">现场逐句标注 · 顾问可选（要在几秒内返回，只列快的）</div>' + modelOpts('live') + '</div>' +
+    '<div><div class="sec-t">访谈后汇总与机会卡生成 · 顾问可选</div>' + modelOpts('summary') + '</div>' +
+    '<div class="budget"><div class="bh"><span>项目预算（示例）</span><b>已用 24%</b></div><i><b style="width:24%"></b></i><span class="muted">按实际调用量记账；用到 80% 提醒，用完需管理员批准。按顾问、企业、访谈统计。</span></div>' +
   '</div></div>';
 }
 /* 麦克风：真实检测（只在本机浏览器里读音量，不上传任何声音） */
@@ -1857,7 +1895,7 @@ function qi(no, h, a, src){
 /* =====================================================================
    真实 AI：顾问输入一句话，后端 /api/analyze 调大模型逐句分析
    ===================================================================== */
-var RAI_URL = /vercel\.app$/.test(location.hostname) ? '/api/analyze' : 'https://fde-copilot-xi.vercel.app/api/analyze';
+var RAI_URL = API_BASE + '/api/analyze';
 var RAI_HYP = [
   {id:'h1', field:'北极星', text:'首次修复率'},
   {id:'h2', field:'痛点', text:'现场故障判断依赖资深工程师'},
@@ -1883,7 +1921,7 @@ function raiLines(){
       var r = l.res, tags = (r.tags || []).map(function(t){ var m = RAI_TAG[t.type]; if (!m) return ''; var ref = raiRef(t); return '<span class="atg ' + m[0] + '">' + ico(m[1]) + m[2] + ' · ' + esc(ref || t.label) + '</span>'; }).join('');
       body = '<div class="atags">' + (tags || '<span class="muted" style="font-size:11.5px">AI 判断：这句没有需要标注的内容</span>') + '</div>' +
         (r.next_best_move ? '<div class="rai-nbm">' + ico('i-ai') + '<div><b>建议追问：</b>' + esc(r.next_best_move.question) + '<span>' + esc(r.next_best_move.why) + '</span></div></div>' : '') +
-        '<div class="rai-meta">真实调用 · ' + esc(r.model) + ' · ' + (r.latency_ms / 1000).toFixed(1) + ' 秒' + (r.usage ? ' · ' + (r.usage.prompt_tokens + r.usage.completion_tokens) + ' tokens' : '') + ' · 结论待顾问确认</div>';
+        '<div class="rai-meta">真实调用 · ' + esc(r.model_label || r.model) + ' · ' + (r.latency_ms / 1000).toFixed(1) + ' 秒' + (r.usage ? ' · ' + (r.usage.prompt_tokens + r.usage.completion_tokens) + ' tokens' : '') + ' · 结论待顾问确认</div>';
     }
     return '<div class="ln ' + l.sp + ' real"><div class="lh"><span class="spk ' + l.sp + '">' + (l.sp === 'k' ? '客户' : '顾问') + '</span><span class="tg tg-ai">' + ico('i-ai') + '真实 AI</span></div><div class="lt">' + esc(l.text) + '</div>' + body + '</div>';
   }).join('');
@@ -1891,7 +1929,7 @@ function raiLines(){
 function raiBar(){
   var R = S.rai;
   return '<div class="rai-bar"><div class="seg2 rai-sp">' + [['k','客户'],['g','顾问']].map(function(x){ return '<button class="' + (R.sp === x[0] ? 'on' : '') + '" data-act="rai-sp" data-v="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' +
-    '<input id="raiIn" maxlength="600" placeholder="试试真实 AI：输入一句' + (R.sp === 'k' ? '客户' : '顾问') + '说的话，回车发送" value="' + esc(R.draft) + '"' + (R.busy ? ' disabled' : '') + '>' +
+    '<input id="raiIn" maxlength="600" placeholder="试试真实 AI（' + modelLabel(S.iv.liveModel || 'ds-flash') + '）：输入一句' + (R.sp === 'k' ? '客户' : '顾问') + '说的话，回车发送" value="' + esc(R.draft) + '"' + (R.busy ? ' disabled' : '') + '>' +
     '<button class="btn btn-p btn-sm" data-act="rai-send"' + (R.busy ? ' disabled' : '') + '>' + (R.busy ? '分析中' : '分析') + '</button></div>';
 }
 function raiSend(){
@@ -1901,7 +1939,7 @@ function raiSend(){
   R.lines.push(line); R.draft = '';
   if (R.sp === 'g'){ drawLive(); return; }
   R.busy = true; drawLive();
-  var body = {sentence: text, speaker: 'client', question: '流程中最耗时、最容易出错或最依赖经验的环节是什么？', northStar: M.calib === 'ok' ? '服务合同续约率' : '首次修复率',
+  var body = {model: S.iv.liveModel || 'ds-flash', sentence: text, speaker: 'client', question: '流程中最耗时、最容易出错或最依赖经验的环节是什么？', northStar: M.calib === 'ok' ? '服务合同续约率' : '首次修复率',
     slots: RAI_SLOT.map(function(x){ return {key: x[0], label: x[1], filled: !!M.slots[x[0]]}; }), hypotheses: RAI_HYP};
   fetch(RAI_URL, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)})
     .then(function(r){ return r.json().then(function(j){ return {ok: r.ok, j: j}; }); })
@@ -2004,7 +2042,7 @@ function viewWrap(){
   return '<div class="page wrap" id="wrapPage" data-ph="' + (W.played ? 2 : 0) + '">' +
     '<div class="ph"><div><h1>访谈 #1 已结束</h1><div class="sub">高层访谈 · 分管服务的副总裁 · 52 分钟。AI 把本场证据整理成机会卡草稿，由你决定采纳还是驳回。</div></div>' +
       '<div class="r"><span class="tg tg-warn">演示 · 预设对话</span></div></div>' +
-    '<div class="ai-bar' + (W.played ? ' done' : '') + '" id="wrapBar"><div class="thinking" id="wrapTxt">' + (W.played ? ico('i-check') + '汇总完成：31 条证据 → 2 张机会卡草稿，2 个槽位未补齐' : '<span class="dots"><i></i><i></i><i></i></span>AI 正在汇总本场证据（使用访谈后汇总模型：' + (MODELS.filter(function(m){ return m.v === (S.iv.model || 'std'); })[0] || MODELS[0]).n + '）…') + '</div>' +
+    '<div class="ai-bar' + (W.played ? ' done' : '') + '" id="wrapBar"><div class="thinking" id="wrapTxt">' + (W.played ? ico('i-check') + '汇总完成：31 条证据 → 2 张机会卡草稿，2 个槽位未补齐' : '<span class="dots"><i></i><i></i><i></i></span>AI 正在汇总本场证据（使用访谈后汇总模型：' + modelLabel(S.iv.model) + '）…') + '</div>' +
       (W.played ? '' : '<div class="track"><b id="wrapTrack"></b></div>') + '</div>' +
     '<div class="kpis">' +
       '<div class="kpi"><div class="l">问题</div><div class="n">8 + 2</div><div class="s">提纲 8 问 · 提纲外追问 2</div></div>' +
@@ -2274,7 +2312,8 @@ document.addEventListener('click', function(e){
   else if (a === 'pre-skip'){ S.pre.skipOpen = !S.pre.skipOpen; route(true); }
   else if (a === 'pre-q'){ S.pre.qOpen = !S.pre.qOpen; route(true); }
   else if (a === 'copy-req'){ var txt = GAPS[kind()].req.map(function(r, i){ return (i + 1) + '. ' + r; }).join('\n'); try { navigator.clipboard.writeText('访谈前请协助提供以下材料：\n' + txt).then(function(){ toast('已复制，可直接发给客户'); }, function(){ toast('浏览器不允许自动复制，请手动选择清单文字'); }); } catch (err){ toast('浏览器不允许自动复制，请手动选择清单文字'); } }
-  else if (a === 'iv-model'){ S.iv.model = el.dataset.v; route(true); toast('访谈后汇总将使用：' + el.dataset.n); }
+  else if (a === 'iv-model'){ if (el.dataset.use === 'live') S.iv.liveModel = el.dataset.v; else S.iv.model = el.dataset.v; route(true); toast((el.dataset.use === 'live' ? '现场逐句标注' : '访谈后汇总') + '将使用：' + modelLabel(el.dataset.v)); }
+  else if (a === 'iv-mmore'){ S.iv.open[el.dataset.k] = !S.iv.open[el.dataset.k]; route(true); }
   else if (a === 'demo-setup'){ e.preventDefault(); $('#guide').classList.remove('open'); demoSetup(); }
   else if (a === 'demo-sed'){ e.preventDefault(); $('#guide').classList.remove('open'); demoSed(); }
   else if (a === 'mr-play'){ e.preventDefault(); $('#guide').classList.remove('open'); ACT['mr-play'](); }

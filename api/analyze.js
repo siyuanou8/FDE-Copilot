@@ -8,17 +8,12 @@
  * 规则（与产品一致）：
  * - 顾问的话不作为证据，不调用大模型
  * - AI 只给提议，所有结论都是「待确认」，由顾问决定
- * - 密钥只在后端（环境变量 DEEPSEEK_API_KEY），不进网页
+ * - 密钥只在后端（Vercel 环境变量，名字见 _models.js），不进网页
  *
- * 模型：默认 deepseek-flash（快，适合逐句）。接口是通用格式，
- * 换 Kimi / 通义千问 / GPT 只需改 LLM_BASE_URL、LLM_MODEL 和密钥。
+ * 模型：由顾问在画面 4 选择（body.model，取值见 _models.js 清单），默认 DeepSeek Flash。
+ * 只能选清单里已开通、且标明可用于现场标注（live）的模型；前端传别的一律拒绝。
  */
-
-const BASE_URL = process.env.LLM_BASE_URL || 'https://api.deepseek.com';
-const MODEL = process.env.LLM_MODEL || 'deepseek-flash';
-const API_KEY = process.env.LLM_API_KEY || process.env.DEEPSEEK_API_KEY;
-// 逐句分析要快：DeepSeek 默认会先「思考」，思考内容也计入输出 token，现场场景关掉
-const DISABLE_THINKING = (process.env.LLM_THINKING || 'off') === 'off' && BASE_URL.includes('deepseek');
+import { resolve, DEFAULT_LIVE } from './_models.js';
 
 // 只接受来自本站的请求，避免公开接口被别人拿去消耗余额
 const ALLOWED_ORIGINS = [
@@ -126,7 +121,6 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: '只支持 POST' });
   // 浏览器跨站请求一定带 Origin；带了但不在白名单里就拒绝
   if (origin && !ALLOWED_ORIGINS.includes(origin)) return res.status(403).json({ error: '来源不被允许' });
-  if (!API_KEY) return res.status(500).json({ error: '后端未配置大模型密钥' });
 
   const input = sanitizeInput(req.body);
   if (!input.sentence) return res.status(400).json({ error: '缺少要分析的句子' });
@@ -136,13 +130,16 @@ export default async function handler(req, res) {
     return res.status(200).json({ tags: [], next_best_move: null, northstar_candidate: '', note: '顾问发言不作为证据', model: null, usage: null });
   }
 
+  const cfg = resolve(clip(req.body && req.body.model, 40) || DEFAULT_LIVE, 'live');
+  if (!cfg) return res.status(400).json({ error: '所选模型未开通，或不适合现场逐句标注' });
+
   const started = Date.now();
   try {
-    const r = await fetch(`${BASE_URL}/chat/completions`, {
+    const r = await fetch(`${cfg.baseUrl}/chat/completions`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${API_KEY}` },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${cfg.apiKey}` },
       body: JSON.stringify({
-        model: MODEL,
+        model: cfg.model,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: buildUserPrompt(input) },
@@ -150,7 +147,8 @@ export default async function handler(req, res) {
         response_format: { type: 'json_object' },
         temperature: 0.2,
         max_tokens: MAX_OUTPUT_TOKENS,
-        ...(DISABLE_THINKING ? { thinking: { type: 'disabled' } } : {}),
+        // DeepSeek 默认先「思考」，思考内容计入输出 token，现场标注要快，按清单关闭
+        ...(cfg.thinkingParam ? { thinking: { type: cfg.thinking ? 'enabled' : 'disabled' } } : {}),
       }),
       signal: AbortSignal.timeout(25000),
     });
@@ -163,7 +161,9 @@ export default async function handler(req, res) {
     const out = sanitizeOutput(parsed, input);
     return res.status(200).json({
       ...out,
-      model: data.model || MODEL,
+      model: data.model || cfg.model,
+      model_id: cfg.id,
+      model_label: cfg.label,
       usage: data.usage ? { prompt_tokens: data.usage.prompt_tokens, completion_tokens: data.usage.completion_tokens } : null,
       latency_ms: Date.now() - started,
     });
