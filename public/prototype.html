@@ -533,6 +533,15 @@ button.chip{cursor:pointer}
 .atags.in .atg:nth-child(2){animation-delay:.12s}.atags.in .atg:nth-child(3){animation-delay:.24s}
 .atg{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap}
 .atg .ico{width:11px;height:11px}
+.rai-bar{display:flex;align-items:center;gap:8px;padding:8px 0 6px;border-top:1px solid var(--line-2)}
+.rai-bar input{flex:1;min-width:0;height:32px;border:1px solid var(--line);border-radius:999px;padding:0 14px;font:inherit;font-size:13px;background:var(--surface-2)}
+.rai-bar input:focus{outline:none;border-color:var(--ai);box-shadow:0 0 0 3px var(--ai-soft)}
+.rai-sp button{padding:4px 10px;font-size:12px}
+.ln.real{box-shadow:inset 0 0 0 1px var(--ai-line)}
+.rai-nbm{display:flex;gap:8px;margin-top:8px;padding:8px 10px;border-radius:9px;border:1.5px dashed var(--ai-line);background:var(--ai-soft);font-size:12.5px;line-height:1.55}
+.rai-nbm > .ico{width:13px;height:13px;color:var(--ai);flex:none;margin-top:3px}
+.rai-nbm span{display:block;color:var(--muted);font-size:12px}
+.rai-meta{margin-top:6px;font-size:11px;color:var(--faint)}
 .atg.a-slot{background:var(--brand-tint);color:var(--brand)}
 .atg.a-hyp{background:var(--ok-soft);color:var(--ok)}
 .atg.a-dig,.atg.a-new{background:var(--ai-soft);color:var(--ai)}
@@ -1068,6 +1077,7 @@ function reset(){
     pre: freshPre(),
     iv: freshIv(),
     mr: freshMr(),
+    rai: {lines: [], sp: 'k', busy: false, draft: ''},
     wrap: freshWrap(),
     sed: freshSed(),
     board: freshBoard(),
@@ -1814,7 +1824,7 @@ function viewLive(){
       '<div class="recap' + seenCls('rc') + '"><div class="h">' + ico('i-repeat') + '复述确认 · 绑定在本题槽位</div><p>我复述一下：现场故障判断主要靠资深工程师的经验，新人平均要上门 2.6 次，资深约 1.2 次。这样理解对吗？</p>' +
         '<div class="acts"><button class="btn btn-p btn-sm" data-act="mr-recap">客户确认</button><button class="btn btn-g btn-sm" data-act="noop">修改</button></div></div>') + '</div>';
   var mid = '<div class="qcard"><div class="qlabel"><b>Q4</b>组二 · 流程、痛点、能力与数字化基础</div><div class="qtitle">流程中最耗时、最容易出错或最依赖经验的环节是什么？</div></div>' +
-    '<div class="txw"><div class="col-h">' + ico('i-mic') + '实时转写<span class="r"><span class="tg tg-warn">演示 · 预设对话</span>点说话人可纠正</span></div><div class="tx" id="tx">' + lines + '</div></div>' + slots;
+    '<div class="txw"><div class="col-h">' + ico('i-mic') + '实时转写<span class="r"><span class="tg tg-warn">演示 · 预设对话</span>点说话人可纠正</span></div><div class="tx" id="tx">' + lines + raiLines() + '</div>' + raiBar() + '</div>' + slots;
 
   /* 右栏：Next Best Move + 案例 + 候选需求 */
   var nbm;
@@ -1843,6 +1853,61 @@ function viewLive(){
 function qi(no, h, a, src){
   return '<div class="qi past" title="' + a + '"><div class="h"><span class="no">' + no + '</span>' + h + '<span class="s s-done">已答</span></div><div class="a">' + a + '</div>' +
     (src === 'quote' ? '<span class="src src-quote">' + ico('i-quote') + '客户原话<span class="st st-ok">已确认</span></span>' : '<span class="src">' + ico('i-pen') + '顾问提炼<span class="st st-warn">待确认</span></span>') + '</div>';
+}
+/* =====================================================================
+   真实 AI：顾问输入一句话，后端 /api/analyze 调大模型逐句分析
+   ===================================================================== */
+var RAI_URL = /vercel\.app$/.test(location.hostname) ? '/api/analyze' : 'https://fde-copilot-xi.vercel.app/api/analyze';
+var RAI_HYP = [
+  {id:'h1', field:'北极星', text:'首次修复率'},
+  {id:'h2', field:'痛点', text:'现场故障判断依赖资深工程师'},
+  {id:'h3', field:'预读线索', text:'服务收入占比提升至 30%'},
+  {id:'h4', field:'痛点', text:'备件需求预测不准，积压与缺件并存'},
+  {id:'h5', field:'核心能力', text:'故障诊断与维修知识沉淀'}
+];
+var RAI_SLOT = [['pain','痛点环节'],['dep','依赖程度'],['quant','影响量化']];
+var RAI_TAG = {slot:['a-slot','i-check','填槽位'], confirm:['a-hyp','i-check','印证假设'], refute:['a-neg','i-x','否定假设'], dig:['a-dig','i-ai','值得深挖'], new_northstar:['a-new','i-target','新北极星候选']};
+function esc(t){ return String(t == null ? '' : t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function raiRef(t){
+  if (t.type === 'slot'){ var sl = RAI_SLOT.filter(function(x){ return x[0] === t.ref; })[0]; return sl ? sl[1] : ''; }
+  if (t.type === 'confirm' || t.type === 'refute'){ var h = RAI_HYP.filter(function(x){ return x.id === t.ref; })[0]; return h ? h.text : ''; }
+  return '';
+}
+function raiLines(){
+  return S.rai.lines.map(function(l){
+    var body = '';
+    if (l.sp === 'g') body = '<div class="atags"><span class="muted" style="font-size:11.5px">顾问发言不作为证据，未调用大模型</span></div>';
+    else if (l.st === 'loading') body = '<div class="atags"><span class="ana"><span class="dots"><i></i><i></i><i></i></span>真实 AI 分析中…</span></div>';
+    else if (l.st === 'err') body = '<div class="atags"><span class="atg a-neg">' + ico('i-alert') + esc(l.err) + '</span></div>';
+    else {
+      var r = l.res, tags = (r.tags || []).map(function(t){ var m = RAI_TAG[t.type]; if (!m) return ''; var ref = raiRef(t); return '<span class="atg ' + m[0] + '">' + ico(m[1]) + m[2] + ' · ' + esc(ref || t.label) + '</span>'; }).join('');
+      body = '<div class="atags">' + (tags || '<span class="muted" style="font-size:11.5px">AI 判断：这句没有需要标注的内容</span>') + '</div>' +
+        (r.next_best_move ? '<div class="rai-nbm">' + ico('i-ai') + '<div><b>建议追问：</b>' + esc(r.next_best_move.question) + '<span>' + esc(r.next_best_move.why) + '</span></div></div>' : '') +
+        '<div class="rai-meta">真实调用 · ' + esc(r.model) + ' · ' + (r.latency_ms / 1000).toFixed(1) + ' 秒' + (r.usage ? ' · ' + (r.usage.prompt_tokens + r.usage.completion_tokens) + ' tokens' : '') + ' · 结论待顾问确认</div>';
+    }
+    return '<div class="ln ' + l.sp + ' real"><div class="lh"><span class="spk ' + l.sp + '">' + (l.sp === 'k' ? '客户' : '顾问') + '</span><span class="tg tg-ai">' + ico('i-ai') + '真实 AI</span></div><div class="lt">' + esc(l.text) + '</div>' + body + '</div>';
+  }).join('');
+}
+function raiBar(){
+  var R = S.rai;
+  return '<div class="rai-bar"><div class="seg2 rai-sp">' + [['k','客户'],['g','顾问']].map(function(x){ return '<button class="' + (R.sp === x[0] ? 'on' : '') + '" data-act="rai-sp" data-v="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' +
+    '<input id="raiIn" maxlength="600" placeholder="试试真实 AI：输入一句' + (R.sp === 'k' ? '客户' : '顾问') + '说的话，回车发送" value="' + esc(R.draft) + '"' + (R.busy ? ' disabled' : '') + '>' +
+    '<button class="btn btn-p btn-sm" data-act="rai-send"' + (R.busy ? ' disabled' : '') + '>' + (R.busy ? '分析中' : '分析') + '</button></div>';
+}
+function raiSend(){
+  var R = S.rai, inp = $('#raiIn'), text = (inp ? inp.value : R.draft).trim();
+  if (!text || R.busy) return;
+  var M = S.mr, line = {sp: R.sp, text: text, st: R.sp === 'g' ? 'ok' : 'loading'};
+  R.lines.push(line); R.draft = '';
+  if (R.sp === 'g'){ drawLive(); return; }
+  R.busy = true; drawLive();
+  var body = {sentence: text, speaker: 'client', question: '流程中最耗时、最容易出错或最依赖经验的环节是什么？', northStar: M.calib === 'ok' ? '服务合同续约率' : '首次修复率',
+    slots: RAI_SLOT.map(function(x){ return {key: x[0], label: x[1], filled: !!M.slots[x[0]]}; }), hypotheses: RAI_HYP};
+  fetch(RAI_URL, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)})
+    .then(function(r){ return r.json().then(function(j){ return {ok: r.ok, j: j}; }); })
+    .then(function(x){ if (x.ok){ line.st = 'ok'; line.res = x.j; } else { line.st = 'err'; line.err = x.j.error || '分析失败'; } })
+    .catch(function(){ line.st = 'err'; line.err = '连不上后端（本地预览请用线上地址）'; })
+    .then(function(){ R.busy = false; drawLive(); var i2 = $('#raiIn'); if (i2) i2.focus(); });
 }
 function drawLive(){
   if (location.hash.indexOf('#/e/huaheng/live') !== 0) return;
@@ -2231,12 +2296,16 @@ document.addEventListener('click', function(e){
   else if (a === 'hb-done'){ S.board.done[el.dataset.t] = 1; route(true); toast('已手动标为已印证，记录为「顾问判断」'); }
   else if (a === 'mr-gocal'){ var cb = $('.calib'); if (cb) cb.scrollIntoView({behavior:'smooth', block:'center'}); }
   else if (a === 'mr-slots'){ S.mr.slotOpen = !S.mr.slotOpen; drawLive(); }
+  else if (a === 'rai-sp'){ var ri = $('#raiIn'); if (ri) S.rai.draft = ri.value; S.rai.sp = el.dataset.v; drawLive(); }
+  else if (a === 'rai-send'){ raiSend(); }
   else if (a === 'mr-calib'){ S.mr.calib = 'ok'; drawLive(); toast('企业层战略假设已更新：北极星改为「服务合同续约率」'); }
   else if (a === 'mr-spk'){ var id = el.dataset.id, l = TX.filter(function(x){ return x.id === id; })[0]; S.mr.sp[id] = (S.mr.sp[id] || l.sp) === 'k' ? 'g' : 'k'; drawLive(); toast('已纠正说话人：' + (S.mr.sp[id] === 'k' ? '客户' : '顾问')); }
   else if (a === 'add-clue'){ ACT['add-clue'](el.dataset.id); }
   else if (a === 'pre-done'){ S.pre.done = true; S.newHH = true; toast('预读已完成，可以设置第一场访谈'); location.hash = '#/e/huaheng/interviews/new'; }
 });
+document.addEventListener('keydown', function(e){ if (e.target && e.target.id === 'raiIn' && e.key === 'Enter' && !e.isComposing){ e.preventDefault(); raiSend(); } });
 document.addEventListener('input', function(e){
+  if (e.target && e.target.id === 'raiIn'){ S.rai.draft = e.target.value; return; }
   var fd = e.target.dataset && e.target.dataset.field; if (!fd) return;
   S.form[fd] = e.target.value;
   if (e.target.tagName === 'SELECT') e.target.classList.toggle('unset', !e.target.value);
