@@ -677,6 +677,14 @@ button.chip{cursor:pointer}
 .mopt.on .rd{border:5px solid var(--brand)}
 .mopt .cost{margin-left:auto}
 .mopt .tg{margin-left:6px}
+.mthink{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border-radius:10px;border:1px dashed var(--line);background:var(--surface);text-align:left}
+.mthink .sw{width:30px;height:18px;border-radius:999px;background:#D9D6CC;position:relative;flex:none;transition:background .2s}
+.mthink .sw i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:var(--sh-1);transition:left .2s}
+.mthink.on .sw{background:var(--brand)}
+.mthink.on .sw i{left:14px}
+.mthink b{display:block;font-size:13px}
+.mthink span span{font-size:12px;color:var(--muted)}
+.mthink.dis{opacity:.5;cursor:not-allowed}
 .cost{margin-left:auto;display:inline-flex;gap:3px;padding-top:4px}
 .cost i{width:7px;height:7px;border-radius:50%;background:var(--line)}
 .cost i.on{background:var(--warn)}
@@ -1594,10 +1602,10 @@ function prioForLabel(v){
 /* AI 模型：清单来自后端 /api/models（管理员维护，标明哪些已开通）；离线时用下面的默认清单 */
 var API_BASE = /vercel\.app$/.test(location.hostname) ? '' : 'https://fde-copilot-xi.vercel.app';
 var MODEL_FALLBACK = [
-  {id:'ds-flash', label:'DeepSeek Flash', provider:'DeepSeek', region:'国内', uses:['live','summary'], tier:1, note:'最快，现场标注默认', speed:'约 1.4 秒 / 句', available:null},
-  {id:'ds-pro', label:'DeepSeek V4 Pro', provider:'DeepSeek', region:'国内', uses:['live','summary'], tier:2, note:'判断更细，稍慢', speed:'约 2.4 秒 / 句', available:null},
-  {id:'ds-flash-think', label:'DeepSeek Flash · 深度思考', provider:'DeepSeek', region:'国内', uses:['summary'], tier:2, note:'先推理再回答，适合汇总', speed:'约 5 秒 / 段', available:null},
-  {id:'ds-pro-think', label:'DeepSeek V4 Pro · 深度思考', provider:'DeepSeek', region:'国内', uses:['summary'], tier:3, note:'最深入，适合大型企业的机会卡', speed:'约 17 秒 / 段', available:null},
+  {id:'ds-flash', label:'DeepSeek Flash', provider:'DeepSeek', region:'国内', uses:['live','summary'], tier:1, note:'最快；直白的话判断够用，容易下结论过头', speed:'约 1.5 秒 / 句', available:null},
+  {id:'ds-pro', label:'DeepSeek V4 Pro', provider:'DeepSeek', region:'国内', uses:['live','summary'], tier:2, note:'能力更强，判断更稳，不轻易下结论', speed:'约 2.5 秒 / 句', available:null},
+  {id:'ds-flash-think', label:'DeepSeek Flash · 深度思考', provider:'DeepSeek', region:'国内', uses:['live','summary'], tier:2, note:'能听出话里的转折', speed:'约 4–5 秒 / 句', available:null},
+  {id:'ds-pro-think', label:'DeepSeek V4 Pro · 深度思考', provider:'DeepSeek', region:'国内', uses:['live','summary'], tier:3, note:'判断最准，但很慢', speed:'约 17–25 秒 / 句', available:null},
   {id:'claude-haiku', label:'Claude Haiku 5.5', provider:'Anthropic Claude', region:'海外', uses:['live','summary'], tier:1, note:'需海外账户与预付费', speed:'待开通后实测', available:false},
   {id:'claude-sonnet', label:'Claude Sonnet 5.5', provider:'Anthropic Claude', region:'海外', uses:['summary'], tier:2, note:'需海外账户与预付费', speed:'待开通后实测', available:false},
   {id:'claude-opus', label:'Claude Opus 5.5', provider:'Anthropic Claude', region:'海外', uses:['summary'], tier:3, note:'需海外账户与预付费', speed:'待开通后实测', available:false},
@@ -1619,17 +1627,21 @@ function loadModels(){
 /* 清单里带 -think 的条目是同一模型开「深度思考」，只用于汇总；现场选择里不列 */
 function baseId(id){ return String(id || '').replace(/-think$/, ''); }
 function isThink(id){ return /-think$/.test(id || ''); }
+function thinkOf(base){ return modelList().filter(function(m){ return m.id === base + '-think'; })[0]; }
 function modelCard(){
   loadModels();
-  var iv = S.iv, cur = baseId(iv.liveModel || 'ds-flash');
+  var iv = S.iv, sel = iv.liveModel || 'ds-flash', cur = baseId(sel), think = isThink(sel);
   var opts = modelList().filter(function(m){ return m.uses.indexOf('live') >= 0 && !isThink(m.id) && m.available !== false; });
-  var st = MODELS_STATE.list ? '已开通 ' + opts.length + ' 个' : MODELS_STATE.failed ? '连不上后端' : '正在读取…';
+  var tv = thinkOf(cur), canThink = !!tv && tv.available !== false;
+  var st = MODELS_STATE.list ? '已开通 ' + opts.length + ' 个模型' : MODELS_STATE.failed ? '连不上后端' : '正在读取…';
   return '<div class="card" id="modelCard"><div class="card-h">' + ico('i-ai') + '<h3>AI 模型</h3><div class="r">' + st + '</div></div><div class="card-b" style="display:flex;flex-direction:column;gap:10px">' +
     '<div class="mopts">' + opts.map(function(m){
-      return '<button class="mopt' + (cur === m.id ? ' on' : '') + '" data-act="iv-model" data-use="live" data-v="' + m.id + '"><span class="rd"></span><span><b>' + m.label + '</b><span>' + m.note + ' · ' + m.speed + '</span></span>' +
+      var t = think && thinkOf(m.id), sp = t ? t.speed : m.speed;
+      return '<button class="mopt' + (cur === m.id ? ' on' : '') + '" data-act="iv-model" data-v="' + m.id + '"><span class="rd"></span><span><b>' + m.label + '</b><span>' + m.note + ' · ' + sp + '</span></span>' +
         '<span class="cost" title="相对费用">' + [1,2,3].map(function(k){ return '<i class="' + (k <= m.tier ? 'on' : '') + '"></i>'; }).join('') + '</span></button>';
-    }).join('') + '</div>' +
-    '<div class="hint">' + ico('i-info') + '访谈现场的「真实 AI」逐句分析使用这里选的模型。</div>' +
+    }).join('') +
+    '<button class="mthink' + (think ? ' on' : '') + (canThink ? '' : ' dis') + '"' + (canThink ? ' data-act="iv-think"' : ' disabled') + '><span class="sw"><i></i></span><span><b>深度思考</b><span>' + (canThink ? '先推理再回答，能听出话里的转折，但更慢：' + tv.speed : '所选模型不支持') + '</span></span></button></div>' +
+    '<div class="hint">' + ico('i-info') + '访谈现场的「真实 AI」逐句分析使用这里的设置。</div>' +
   '</div></div>';
 }
 /* 麦克风：真实检测（只在本机浏览器里读音量，不上传任何声音） */
@@ -1905,7 +1917,7 @@ function raiLines(){
   return S.rai.lines.map(function(l){
     var body = '';
     if (l.sp === 'g') body = '<div class="atags"><span class="muted" style="font-size:11.5px">顾问发言不作为证据，未调用大模型</span></div>';
-    else if (l.st === 'loading') body = '<div class="atags"><span class="ana"><span class="dots"><i></i><i></i><i></i></span>真实 AI 分析中…</span></div>';
+    else if (l.st === 'loading') body = '<div class="atags"><span class="ana"><span class="dots"><i></i><i></i><i></i></span>' + (isThink(l.model) ? '深度思考中（' + (thinkOf(baseId(l.model)) || {}).speed + '）…' : '真实 AI 分析中…') + '</span></div>';
     else if (l.st === 'err') body = '<div class="atags"><span class="atg a-neg">' + ico('i-alert') + esc(l.err) + '</span></div>';
     else {
       var r = l.res, tags = (r.tags || []).map(function(t){ var m = RAI_TAG[t.type]; if (!m) return ''; var ref = raiRef(t); return '<span class="atg ' + m[0] + '">' + ico(m[1]) + m[2] + ' · ' + esc(ref || t.label) + '</span>'; }).join('');
@@ -1925,7 +1937,7 @@ function raiBar(){
 function raiSend(){
   var R = S.rai, inp = $('#raiIn'), text = (inp ? inp.value : R.draft).trim();
   if (!text || R.busy) return;
-  var M = S.mr, line = {sp: R.sp, text: text, st: R.sp === 'g' ? 'ok' : 'loading'};
+  var M = S.mr, line = {sp: R.sp, text: text, st: R.sp === 'g' ? 'ok' : 'loading', model: S.iv.liveModel || 'ds-flash'};
   R.lines.push(line); R.draft = '';
   if (R.sp === 'g'){ drawLive(); return; }
   R.busy = true; drawLive();
@@ -2302,7 +2314,8 @@ document.addEventListener('click', function(e){
   else if (a === 'pre-skip'){ S.pre.skipOpen = !S.pre.skipOpen; route(true); }
   else if (a === 'pre-q'){ S.pre.qOpen = !S.pre.qOpen; route(true); }
   else if (a === 'copy-req'){ var txt = GAPS[kind()].req.map(function(r, i){ return (i + 1) + '. ' + r; }).join('\n'); try { navigator.clipboard.writeText('访谈前请协助提供以下材料：\n' + txt).then(function(){ toast('已复制，可直接发给客户'); }, function(){ toast('浏览器不允许自动复制，请手动选择清单文字'); }); } catch (err){ toast('浏览器不允许自动复制，请手动选择清单文字'); } }
-  else if (a === 'iv-model'){ S.iv.liveModel = el.dataset.v; route(true); toast('真实 AI 分析将使用：' + modelLabel(S.iv.liveModel)); }
+  else if (a === 'iv-model'){ var t0 = isThink(S.iv.liveModel) && thinkOf(el.dataset.v); S.iv.liveModel = t0 && t0.available !== false ? t0.id : el.dataset.v; route(true); toast('真实 AI 分析将使用：' + modelLabel(S.iv.liveModel)); }
+  else if (a === 'iv-think'){ var b1 = baseId(S.iv.liveModel || 'ds-flash'); S.iv.liveModel = isThink(S.iv.liveModel) ? b1 : b1 + '-think'; route(true); toast(isThink(S.iv.liveModel) ? '已开启深度思考：' + modelLabel(S.iv.liveModel) : '已关闭深度思考'); }
   else if (a === 'demo-setup'){ e.preventDefault(); $('#guide').classList.remove('open'); demoSetup(); }
   else if (a === 'demo-sed'){ e.preventDefault(); $('#guide').classList.remove('open'); demoSed(); }
   else if (a === 'mr-play'){ e.preventDefault(); $('#guide').classList.remove('open'); ACT['mr-play'](); }

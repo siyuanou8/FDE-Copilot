@@ -25,7 +25,8 @@ const ALLOWED_ORIGINS = [
 
 const MAX_SENTENCE = 600;   // 一句话的长度上限（字符）
 const MAX_ITEMS = 20;       // 槽位、假设各自的条数上限
-const MAX_OUTPUT_TOKENS = 700;
+const MAX_OUTPUT_TOKENS = 700;          // 不思考时的输出上限
+const MAX_OUTPUT_TOKENS_THINKING = 4000; // 深度思考时，推理过程也计入输出（实测最多约 1900）
 
 const TAG_TYPES = ['slot', 'confirm', 'refute', 'dig', 'new_northstar'];
 
@@ -146,11 +147,11 @@ export default async function handler(req, res) {
         ],
         response_format: { type: 'json_object' },
         temperature: 0.2,
-        max_tokens: MAX_OUTPUT_TOKENS,
+        max_tokens: cfg.thinking ? MAX_OUTPUT_TOKENS_THINKING : MAX_OUTPUT_TOKENS,
         // DeepSeek 默认先「思考」，思考内容计入输出 token，现场标注要快，按清单关闭
         ...(cfg.thinkingParam ? { thinking: { type: cfg.thinking ? 'enabled' : 'disabled' } } : {}),
       }),
-      signal: AbortSignal.timeout(25000),
+      signal: AbortSignal.timeout(cfg.thinking ? 60000 : 25000),
     });
     const data = await r.json().catch(() => ({}));
     if (!r.ok) {
@@ -164,6 +165,7 @@ export default async function handler(req, res) {
       model: data.model || cfg.model,
       model_id: cfg.id,
       model_label: cfg.label,
+      thinking: cfg.thinking,
       usage: data.usage ? { prompt_tokens: data.usage.prompt_tokens, completion_tokens: data.usage.completion_tokens } : null,
       latency_ms: Date.now() - started,
     });

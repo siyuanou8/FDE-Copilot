@@ -5,7 +5,7 @@
  * - 接口都是通用格式（/chat/completions），新增供应商只需加一项
  * - model 为 null 的条目是「待开通」：管理员配好密钥后，按官方模型列表填入型号
  * - uses：live = 现场逐句标注（要求几秒内返回），summary = 访谈后汇总
- * - speed 是 2026-10-13 用访谈现场同一句话实测的耗时
+ * - speed 是 2026-10-13 用访谈现场的句子实测的耗时；深度思考也开放给现场，由顾问自己权衡快慢
  */
 
 export const PROVIDERS = {
@@ -18,13 +18,13 @@ export const PROVIDERS = {
 
 export const MODELS = [
   { id: 'ds-flash', provider: 'deepseek', model: 'deepseek-flash', thinking: false, uses: ['live', 'summary'], tier: 1,
-    label: 'DeepSeek Flash', note: '最快，现场标注默认', speed: '约 1.4 秒 / 句' },
+    label: 'DeepSeek Flash', note: '最快；直白的话判断够用，容易下结论过头', speed: '约 1.5 秒 / 句' },
   { id: 'ds-pro', provider: 'deepseek', model: 'deepseek-v4-pro', thinking: false, uses: ['live', 'summary'], tier: 2,
-    label: 'DeepSeek V4 Pro', note: '判断更细，稍慢', speed: '约 2.4 秒 / 句' },
-  { id: 'ds-flash-think', provider: 'deepseek', model: 'deepseek-flash', thinking: true, uses: ['summary'], tier: 2,
-    label: 'DeepSeek Flash · 深度思考', note: '先推理再回答，适合汇总', speed: '约 5 秒 / 段' },
-  { id: 'ds-pro-think', provider: 'deepseek', model: 'deepseek-v4-pro', thinking: true, uses: ['summary'], tier: 3,
-    label: 'DeepSeek V4 Pro · 深度思考', note: '最深入，适合大型企业的机会卡', speed: '约 17 秒 / 段' },
+    label: 'DeepSeek V4 Pro', note: '能力更强，判断更稳，不轻易下结论', speed: '约 2.5 秒 / 句' },
+  { id: 'ds-flash-think', provider: 'deepseek', model: 'deepseek-flash', thinking: true, uses: ['live', 'summary'], tier: 2,
+    label: 'DeepSeek Flash · 深度思考', note: '能听出话里的转折', speed: '约 4–5 秒 / 句' },
+  { id: 'ds-pro-think', provider: 'deepseek', model: 'deepseek-v4-pro', thinking: true, uses: ['live', 'summary'], tier: 3,
+    label: 'DeepSeek V4 Pro · 深度思考', note: '判断最准，但很慢', speed: '约 17–25 秒 / 句' },
   { id: 'claude-haiku', provider: 'anthropic', model: 'claude-haiku-5-5', thinking: false, uses: ['live', 'summary'], tier: 1,
     label: 'Claude Haiku 5.5', note: '需海外账户与预付费', speed: '待开通后实测' },
   { id: 'claude-sonnet', provider: 'anthropic', model: 'claude-sonnet-5-5', thinking: false, uses: ['summary'], tier: 2,
