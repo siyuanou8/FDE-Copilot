@@ -677,6 +677,15 @@ button.chip{cursor:pointer}
 .mopt.on .rd{border:5px solid var(--brand)}
 .mopt.off{opacity:.55;cursor:not-allowed;background:var(--surface-2)}
 .mopt .cost{margin-left:auto}
+.mopt .tg{margin-left:6px}
+.mthink{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border-radius:10px;border:1px dashed var(--line);background:var(--surface);text-align:left}
+.mthink .sw{width:30px;height:18px;border-radius:999px;background:#D9D6CC;position:relative;flex:none;transition:background .2s}
+.mthink .sw i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:var(--sh-1);transition:left .2s}
+.mthink.on .sw{background:var(--brand)}
+.mthink.on .sw i{left:14px}
+.mthink b{display:block;font-size:13px}
+.mthink span span{font-size:12px;color:var(--muted)}
+.mthink.dis{opacity:.5;cursor:not-allowed}
 .mmore{display:flex;align-items:center;gap:6px;width:100%;padding:8px 12px;border-radius:10px;font-size:12px;color:var(--muted);text-align:left;background:var(--surface-2)}
 .mmore .ico{width:12px;height:12px}
 .mmore:hover{color:var(--ink)}
@@ -1619,25 +1628,34 @@ function loadModels(){
     .catch(function(){ MODELS_STATE.failed = true; })
     .then(function(){ MODELS_STATE.loading = false; if (location.hash.indexOf('#/e/huaheng/interviews/new') === 0) route(true); });
 }
+/* 「深度思考」不是另一个模型，而是同一模型的开关：清单里带 -think 的条目在界面上合并成开关 */
+function baseId(id){ return String(id || '').replace(/-think$/, ''); }
+function isThink(id){ return /-think$/.test(id || ''); }
+function thinkVariant(base){ return modelList().filter(function(m){ return m.id === base + '-think'; })[0]; }
+var SUMMARY_NOTE = {'ds-flash':'更快、更省，一般访谈够用', 'ds-pro':'更深入，大型企业、机会卡要求高时选'};
 function modelOpts(use){
-  var iv = S.iv, cur = use === 'live' ? iv.liveModel : iv.model, all = modelList().filter(function(m){ return m.uses.indexOf(use) >= 0; });
+  var iv = S.iv, cur = baseId(use === 'live' ? iv.liveModel : iv.model), think = use === 'summary' && isThink(iv.model);
+  var all = modelList().filter(function(m){ return m.uses.indexOf(use) >= 0 && !isThink(m.id); });
   var on = all.filter(function(m){ return m.available !== false; }), off = all.filter(function(m){ return m.available === false; });
   var btn = function(m){
-    var dis = m.available === false;
-    return '<button class="mopt' + (cur === m.id ? ' on' : '') + (dis ? ' off' : '') + '"' + (dis ? ' disabled' : ' data-act="iv-model" data-use="' + use + '" data-v="' + m.id + '"') + '><span class="rd"></span><span><b>' + m.label + '</b><span class="ex">' + m.provider + ' · ' + m.region + '</span>' +
-      (dis ? '<span class="tg tg-done" style="margin-left:6px">待开通</span>' : '') + '<span>' + m.note + ' · ' + m.speed + '</span></span>' +
+    var dis = m.available === false, tv = think && thinkVariant(m.id), sp = tv ? tv.speed : m.speed;
+    var note = use === 'summary' && SUMMARY_NOTE[m.id] ? SUMMARY_NOTE[m.id] : m.note;
+    return '<button class="mopt' + (cur === m.id ? ' on' : '') + (dis ? ' off' : '') + '"' + (dis ? ' disabled' : ' data-act="iv-model" data-use="' + use + '" data-v="' + m.id + '"') + '><span class="rd"></span><span><b>' + m.label + '</b>' +
+      (dis ? '<span class="tg tg-done">待开通</span>' : '') + '<span>' + note + ' · ' + sp + '</span></span>' +
       '<span class="cost" title="相对费用">' + [1,2,3].map(function(k){ return '<i class="' + (k <= m.tier ? 'on' : '') + '"></i>'; }).join('') + '</span></button>';
   };
   var openKey = 'more-' + use;
+  var canThink = use === 'summary' && !!thinkVariant(cur) && thinkVariant(cur).available !== false;
   return '<div class="mopts">' + on.map(btn).join('') +
+    (use === 'summary' ? '<button class="mthink' + (think ? ' on' : '') + (canThink ? '' : ' dis') + '"' + (canThink ? ' data-act="iv-think"' : ' disabled') + '><span class="sw"><i></i></span><span><b>深度思考</b><span>' + (canThink ? '先推理再回答，汇总更深入，耗时更长' : '所选模型不支持') + '</span></span></button>' : '') +
     (off.length ? '<button class="mmore" data-act="iv-mmore" data-k="' + openKey + '">' + ico('i-chev') + '另有 ' + off.length + ' 个待开通：' + off.map(function(m){ return m.label; }).join('、') + (iv.open[openKey] ? ' · 收起' : ' · 展开') + '</button>' + (iv.open[openKey] ? off.map(btn).join('') : '') : '') + '</div>';
 }
 function modelCard(){
   loadModels();
-  var n = modelList().filter(function(m){ return m.available; }).length;
-  var st = MODELS_STATE.list ? '已开通 ' + n + ' 个 · 清单由管理员维护' : MODELS_STATE.failed ? '连不上后端，显示默认清单' : '正在读取可用模型…';
+  var avail = modelList().filter(function(m){ return m.available && !isThink(m.id); });
+  var st = MODELS_STATE.list ? '已开通 ' + avail.length + ' 个模型 · 清单由管理员维护' : MODELS_STATE.failed ? '连不上后端，显示默认清单' : '正在读取可用模型…';
   return '<div class="card" id="modelCard"><div class="card-h">' + ico('i-ai') + '<h3>AI 模型</h3><div class="r">' + st + '</div></div><div class="card-b" style="display:flex;flex-direction:column;gap:14px">' +
-    '<div><div class="sec-t">现场逐句标注 · 顾问可选（要在几秒内返回，只列快的）</div>' + modelOpts('live') + '</div>' +
+    '<div><div class="sec-t">现场逐句标注 · 顾问可选（要在几秒内返回）</div>' + modelOpts('live') + '</div>' +
     '<div><div class="sec-t">访谈后汇总与机会卡生成 · 顾问可选</div>' + modelOpts('summary') + '</div>' +
     '<div class="budget"><div class="bh"><span>项目预算（示例）</span><b>已用 24%</b></div><i><b style="width:24%"></b></i><span class="muted">按实际调用量记账；用到 80% 提醒，用完需管理员批准。按顾问、企业、访谈统计。</span></div>' +
   '</div></div>';
@@ -2312,7 +2330,8 @@ document.addEventListener('click', function(e){
   else if (a === 'pre-skip'){ S.pre.skipOpen = !S.pre.skipOpen; route(true); }
   else if (a === 'pre-q'){ S.pre.qOpen = !S.pre.qOpen; route(true); }
   else if (a === 'copy-req'){ var txt = GAPS[kind()].req.map(function(r, i){ return (i + 1) + '. ' + r; }).join('\n'); try { navigator.clipboard.writeText('访谈前请协助提供以下材料：\n' + txt).then(function(){ toast('已复制，可直接发给客户'); }, function(){ toast('浏览器不允许自动复制，请手动选择清单文字'); }); } catch (err){ toast('浏览器不允许自动复制，请手动选择清单文字'); } }
-  else if (a === 'iv-model'){ if (el.dataset.use === 'live') S.iv.liveModel = el.dataset.v; else S.iv.model = el.dataset.v; route(true); toast((el.dataset.use === 'live' ? '现场逐句标注' : '访谈后汇总') + '将使用：' + modelLabel(el.dataset.v)); }
+  else if (a === 'iv-model'){ var mv = el.dataset.v; if (el.dataset.use === 'live') S.iv.liveModel = mv; else { var tv = isThink(S.iv.model) && thinkVariant(mv); S.iv.model = tv && tv.available !== false ? tv.id : mv; } route(true); toast((el.dataset.use === 'live' ? '现场逐句标注' : '访谈后汇总') + '将使用：' + modelLabel(el.dataset.use === 'live' ? S.iv.liveModel : S.iv.model)); }
+  else if (a === 'iv-think'){ var b0 = baseId(S.iv.model); S.iv.model = isThink(S.iv.model) ? b0 : b0 + '-think'; route(true); toast(isThink(S.iv.model) ? '已开启深度思考' : '已关闭深度思考'); }
   else if (a === 'iv-mmore'){ S.iv.open[el.dataset.k] = !S.iv.open[el.dataset.k]; route(true); }
   else if (a === 'demo-setup'){ e.preventDefault(); $('#guide').classList.remove('open'); demoSetup(); }
   else if (a === 'demo-sed'){ e.preventDefault(); $('#guide').classList.remove('open'); demoSed(); }
