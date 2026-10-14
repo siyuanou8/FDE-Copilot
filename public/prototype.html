@@ -282,11 +282,6 @@ svg{display:block}
 .tbl .it{font-weight:600}
 .tbl .q{display:block;font-size:12px;color:var(--ink-2);margin-top:4px;line-height:1.5}
 .tbl tr.added td{background:var(--ai-soft)}
-.jd{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
-.jd .ico{width:12px;height:12px}
-.jd-sup{background:var(--ok-soft);color:var(--ok)}
-.jd-opp{background:var(--risk-soft);color:var(--risk)}
-.jd-none{background:var(--line-2);color:var(--muted)}
 .clues{display:flex;flex-direction:column}
 .clue{display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line-2);align-items:flex-start}
 .clue:last-child{border-bottom:0}
@@ -419,6 +414,23 @@ button.chip{cursor:pointer}
 .qr .acts{display:flex;gap:6px;margin-top:8px}
 .vchip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:var(--brand);background:var(--brand-tint);border-radius:6px;padding:1px 7px}
 .vchip .ico{width:11px;height:11px}
+.vchip.clue{color:#8A6A3C;background:#F6EFE3}
+.gen-st{display:flex;align-items:center;gap:8px;margin:12px 18px 0;padding:9px 12px;border-radius:10px;background:var(--ai-soft);color:var(--ai);font-size:12.5px;font-weight:600}
+.gen-st.ok{background:var(--ok-soft);color:var(--ok)}
+.gen-st .ico{width:13px;height:13px}
+.qt[contenteditable]{outline:none;border-radius:6px;padding:1px 4px;margin:-1px -4px}
+.qt[contenteditable]:hover{background:var(--surface-2)}
+.qt[contenteditable]:focus{background:#fff;box-shadow:0 0 0 2px var(--brand-tint)}
+.tpl3 tr.grp td{background:var(--surface-2);padding:8px 18px;font-size:12px;font-weight:600;color:var(--muted)}
+.tpl3 tr.grp{animation:none}
+.tpl3 td{vertical-align:middle}
+.clue.off{opacity:.55}
+.ctog{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+.ctog.on{color:var(--brand)}
+.ctog .sw{width:28px;height:16px;border-radius:999px;background:#D9D6CC;position:relative;transition:background .2s}
+.ctog .sw i{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:var(--sh-1);transition:left .2s}
+.ctog.on .sw{background:var(--brand)}
+.ctog.on .sw i{left:14px}
 .qr.up{background:var(--brand-tint);margin:0 -18px;padding:10px 18px;border-bottom:0}
 .qr.cf{background:var(--warn-soft);margin:4px -18px;padding:10px 18px;border-bottom:0}
 .seg2{display:inline-flex;padding:3px;border-radius:9px;background:var(--line-2);gap:2px}
@@ -646,7 +658,6 @@ button.chip{cursor:pointer}
 .person .pn{display:flex;align-items:center;gap:8px;margin-bottom:3px}
 .person .pr{font-size:12.5px;color:var(--ink-2);line-height:1.55}
 .person q::before{content:"「"}.person q::after{content:"」"}
-.jd-inf{background:var(--ai-soft);color:var(--ai)}
 .gap-sec{padding:14px 18px;border-bottom:1px solid var(--line-2)}
 .gaps-wide .need4{display:grid;grid-template-columns:1fr 1fr}
 .gaps-wide .gap-sec{border-bottom:0}
@@ -661,8 +672,6 @@ button.chip{cursor:pointer}
 /* 画面 4：带入预读 + 模型选择 */
 .carry{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:var(--brand-tint);border:1px solid var(--brand-soft);font-size:13px;line-height:1.6}
 .carry .ico{width:15px;height:15px;color:var(--brand);margin-top:3px}
-.vchip.must{color:var(--risk);background:var(--risk-soft)}
-.vchip.quick{color:var(--warn);background:var(--warn-soft)}
 .mrow{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-2)}
 .mrow b{display:block;font-size:13px}
 .mrow span{font-size:12px;color:var(--muted)}
@@ -763,25 +772,6 @@ button.chip{cursor:pointer}
 .tbl.hb td{vertical-align:top}
 .tbl.hb th:nth-child(2),.tbl.hb td:nth-child(2),.tbl.hb th:nth-child(3),.tbl.hb td:nth-child(3){text-align:center}
 .tbl.hb .evs{align-items:center}
-.pflow{display:grid;grid-template-columns:1fr auto 1.3fr auto 1.3fr;align-items:center;gap:14px;padding:16px 18px;border-bottom:1px solid var(--line-2)}
-.pflow > .ico{width:16px;height:16px;color:var(--muted)}
-.ps{display:flex;flex-direction:column;gap:3px}
-.ps .k{font-size:11.5px;font-weight:600;color:var(--muted)}
-.ps b{display:flex;gap:12px;font-size:17px;font-weight:700;letter-spacing:-.01em}
-.ps b em{font-style:normal}
-.ps .d{font-size:11.5px;color:var(--muted)}
-.c-ok{color:var(--ok)}.c-risk{color:var(--risk)}.c-warn{color:var(--warn)}
-.pre3 .arr{width:28px;padding-left:0;padding-right:0;text-align:center;color:#C9CEC9}
-.pre3 td.arr .ico{width:13px;height:13px;margin-top:4px}
-.pre3 .hf{display:block;font-size:11.5px;color:var(--muted);margin-bottom:2px}
-.pre3 .from{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
-.pre3 .from .cnt{font-size:11.5px;color:var(--muted)}
-.pre3 .srcl{margin-top:6px}
-.pre3 .why{display:block;font-size:12px;color:var(--ink-2);margin-top:6px;line-height:1.5}
-.pre3 tr.grp td{background:var(--surface-2);padding:8px 18px;font-size:12px;color:var(--muted)}
-.pre3 tr.grp td > span:nth-child(2){margin-left:10px}
-.pre3 tr.grp .lnk2{float:right;font-size:12px;color:var(--brand);font-weight:600}
-.pre3 tr.grp{animation:none}
 .tbl.hb .it{font-weight:600;margin-top:2px}
 .evs{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
 .evs .snip{align-self:stretch}
@@ -830,7 +820,6 @@ button.chip{cursor:pointer}
 .kpi{padding:16px 20px 18px}
 .kpi .l{font-size:12px;font-weight:500}
 .kpi .n{font-size:34px;font-weight:300;letter-spacing:-.035em;line-height:1.2;margin:4px 0 2px}
-.ps b{font-weight:400;font-size:20px;letter-spacing:-.02em}
 /* 胶囊控件 */
 .btn,.btn-sm,.btn-xs{border-radius:999px}
 .btn-sm{padding:0 14px}
@@ -1034,21 +1023,6 @@ var PEOPLE = {
   none: [['总经理或分管负责人','没有公开信息，首场以了解业务全貌为主','—','首场建议']]
 };
 /* 待验证清单逐条预判：j = sup 支持 / opp 反驳 / infer 仅推测 / none 未提及；src = up 客户提供 / off 官方披露 / web 联网 */
-var JUDGE = {
-  listed: {
-    '现场故障判断依赖资深工程师': {j:'sup', src:'off', ref:'2025 年报 p.41', q:'核心服务工程师平均从业 11 年，新人独立上岗培养周期约 2 年'},
-    '备件需求预测不准，积压与缺件并存': {j:'sup', src:'off', ref:'2026 半年报 p.12', q:'备品备件存货周转天数同比增加 23 天'},
-    '售后服务部、生产部、供应链部、研发部': {j:'sup', src:'up', ref:'组织架构图（客户提供，2026-09）', q:'四个部门均在组织架构中独立设置'},
-    '大客户续约率': {j:'opp', src:'off', ref:'2025 年报 p.15', q:'设备销售以单次采购为主，长期服务合同收入占比不足 10%'},
-    '招投标周期长，一个销售盯三四个大客户': {j:'sup', src:'off', ref:'2025 年报 p.18', q:'订单主要通过公开招标取得，平均招标周期约 9 个月'},
-    '销售与投标部': {j:'sup', src:'up', ref:'组织架构图（客户提供，2026-09）', q:'设销售与投标管理部，下辖 4 个区域销售组'}
-  },
-  private: {
-    '现场故障判断依赖资深工程师': {j:'infer', src:'web', ref:'招聘信息', q:'招聘要求「5 年以上现场维修经验」'},
-    '招投标周期长，一个销售盯三四个大客户': {j:'infer', src:'web', ref:'中标公告', q:'近三年中标均为公开招标项目'}
-  },
-  none: {}
-};
 var CLUES = {
   listed: [
     {id:'c1', t:'服务收入占比提升至 30%', d:'年报战略章节提出三年内把服务收入占比从 22% 提升到 30%——可能是比「首次修复率」更上层的北极星。', ref:'2025 年报 p.9', f:'北极星指标'},
@@ -1077,7 +1051,7 @@ var BASE_ENTS = [
    状态
    ===================================================================== */
 var S;
-function freshPre(k){ return {kind:k || 'listed', done:false, played:false, ph:0, bizAdopted:false, added:{}, flash:{}, open:{}, qOpen:false}; }
+function freshPre(k){ return {kind:k || 'listed', done:false, played:false, ph:0, bizAdopted:false, skip:{}, flash:{}, open:{}, qOpen:false}; }
 function reset(){
   S = {
     hh: null,
@@ -1245,7 +1219,7 @@ function entCard(e, isNew){
 function hhCard(){
   var h = S.hh;
   return {id:'huaheng', name:h.name, ind:h.ind, biz:h.biz, st: S.pre.done ? 'pre' : 'draft', stage: S.pre.done ? 1 : 0,
-    s: S.pre.done ? ['待验证清单 ' + checklist().length + ' 条','材料已支持 ' + supCount() + ' 条'] : ['已预填 ' + items(h.ind, h.biz).length + ' 条假设', '预读未完成'],
+    s: S.pre.done ? ['待验证清单 ' + checklist().length + ' 条','材料新线索 ' + cluesOn().length + ' 条'] : ['已预填 ' + items(h.ind, h.biz).length + ' 条假设', '预读未完成'],
     nx: S.mr.calib === 'ok' ? '访谈 #1 进行中 · 北极星已更新为服务合同续约率' : S.pre.done ? '设置第一场访谈（建议高层 / 战略访谈）' : '完成访谈前预读', t: h.created};
 }
 function viewList(empty){
@@ -1393,20 +1367,12 @@ function demoNew(){
 function kind(){ return S.pre.kind || 'listed'; }
 function clueList(){ return CLUES[kind()] || []; }
 function checklist(){
-  var h = S.hh, list = items(h.ind, h.biz).filter(function(x){ return !S.na[keyOf(x)]; });
-  clueList().forEach(function(c){ if (S.pre.added[c.id]) list.push({src:'clue', id:c.id, f:c.f, t:c.t, ref:c.ref, men:[], na:[]}); });
-  return list;
+  var h = S.hh;
+  return items(h.ind, h.biz).filter(function(x){ return !S.na[keyOf(x)]; });
 }
+function clueOn(id){ return !S.pre.skip[id]; }
+function cluesOn(){ return clueList().filter(function(c){ return clueOn(c.id); }); }
 function fLab(f){ return f === '北极星指标' ? '北极星假设' : f; }
-function judgeOf(x){ return x.src === 'clue' ? {j:'clue', ref:x.ref} : ((JUDGE[kind()] || {})[x.t] || {j:'none'}); }
-function prio(x){ var j = judgeOf(x); if (j.j === 'sup' && j.src === 'up') return 'skip'; if (j.j === 'sup' && j.src === 'off') return 'quick'; return 'must'; }
-var PRIO = {must:['必问','tg-risk'], quick:['快速确认','tg-warn'], skip:['可跳过','tg-done']};
-function prioCount(){ var c = {must:0, quick:0, skip:0}; checklist().forEach(function(x){ c[prio(x)]++; }); return c; }
-function supCount(){ return checklist().filter(function(x){ return judgeOf(x).j === 'sup'; }).length; }
-function judgeCell(x){
-  var j = judgeOf(x).j;
-  return {clue:'<span class="jd jd-sup">' + ico('i-sprout') + '材料线索</span>', sup:'<span class="jd jd-sup">' + ico('i-check') + '材料有印证</span>', opp:'<span class="jd jd-opp">' + ico('i-alert') + '材料有出入</span>', infer:'<span class="jd jd-inf">' + ico('i-ai') + '只有间接线索</span>', none:'<span class="jd jd-none">材料未涉及</span>'}[j];
-}
 function srcTag(j){
   if (!j.ref) return '<span class="muted" style="font-size:12px">—</span>';
   var lab = j.src === 'up' ? '客户提供' : j.src === 'off' ? '官方披露' : '公开检索';
@@ -1464,40 +1430,23 @@ function viewPreread(){
   /* 建议访谈对象 */
   var people = PEOPLE[K].map(function(p, i){ return '<div class="person" style="--d:' + i * 100 + 'ms"><div class="pn"><b>' + p[0] + '</b>' + (p[3] ? '<span class="tg tg-ai">' + ico('i-ai') + p[3] + '</span>' : '') + '</div><div class="pr"><q>' + p[1] + '</q>' + (p[2] !== '—' ? ' · ' + p[2] : '') + '</div></div>'; }).join('');
   /* 清单预判 + 访谈优先级 */
-  var list = checklist(), ri = 0, pc = prioCount();
-  var REASON = {sup_off:'官方原文已写明，现场确认仍然成立即可', sup_up:'客户近期提供的材料已写明，不必再问', opp:'材料与假设不一致，当面问清现在的情况', none:'材料没有涉及，只能当面问', infer:'只有间接线索，需要当面确认', clue:'材料里的新线索，带去访谈确认'};
-  var GRP = {must:'材料无法判断，或与假设有出入', quick:'官方原文已写明，现场确认一句', skip:'客户近期材料已写明'};
-  var rowOf = function(x){
-    var j = judgeOf(x), k = x.src === 'clue' ? 'clue|' + x.id : keyOf(x), pk = prio(x);
-    var from = x.src === 'clue' ? '<span class="lab">' + ico('i-sprout') + '预读新增</span><span class="cnt">本企业材料</span>' : srcLab(x) + countText(x);
-    var src = x.src === 'clue' ? stMat(x.ref) : j.j === 'infer' ? stInfer(j.ref) : srcTag(j);
-    var rk = j.j === 'sup' ? 'sup_' + (j.src === 'up' ? 'up' : 'off') : j.j;
-    return '<tr data-k="' + k + '" class="' + (P.flash[k] ? 'flash' : '') + '" style="--d:' + (ri++ * 90) + 'ms">' +
-      '<td><span class="hf">' + fLab(x.f) + '</span><span class="it">' + x.t + '</span><div class="from">' + from + '</div></td>' +
-      '<td class="arr">' + ico('i-arrow') + '</td>' +
-      '<td>' + judgeCell(x) + (j.q ? '<span class="q">「' + j.q + '」</span>' : '') + (j.ref || x.src === 'clue' ? '<div class="srcl">' + src + '</div>' : '') + '</td>' +
-      '<td class="arr">' + ico('i-arrow') + '</td>' +
-      '<td><span class="tg ' + PRIO[pk][1] + '">' + PRIO[pk][0] + '</span><span class="why">' + REASON[rk] + '</span></td></tr>';
-  };
-  var rows = ['must','quick','skip'].map(function(pk){
-    var g = list.filter(function(x){ return prio(x) === pk; }); if (!g.length) return '';
-    var shut = pk === 'skip' && !P.skipOpen;
-    return '<tr class="grp grp-' + pk + '"><td colspan="5"><span class="tg ' + PRIO[pk][1] + '">' + PRIO[pk][0] + ' · ' + g.length + '</span><span>' + GRP[pk] + '</span>' +
-      (pk === 'skip' ? '<button class="lnk2" data-act="pre-skip">' + (shut ? '展开' : '收起') + '</button>' : '') + '</td></tr>' +
-      (shut ? '' : g.map(rowOf).join(''));
+  /* ① 知识库模板：待验证假设。访谈前不拿材料给它下判断，全部到访谈里印证或推翻 */
+  var list = checklist(), ri = 0;
+  var rows = FIELDS.map(function(fd){
+    var g = list.filter(function(x){ return x.f === fd; }); if (!g.length) return '';
+    return '<tr class="grp"><td colspan="3">' + fLab(fd) + ' · ' + g.length + '</td></tr>' + g.map(function(x){
+      var k = keyOf(x);
+      return '<tr data-k="' + k + '" class="' + (P.flash[k] ? 'flash' : '') + '" style="--d:' + (ri++ * 60) + 'ms"><td><span class="it">' + x.t + '</span></td><td>' + srcLab(x) + '</td><td>' + countText(x) + '</td></tr>';
+    }).join('');
   }).join('');
-  var jc = {sup:0, opp:0, none:0}; list.forEach(function(x){ var j = judgeOf(x).j; jc[j === 'sup' ? 'sup' : j === 'opp' ? 'opp' : 'none']++; });
-  var flow = '<div class="pflow need3"><div class="ps"><span class="k">模板假设</span><b>' + list.length + ' 条</b><span class="d">来自行业与业务模式标签</span></div>' + ico('i-arrow') +
-    '<div class="ps"><span class="k">逐条核对材料</span><b><em class="c-ok">印证 ' + jc.sup + '</em><em class="c-risk">有出入 ' + jc.opp + '</em><em>未涉及 ' + jc.none + '</em></b><span class="d">材料只代表过去</span></div>' + ico('i-arrow') +
-    '<div class="ps"><span class="k">访谈怎么安排</span><b><em class="c-risk">必问 ' + pc.must + '</em><em class="c-warn">快速确认 ' + pc.quick + '</em><em>可跳过 ' + pc.skip + '</em></b><span class="d">优先级 = 访谈还需覆盖多少</span></div></div>';
   P.flash = {};
-  /* 新线索、缺口与替代 */
+  /* ② 材料新线索：模板没有、这家企业特有、值得深挖；默认带进提纲，顾问可以去掉 */
   var cl = clueList();
   var clues = cl.length ? cl.map(function(c, i){
-    var added = P.added[c.id];
-    return '<div class="clue" style="--d:' + i * 140 + 'ms"><span class="n">' + (i + 1) + '</span><div class="body"><b>' + c.t + '</b><span>' + c.d + '</span><div>' + stMat(c.ref) + '</div></div><div class="ac">' +
-      (added ? '<span class="ok-l">' + ico('i-check') + '已加入清单</span>' : '<button class="btn btn-g btn-sm" data-act="add-clue" data-id="' + c.id + '">' + ico('i-plus') + '加入清单</button>') + '</div></div>';
-  }).join('') : '<div class="cl-empty" style="padding:28px">' + ico('i-sprout') + '<b>没有找到清单之外的线索</b>公开信息太少。线索会在第一场访谈里出现。</div>';
+    var on = clueOn(c.id);
+    return '<div class="clue' + (on ? '' : ' off') + (P.flash['clue|' + c.id] ? ' flash' : '') + '" style="--d:' + i * 140 + 'ms"><span class="n">' + (i + 1) + '</span><div class="body"><b>' + c.t + '</b><span>' + c.d + '</span><div>' + stMat(c.ref) + '</div></div><div class="ac">' +
+      '<button class="ctog' + (on ? ' on' : '') + '" data-act="clue-tog" data-id="' + c.id + '"><span class="sw"><i></i></span>' + (on ? '带进提纲' : '不带') + '</button></div></div>';
+  }).join('') : '<div class="cl-empty" style="padding:28px">' + ico('i-sprout') + '<b>材料里没有找到值得深挖的新线索</b>公开信息太少。线索会在第一场访谈里出现。</div>';
   var G = GAPS[K];
   var gaps = '<div class="gap-sec"><div class="sec-t">向客户索取的材料 · ' + G.req.length + ' 项</div><ul class="req">' + G.req.map(function(r){ return '<li>' + ico('i-file') + r + '</li>'; }).join('') + '</ul>' +
       '<button class="btn btn-g btn-sm" data-act="copy-req">' + ico('i-file') + '复制清单，发给客户</button></div>' +
@@ -1507,7 +1456,7 @@ function viewPreread(){
 
   var ph = P.played ? 4 : 0;
   return '<div class="page pre' + (P.played ? ' played' : '') + '" id="pre" data-ph="' + ph + '">' +
-    '<div class="ph"><div><h1>访谈前预读 · ' + h.name + '</h1><div class="sub">进场前先对经营模式有概念；清单上每条假设先看材料怎么说，最后变成访谈的优先级。</div></div>' +
+    '<div class="ph"><div><h1>访谈前预读 · ' + h.name + '</h1><div class="sub">进场前先读懂这家企业：整理概况，找出材料里值得深挖的线索，和知识库模板一起生成这家企业的访谈提纲。</div></div>' +
     '<div class="r">' + labInd(h.ind) + labBiz(h.biz) + '</div></div>' +
     '<div class="kindbar"><span class="muted">演示：同一套看板，在不同材料条件下</span><div class="seg2">' + Object.keys(KINDS).map(function(k){ return '<button class="' + (K === k ? 'on' : '') + '" data-act="pre-kind" data-k="' + k + '" title="' + KINDS[k].d + '">' + KINDS[k].n + '</button>'; }).join('') + '</div></div>' +
     '<div class="ai-bar' + (P.played ? ' done' : '') + '" id="aiBar"><div class="thinking" id="aiTxt">' + (P.played ? ico('i-check') + '预读完成：' + srcs.length + ' 份材料 · 概况 ' + cov.orig + ' 块原文、' + cov.infer + ' 块推测、' + cov.miss + ' 块缺失' : '<span class="dots"><i></i><i></i><i></i></span>AI 正在收集材料…') + '</div>' +
@@ -1526,17 +1475,17 @@ function viewPreread(){
       '<div class="card c5"><div class="card-h">' + ico('i-users') + '<h3>建议访谈对象</h3><div class="r">附原文理由</div></div><div class="card-b">' +
         '<div class="sk-row wait2" style="padding:0"><span class="sk" style="height:40px"></span><span class="sk" style="height:40px"></span></div>' +
         '<div class="people need2">' + people + '</div><div class="hint need2" style="margin-top:10px">' + ico('i-info') + '首场建议为本项目判断，待 Maggie 确认；顾问可在设置访谈时改选。</div></div></div>' +
-      '<div class="card c12" id="tblCard"><div class="card-h">' + ico('i-target') + '<h3>待验证清单 · 带进访谈前先核对一遍</h3><div class="r">每条判断都待访谈确认</div></div>' +
-        '<div class="sk-row wait3"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span>AI 正在逐条对照清单与材料…</div><span class="sk" style="height:34px"></span><span class="sk" style="height:34px"></span><span class="sk" style="height:34px"></span></div>' +
-        '' + flow + '<table class="tbl need3 pre3"><thead><tr><th style="width:31%">假设 · 从哪来</th><th class="arr"></th><th>材料怎么说</th><th class="arr"></th><th style="width:24%">所以访谈怎么做</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-        '<div class="card-f">' + ico('i-info') + '优先级只表示这一条访谈还需要覆盖多少，不代表重要程度。材料与访谈冲突时，以访谈为准。</div></div>' +
-      (cl.length ? '<div class="card c7" id="cluesCard"><div class="card-h">' + ico('i-sprout') + '<h3>材料中的新线索</h3><div class="r">清单里没有、值得带去访谈</div></div>' +
-        '<div class="sk-row wait4"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span>AI 正在寻找清单之外的线索…</div><span class="sk" style="height:46px"></span></div>' +
-        '<div class="clues need4">' + clues + '</div></div>' : '<div id="cluesCard" style="display:none"></div>') +
+      '<div class="card c12" id="tblCard"><div class="card-h">' + ico('i-layers') + '<h3>① 待验证假设 · 来自知识库模板</h3><div class="r need3">' + list.length + ' 条 · 全部待访谈确认</div></div>' +
+        '<div class="sk-row wait3"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span>AI 正在合并行业与业务模式两组模板…</div><span class="sk" style="height:34px"></span><span class="sk" style="height:34px"></span><span class="sk" style="height:34px"></span></div>' +
+        '<table class="tbl need3 tpl3"><thead><tr><th>假设</th><th style="width:26%">来自</th><th style="width:26%">此前印证</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        '<div class="card-f">' + ico('i-info') + '这些是模板里的假设，不是这家企业的结论，到访谈里逐条印证或推翻。「此前印证」= 之前有几家其他企业在访谈中印证过。</div></div>' +
+      (cl.length ? '<div class="card c7" id="cluesCard"><div class="card-h">' + ico('i-sprout') + '<h3>② 材料新线索 · 值得深挖</h3><div class="r need4">带进提纲 ' + cluesOn().length + ' / ' + cl.length + '</div></div>' +
+        '<div class="sk-row wait4"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span>AI 正在从材料里找模板没有、值得深挖的点…</div><span class="sk" style="height:46px"></span></div>' +
+        '<div class="clues need4">' + clues + '</div><div class="card-f need4">' + ico('i-info') + '带进提纲的线索，下一步 AI 会把它写进对应的问题；不带的只留作背景参考。</div></div>' : '<div id="cluesCard" style="display:none"></div>') +
       '<div class="card ' + (cl.length ? 'c5' : 'c12 gaps-wide') + '" id="gapsCard"><div class="card-h">' + ico('i-alert') + '<h3>缺口与替代</h3><div class="r">' + (cov.miss ? cov.miss + ' 块缺失' : '概况齐全') + '</div></div>' +
         '<div class="sk-row wait4"><span class="sk" style="height:46px"></span></div><div class="need4">' + gaps + '</div></div>' +
     '</div></div>' +
-    '<div class="actbar"><div class="pblur"><i></i><i></i><i></i><i></i><i></i></div><div class="actbar-in"><span class="note">' + ico('i-info') + '带入访谈设置：必问 ' + pc.must + ' · 快速确认 ' + pc.quick + ' · 可跳过 ' + pc.skip + '</span>' +
+    '<div class="actbar"><div class="pblur"><i></i><i></i><i></i><i></i><i></i></div><div class="actbar-in"><span class="note">' + ico('i-info') + '带进提纲：模板假设 ' + list.length + ' 条 · 材料新线索 ' + cluesOn().length + ' 条</span>' +
       '<div class="r"><button class="btn btn-p btn-lg" data-act="pre-done">完成预读，设置第一场访谈' + ico('i-arrow') + '</button></div></div></div>';
 }
 function bar(n, p, i){ return '<div class="bar"><span>' + n + '</span><i><b style="width:' + p + '%;--d:' + (300 + i * 150) + 'ms"></b></i><span class="p">' + p + '%</span></div>'; }
@@ -1555,14 +1504,14 @@ function playPre(){
   });
   later(function(){ $('#docSum').textContent = srcs.length + ' 份'; setPh(1, 'AI 正在整理企业概况，并做一致性校验…', 55); }, t);
   later(function(){ setPh(2, 'AI 正在判断业务模式、建议访谈对象…', 70); }, t += 1500);
-  later(function(){ setPh(3, 'AI 正在逐条对照清单与材料，排访谈优先级…', 85); }, t += 1600);
-  later(function(){ setPh(4, 'AI 正在寻找清单之外的线索，整理缺口…', 96); }, t += 2000);
+  later(function(){ setPh(3, 'AI 正在合并行业与业务模式两组模板…', 85); }, t += 1600);
+  later(function(){ setPh(4, 'AI 正在从材料里找值得深挖的线索，整理缺口…', 96); }, t += 2000);
   later(finishPre, t += 1200);
 }
 function finishPre(){
   var P = S.pre; clearT(); P.played = true;
   if (location.hash.indexOf('#/e/huaheng/preread') === 0) route(true);
-  if (!REDUCE) toast('预读完成：已排好访谈优先级');
+  if (!REDUCE) toast('预读完成：模板假设与材料线索已整理好');
 }
 
 /* =====================================================================
@@ -1578,12 +1527,12 @@ var DEPTS = [
 var ROLES = {exec:['分管服务的副总裁','总经理','战略部负责人'], other:['部门负责人','区域经理','一线工程师']};
 var OUT = [
   {g:1, n:'Q1', t:'请介绍{D}的组织构成、6 个大区的分工和主要职责。', o:'请介绍部门组织构成、主要职责和业务范围。', v:[]},
-  {g:1, n:'Q2', t:'服务业务当前最核心的考核目标是什么？年报提到「服务收入占比 30%」，这个目标怎么拆到各大区？', o:'当前部门最核心的 KPI 或管理目标是什么？', v:['首次修复率','服务收入占比 30%']},
+  {g:1, n:'Q2', t:'服务业务当前最核心的考核目标是什么？年报提到「服务收入占比 30%」，这个目标怎么拆到各大区？', o:'当前部门最核心的 KPI 或管理目标是什么？', v:['首次修复率','服务收入占比 30%'], c:'c1', alt:'服务业务当前最核心的考核目标是什么？这个目标怎么拆到各大区？', va:['首次修复率']},
   {g:2, n:'Q3', t:'以一次大客户设备报修为例，从报修、派单、上门到修复和续签服务合同，流程如何运转？', o:'请以一个典型业务场景为例，介绍当前主要业务流程如何运转。', v:['大客户续约率']},
   {g:2, n:'Q4', t:'流程中最耗时、最容易出错或最依赖经验的环节是什么？', o:null, v:['现场故障判断依赖资深工程师']},
   {g:2, n:'Q5', t:'这些痛点背后，需要提升的核心能力是什么？', o:null, v:['故障诊断与维修知识沉淀']},
-  {g:2, n:'Q6', t:'工单、维修记录、备件和服务合同数据分别在哪些系统里？质量如何？', o:'当前有哪些系统、数据或数字化工具在支撑这个流程？数据质量如何？', v:['备件需求预测不准']},
-  {g:2, n:'Q7', t:'新设的远程运维中心做到了哪一步？过去还试过哪些数字化改造，效果如何？', o:'过去是否尝试过 AI、自动化或数字化改造？哪些有效，哪些失败，原因是什么？', v:['远程运维中心']},
+  {g:2, n:'Q6', t:'工单、维修记录、备件和服务合同数据分别在哪些系统里？备件计划和备件销售分属两个部门，数据怎么打通？', o:'当前有哪些系统、数据或数字化工具在支撑这个流程？数据质量如何？', v:['备件需求预测不准','备件业务由两个部门分管'], c:'c3', alt:'工单、维修记录、备件和服务合同数据分别在哪些系统里？质量如何？', va:['备件需求预测不准']},
+  {g:2, n:'Q7', t:'新设的远程运维中心做到了哪一步？过去还试过哪些数字化改造，效果如何？', o:'过去是否尝试过 AI、自动化或数字化改造？哪些有效，哪些失败，原因是什么？', v:['新设「远程运维中心」'], c:'c2', alt:'过去试过哪些数字化或 AI 改造？哪些有效，哪些失败，原因是什么？', va:[]},
   {g:3, n:'Q8', t:'这次 AI 场景共创，你最希望{D}得到什么结果？', o:'对本次 AI 场景共创或咨询服务，最希望我们帮助解决什么问题，或形成什么结果？', v:[]}
 ];
 var GROUPS = {1:'组一 · 部门组成、业务范围及核心 KPI', 2:'组二 · 流程、痛点、能力与数字化基础', 3:'组三 · 咨询服务期待'};
@@ -1593,12 +1542,9 @@ var UPQ = [
   {g:2, t:'现场排查时，工程师最常翻的资料是什么？'}
 ];
 function freshIv(){ return {dept:'', role:'', played:false, consent:false, upload:false, mode:'merge', dup:'', open:{}, mic:'off', demo:false, model:'ds-pro-think', liveModel:'ds-flash'}; }
-function prioForLabel(v){
-  if (!S.pre.played) return '';
-  var hit = checklist().filter(function(x){ return x.t.indexOf(v) >= 0 || v.indexOf(x.t) >= 0; })[0];
-  if (hit) return PRIO[prio(hit)][0];
-  return clueList().some(function(c){ return c.t.indexOf(v) >= 0 || v.indexOf(c.t.replace(/[「」]/g, '')) >= 0; }) ? '预读线索' : '';
-}
+/* 提纲题目随材料线索的取舍变化：线索不带，就换成不提它的说法 */
+function outQ(q){ return q.c && !clueOn(q.c) ? {t: q.alt, v: q.va || []} : {t: q.t, v: q.v}; }
+function isClueLabel(v){ return clueList().some(function(c){ return c.t === v; }); }
 /* AI 模型：清单来自后端 /api/models（管理员维护，标明哪些已开通）；离线时用下面的默认清单 */
 var API_BASE = /vercel\.app$/.test(location.hostname) ? '' : 'https://fde-copilot-xi.vercel.app';
 var MODEL_FALLBACK = [
@@ -1692,17 +1638,21 @@ function viewSetup(){
     outline = '<div class="sk-row"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span>AI 正在按「' + deptLabel() + ' × ' + S.hh.ind + ' × ' + (S.hh.biz || '未选业务模式') + '」改写提纲，并对照待验证清单…</div>' +
       '<span class="sk" style="height:44px"></span><span class="sk" style="height:44px;width:94%"></span><span class="sk" style="height:44px;width:97%"></span><span class="sk" style="height:44px;width:90%"></span></div>';
   } else {
-    var qi = 0;
-    outline = [1,2,3].map(function(g){
+    var qi = 0, G0 = iv.gen, genOk = G0 && G0.st === 'ok';
+    var genHead = !G0 ? '' : G0.st === 'loading' ? '<div class="gen-st"><span class="dots"><i></i><i></i><i></i></span>真实 AI 正在结合模板假设与材料线索生成提纲（DeepSeek V4 Pro，约 4–6 秒）…</div>' :
+      G0.st === 'err' ? '<div class="alert alert-warn" style="margin:12px 18px 0">' + ico('i-alert') + '<div>生成失败：' + esc(G0.err) + '。下面仍是演示提纲。</div></div>' :
+      '<div class="gen-st ok">' + ico('i-check') + '已用真实 AI 生成 · ' + esc(G0.meta.model_label) + ' · ' + (G0.meta.latency_ms / 1000).toFixed(1) + ' 秒' + (G0.meta.usage ? ' · ' + (G0.meta.usage.prompt_tokens + G0.meta.usage.completion_tokens) + ' tokens' : '') + ' · 题目可直接点击编辑</div>';
+    outline = genHead + [1,2,3].map(function(g){
+      if (genOk) return genGroup(g);
       var rows = OUT.filter(function(q){ return q.g === g; }).map(function(q){
-        var t = q.t.replace('{D}', deptLabel()), dupHere = iv.upload && iv.mode === 'merge' && iv.dup === 'merged' && q.n === 'Q4';
+        var oq = outQ(q), t = oq.t.replace('{D}', deptLabel()), dupHere = iv.upload && iv.mode === 'merge' && iv.dup === 'merged' && q.n === 'Q4';
         var hide = iv.upload && iv.mode === 'over';
         if (hide) return '';
         return '<div class="qr" style="--d:' + (qi++ * 70) + 'ms"><span class="n">' + q.n + '</span><div class="qb"><div class="qt">' + t + '</div>' +
           (q.o && iv.open[q.n] ? '<div class="qo">原文：' + q.o + '</div>' : '') +
           (dupHere ? '<div class="qo" style="color:var(--ok)">已合并上传问题「哪个环节最依赖老师傅的经验？」，原措辞保留为追问备选</div>' : '') +
           '<div class="qm">' + (q.o ? '<span class="tg tg-ai">' + ico('i-ai') + 'AI 改写 · 待确认</span><button class="btn btn-t btn-xs" data-act="iv-orig" data-n="' + q.n + '">' + (iv.open[q.n] ? '收起原文' : '看原文') + '</button>' : '<span class="tg tg-done">PRD 原文</span>') +
-          q.v.map(function(v){ var pr = prioForLabel(v); return '<span class="vchip' + (pr === '必问' ? ' must' : pr === '快速确认' ? ' quick' : '') + '">' + ico('i-target') + '验证：' + v + (pr ? ' · ' + pr : '') + '</span>'; }).join('') + '</div></div>' +
+          oq.v.map(function(v){ var cl0 = isClueLabel(v); return '<span class="vchip' + (cl0 ? ' clue' : '') + '">' + ico(cl0 ? 'i-sprout' : 'i-target') + (cl0 ? '追问线索：' : '验证：') + v + '</span>'; }).join('') + '</div></div>' +
           '<button class="btn btn-g btn-xs" data-act="noop">编辑</button></div>';
       }).join('');
       var ups = !iv.upload ? '' : UPQ.filter(function(u){ return u.g === g; }).map(function(u){
@@ -1738,11 +1688,46 @@ function viewSetup(){
           '<div class="dflow">' + ico('i-mic') + '<span>麦克风</span>' + ico('i-arrow') + '<span>语音转文字服务</span>' + ico('i-arrow') + '<span>大模型服务（管理员统一配置）</span>' + ico('i-arrow') + '<span>Mission Room</span></div>' +
         '</div></div>' +
       '</div>' +
-      '<div class="c7" style="display:flex;flex-direction:column;gap:16px">' + (S.pre.played ? (function(){ var pc = prioCount(); return '<div class="carry">' + ico('i-check') + '<span>已带入预读结果：<b>必问 ' + pc.must + '</b> · 快速确认 ' + pc.quick + ' · 可跳过 ' + pc.skip + '。提纲每题标出它验证的假设与优先级。' + (kind() !== 'listed' ? '<br><span class="muted">提纲示例按上市公司情形改写；其他情形下，问题会围绕缺失的信息展开。</span>' : '') + '</span></div>'; })() : '') + '<div class="card" id="outline"><div class="card-h">' + ico('i-chat') + '<h3>访谈提纲</h3><div class="r">' + (iv.played ? total + ' 问 · 约 ' + total * 6 + ' 分钟' : '3 组 8 问') + '</div></div>' + outline +
-        (iv.played ? '<div class="card-f">' + ico('i-info') + '结构来自 PRD §5（3 组 8 问，固定）；措辞由 AI 改写，标「待确认」，可直接编辑。「验证」标签对应待验证清单上的条目与预读给出的优先级。</div>' : '') + '</div>' + modelCard() + '</div>' +
+      '<div class="c7" style="display:flex;flex-direction:column;gap:16px">' + (S.pre.played ? (function(){ return '<div class="carry">' + ico('i-check') + '<span>已带入预读结果：<b>知识库模板假设 ' + checklist().length + ' 条 · 材料新线索 ' + cluesOn().length + ' 条</b>。提纲由 AI 结合两者改写，每题标出它验证的假设或追问的线索。' + (kind() !== 'listed' ? '<br><span class="muted">提纲示例按上市公司情形改写；其他情形下，问题会围绕缺失的信息展开。</span>' : '') + '</span></div>'; })() : '') + '<div class="card" id="outline"><div class="card-h">' + ico('i-chat') + '<h3>访谈提纲</h3><div class="r">' + (iv.played ? total + ' 问 · 约 ' + total * 6 + ' 分钟' : '3 组 8 问') + (iv.played && iv.dept ? '<button class="btn btn-sm ' + (iv.gen && iv.gen.st === 'ok' ? 'btn-g' : 'btn-p') + '" data-act="iv-gen"' + (iv.gen && iv.gen.st === 'loading' ? ' disabled' : '') + '>' + ico('i-ai') + (iv.gen && iv.gen.st === 'ok' ? '重新生成' : '用真实 AI 生成') + '</button>' : '') + '</div></div>' + outline +
+        (iv.played ? '<div class="card-f">' + ico('i-info') + '结构来自 PRD §5（3 组 8 问，固定）；措辞由 AI 结合模板假设与材料线索改写，标「待确认」，可直接编辑。</div>' : '') + '</div>' + modelCard() + '</div>' +
     '</div></div>' +
     '<div class="actbar"><div class="pblur"><i></i><i></i><i></i><i></i><i></i></div><div class="actbar-in"><span class="note">' + ico('i-info') + (ready ? (iv.mic === 'ok' || iv.mic === 'demo' ? '准备就绪。进入后开始录音和实时转写。' : '麦克风未就绪：可以继续，但只能手动记录') : '完成：选择部门和角色 · 提纲生成 · 录音同意') + '</span>' +
       '<div class="r"><button class="btn btn-p btn-lg" data-act="iv-start"' + (ready ? '' : ' disabled') + '>' + ico('i-mic') + '开始访谈，进入 Mission Room' + ico('i-arrow') + '</button></div></div></div>';
+}
+/* =====================================================================
+   真实 AI 生成提纲：PRD 8 问骨架 + ① 模板假设 + ② 选中的材料线索 + 企业概况 → /api/outline
+   ===================================================================== */
+function genInput(){
+  var d = DEPTS.filter(function(x){ return x.id === S.iv.dept; })[0] || {};
+  var facts = (OV[kind()] || []).filter(function(o){ return o.st !== 'miss'; }).map(function(o){
+    return o.k + '：' + (o.v || (o.bars || []).map(function(b){ return b[0] + ' ' + b[1] + '%'; }).join('、')) + (o.s ? '，' + o.s : '');
+  });
+  return {dept: d.n || '', role: S.iv.role || d.d || '', industry: S.hh.ind, biz: S.hh.biz || '',
+    facts: facts,
+    hypotheses: checklist().map(function(x, i){ return {id: 'h' + (i + 1), field: fLab(x.f), text: x.t}; }),
+    clues: cluesOn().map(function(c){ return {id: c.id, field: fLab(c.f), text: c.t, detail: c.d}; })};
+}
+function genOutline(){
+  var iv = S.iv; if (!iv.dept || (iv.gen && iv.gen.st === 'loading')) return;
+  var inp = genInput(), g = {st: 'loading', hyps: inp.hypotheses, clues: inp.clues};
+  iv.gen = g; route(true);
+  fetch(API_BASE + '/api/outline', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(inp)})
+    .then(function(r){ return r.json().then(function(j){ return {ok: r.ok, j: j}; }); })
+    .then(function(x){ if (x.ok){ g.st = 'ok'; g.qs = x.j.questions; g.meta = x.j; } else { g.st = 'err'; g.err = x.j.error || '未知错误'; } })
+    .catch(function(){ g.st = 'err'; g.err = '连不上后端'; })
+    .then(function(){ if (S.iv.gen === g && location.hash.indexOf('#/e/huaheng/interviews/new') === 0){ route(true); if (g.st === 'ok'){ stagger('#outline .qr', 60); toast('提纲已生成：' + g.qs.length + ' 问'); } } });
+}
+function genGroup(g){
+  var G0 = S.iv.gen, iv = S.iv;
+  var rows = G0.qs.filter(function(q){ return q.g === g; }).map(function(q){
+    var idx = G0.qs.indexOf(q);
+    var chips = q.verifies.map(function(id){ var h = G0.hyps.filter(function(x){ return x.id === id; })[0]; return h ? '<span class="vchip">' + ico('i-target') + '验证：' + esc(h.text) + '</span>' : ''; }).join('') +
+      q.clues.map(function(id){ var c = G0.clues.filter(function(x){ return x.id === id; })[0]; return c ? '<span class="vchip clue">' + ico('i-sprout') + '追问线索：' + esc(c.text) + '</span>' : ''; }).join('');
+    return '<div class="qr"><span class="n">' + q.n + '</span><div class="qb"><div class="qt" contenteditable="true" spellcheck="false" data-gen="' + idx + '" title="可直接编辑">' + esc(q.text) + '</div>' +
+      (iv.open[q.n] ? '<div class="qo">原文：' + esc(q.original) + '</div>' : '') +
+      '<div class="qm"><span class="tg tg-ai">' + ico('i-ai') + 'AI 生成 · 待确认</span><button class="btn btn-t btn-xs" data-act="iv-orig" data-n="' + q.n + '">' + (iv.open[q.n] ? '收起原文' : '看原文') + '</button>' + chips + '</div></div></div>';
+  }).join('');
+  return '<div class="qg2"><div class="sec-t">' + GROUPS[g] + '</div>' + rows + '</div>';
 }
 function setupRewrite(){
   if (S.iv.played || !S.iv.dept) return;
@@ -1842,7 +1827,7 @@ function viewLive(){
     if (id === 't6' && M.calib !== 'none'){
       var swap = function(done){ return '<div class="swap"><div class="was2"><span class="k">原北极星假设</span><b>首次修复率</b><span class="src src-tpl">' + ico('i-tpl') + '行业模板 · 3 家印证</span></div>' +
         '<span class="to2">' + ico('i-arrow') + '</span><div class="now2"><span class="k">' + (done ? '现在的北极星' : '改为') + '</span><b>服务合同续约率</b><span class="src src-quote">' + ico('i-quote') + '客户原话 · 34:05' + (done ? '<span class="st st-ok">已确认</span>' : '') + '</span></div></div>'; };
-      var also = '<div class="also">' + ico('i-check') + '同时印证预读线索「服务收入占比 30%」<span class="muted"> · 预读时年报与续约率有出入：材料是过去，访谈是现在</span></div>';
+      var also = '<div class="also">' + ico('i-check') + '同时印证预读线索「服务收入占比 30%」</div>';
       cal = M.calib === 'ok' ?
         '<div class="calib done' + seenCls('calok') + '"><span class="ok-l">' + ico('i-check') + '企业北极星已更新 · 后续访谈继承</span>' + swap(true) + '</div>' :
         '<div class="calib' + seenCls('cal') + '"><span class="prop-l">' + ico('i-ai') + 'AI 提议 · 这句话改写了企业的北极星</span>' + swap(false) + also +
@@ -2151,7 +2136,7 @@ function demoSed(){
    画面 12 · 企业工作台 = 假设看板
    ===================================================================== */
 var HYP = [
-  {f:'北极星指标', t:'服务合同续约率', st:'new', pro:[['访谈 #1 · 34:05','服务合同的续约率才是我们最关心的。']], con:[['年报 p.15 · 反映过去','长期服务合同收入占比不足 10%']]},
+  {f:'北极星指标', t:'服务合同续约率', st:'new', pro:[['访谈 #1 · 34:05','服务合同的续约率才是我们最关心的。']], con:[]},
   {f:'北极星指标', t:'首次修复率', st:'no', pro:[['行业模板','3 家印证']], con:[['访谈 #1 · 34:05','首次修复率我们内部没正式考核。']]},
   {f:'预读线索', t:'服务收入占比提升至 30%', st:'ok', pro:[['年报 p.9','三年内服务收入占比提升至 30%'],['访谈 #1 · 34:05','集团今年更看重服务收入。']], con:[]},
   {f:'痛点', t:'现场故障判断依赖资深工程师', st:'ok', pro:[['年报 p.41','核心服务工程师平均从业 11 年'],['访谈 #1 · 31:18','老师傅一看就知道是液压还是电气的问题。']], con:[]},
@@ -2281,10 +2266,7 @@ var ACT = {
     route(true); toast('已采纳：补充 ' + added.length + ' 条来自「业务模式 · 大客户招投标」的条目');
   },
   'add-clue': function(id){
-    if (S.pre.added[id]) return;
-    S.pre.added[id] = 1; S.pre.flash['clue|' + id] = 1; route(true);
-    toast('已加入待验证清单');
-    var row = $('tr[data-k="clue|' + id + '"]'); if (row) later(function(){ scrollToEl('tr[data-k="clue|' + id + '"]'); }, 150);
+    delete S.pre.skip[id]; S.pre.flash['clue|' + id] = 1; route(true); toast('已带进提纲');
   }
 };
 
@@ -2311,7 +2293,6 @@ document.addEventListener('click', function(e){
   else if (a === 'adopt-biz'){ ACT['adopt-biz'](); }
   else if (a === 'pre-kind'){ ACT['pre-kind'](el.dataset.k); }
   else if (a === 'pre-open'){ S.pre.open[el.dataset.k] = !S.pre.open[el.dataset.k]; route(true); }
-  else if (a === 'pre-skip'){ S.pre.skipOpen = !S.pre.skipOpen; route(true); }
   else if (a === 'pre-q'){ S.pre.qOpen = !S.pre.qOpen; route(true); }
   else if (a === 'copy-req'){ var txt = GAPS[kind()].req.map(function(r, i){ return (i + 1) + '. ' + r; }).join('\n'); try { navigator.clipboard.writeText('访谈前请协助提供以下材料：\n' + txt).then(function(){ toast('已复制，可直接发给客户'); }, function(){ toast('浏览器不允许自动复制，请手动选择清单文字'); }); } catch (err){ toast('浏览器不允许自动复制，请手动选择清单文字'); } }
   else if (a === 'iv-model'){ var t0 = isThink(S.iv.liveModel) && thinkOf(el.dataset.v); S.iv.liveModel = t0 && t0.available !== false ? t0.id : el.dataset.v; route(true); toast('真实 AI 分析将使用：' + modelLabel(S.iv.liveModel)); }
@@ -2319,8 +2300,9 @@ document.addEventListener('click', function(e){
   else if (a === 'demo-setup'){ e.preventDefault(); $('#guide').classList.remove('open'); demoSetup(); }
   else if (a === 'demo-sed'){ e.preventDefault(); $('#guide').classList.remove('open'); demoSed(); }
   else if (a === 'mr-play'){ e.preventDefault(); $('#guide').classList.remove('open'); ACT['mr-play'](); }
-  else if (a === 'iv-dept'){ var ch = S.iv.dept !== el.dataset.id; S.iv.dept = el.dataset.id; if (ch){ S.iv.role = ''; S.iv.played = false; } route(true); setupRewrite(); }
-  else if (a === 'iv-role'){ S.iv.role = el.dataset.r; route(true); }
+  else if (a === 'iv-dept'){ var ch = S.iv.dept !== el.dataset.id; S.iv.dept = el.dataset.id; if (ch){ S.iv.role = ''; S.iv.played = false; S.iv.gen = null; } route(true); setupRewrite(); }
+  else if (a === 'iv-role'){ S.iv.role = el.dataset.r; S.iv.gen = null; route(true); }
+  else if (a === 'iv-gen'){ genOutline(); }
   else if (a === 'iv-orig'){ S.iv.open[el.dataset.n] = !S.iv.open[el.dataset.n]; route(true); }
   else if (a === 'iv-upload'){ S.iv.upload = true; S.iv.mode = 'merge'; S.iv.dup = ''; route(true); toast('已解析 3 个问题，并插入对应分组'); }
   else if (a === 'iv-mode'){ S.iv.mode = el.dataset.v; route(true); }
@@ -2342,8 +2324,10 @@ document.addEventListener('click', function(e){
   else if (a === 'mr-calib'){ S.mr.calib = 'ok'; drawLive(); toast('企业层战略假设已更新：北极星改为「服务合同续约率」'); }
   else if (a === 'mr-spk'){ var id = el.dataset.id, l = TX.filter(function(x){ return x.id === id; })[0]; S.mr.sp[id] = (S.mr.sp[id] || l.sp) === 'k' ? 'g' : 'k'; drawLive(); toast('已纠正说话人：' + (S.mr.sp[id] === 'k' ? '客户' : '顾问')); }
   else if (a === 'add-clue'){ ACT['add-clue'](el.dataset.id); }
+  else if (a === 'clue-tog'){ var cid = el.dataset.id; if (S.pre.skip[cid]) delete S.pre.skip[cid]; else S.pre.skip[cid] = 1; S.iv.gen = null; route(true); toast(S.pre.skip[cid] ? '这条线索不带进提纲' : '已带进提纲'); }
   else if (a === 'pre-done'){ S.pre.done = true; S.newHH = true; toast('预读已完成，可以设置第一场访谈'); location.hash = '#/e/huaheng/interviews/new'; }
 });
+document.addEventListener('focusout', function(e){ var t = e.target; if (t && t.dataset && t.dataset.gen != null && S.iv.gen && S.iv.gen.qs){ var q = S.iv.gen.qs[+t.dataset.gen]; if (q) q.text = t.textContent.trim().slice(0, 120); } });
 document.addEventListener('keydown', function(e){ if (e.target && e.target.id === 'raiIn' && e.key === 'Enter' && !e.isComposing){ e.preventDefault(); raiSend(); } });
 document.addEventListener('input', function(e){
   if (e.target && e.target.id === 'raiIn'){ S.rai.draft = e.target.value; return; }
